@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "effortPlot.bysubject <- function(d) {\n  # Recieves a long data frame and returns a ggplot historgram\n  # Their must be the following fields:\n  #  -- Score : The score (1 to 5, 5 being Outstanding)\n  #  -- Subject : The subject (such as 'English')\n  #  -- Source : Either Student or Teacher\n  #  -- Category : One of Diligence, Behaviour or Effort\n  require(ggplot2)\n  \n  # Setting up reording of subjects -- this needs to be refined \n  # to include Y12 subjects\n  slist <- c(\"English\",\n             \"Mathematics\",\n             \"Science\",\n             \"History\",\n             \"Geography\",\n             \"Cornerstone\",\n             \"Music\",\n             \"French\",\n             \"Design & Technology\",\n             \"Media Technology\",\n             \"Food Technology\",\n             \"Grahpics Technology\",\n             \"Visual Art\",\n             \"PDHPE\")\n  subject.orders <- data.frame(Subject = slist, Order = seq(length(slist)))\n  d <- merge(d, subject.orders)\n  forOrder <- unique(data.frame(Subject = d$Subject, Order = d$Order))\n  forOrder <- forOrder[order(forOrder$Order),]\n  facetOrder <- forOrder$Subject\n  d$Subject <- factor(d$Subject, levels = facetOrder)\n  \n  d$Category <- factor(d$Category, levels = c(\"Diligence\", \"Engagement\", \"Behaviour\"))\n  \n  # Creating the actual plot\n  g <- ggplot(data = d, \n              aes(x = Category, y = Score, fill = Source)) + \n    geom_bar(stat = \"identity\", position = \"dodge\", width = 0.6) +\n    facet_grid(Subject ~ .) +\n    scale_y_discrete(name = \"Effort rating\", \n                     limits = c(\"Unsatisfactory\", \"Fair\", \"Good\", \"Very Good\", \"Outstanding\")) +\n    scale_fill_brewer(palette = \"Paired\", type = \"div\")\n  return(g)\n}\n\n\n\n\ng <- effortPlot.bysubject(efdat[efdat$Student.ID == 1000,])\nggplotly(g)\n",
+    "created" : 1477963757379.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "843578788",
+    "id" : "8F915DD4",
+    "lastKnownWriteTime" : 1478118280,
+    "last_content_update" : 1478122611628,
+    "path" : "~/Documents/Data Analysis/R/Effort Reporting/effort.functions.R",
+    "project_path" : "effort.functions.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
