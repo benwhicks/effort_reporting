@@ -1,0 +1,73 @@
+Student.ID,Category,Subject,Score,Source
+1000,Diligence,English,4,Teacher
+1000,Engagement,English,4,Teacher
+1000,Behaviour,English,4,Teacher
+1000,Diligence,Science,3,Teacher
+1000,Engagement,Science,4,Teacher
+1000,Behaviour,Science,5,Teacher
+1000,Diligence,Mathematics,2,Teacher
+1000,Engagement,Mathematics,4,Teacher
+1000,Behaviour,Mathematics,2,Teacher
+1000,Diligence,Art,3,Teacher
+1000,Engagement,Art,4,Teacher
+1000,Behaviour,Art,2,Teacher
+1000,Diligence,PDHPE,5,Teacher
+1000,Engagement,PDHPE,4,Teacher
+1000,Behaviour,PDHPE,5,Teacher
+1000,Diligence,Food Technology,4,Teacher
+1000,Engagement,Food Technology,1,Teacher
+1000,Behaviour,Food Technology,2,Teacher
+1000,Diligence,English,5,Student
+1000,Engagement,English,5,Student
+1000,Behaviour,English,5,Student
+1000,Diligence,Science,4,Student
+1000,Engagement,Science,4,Student
+1000,Behaviour,Science,4,Student
+1000,Diligence,Mathematics,4,Student
+1000,Engagement,Mathematics,3,Student
+1000,Behaviour,Mathematics,3,Student
+1000,Diligence,Art,4,Student
+1000,Engagement,Art,2,Student
+1000,Behaviour,Art,3,Student
+1000,Diligence,PDHPE,3,Student
+1000,Engagement,PDHPE,3,Student
+1000,Behaviour,PDHPE,3,Student
+1000,Diligence,Food Technology,4,Student
+1000,Engagement,Food Technology,3,Student
+1000,Behaviour,Food Technology,1,Student
+1055,Diligence,English,5,Teacher
+1055,Engagement,English,4,Teacher
+1055,Behaviour,English,5,Teacher
+1055,Diligence,Science,4,Teacher
+1055,Engagement,Science,5,Teacher
+1055,Behaviour,Science,5,Teacher
+1055,Diligence,Mathematics,5,Teacher
+1055,Engagement,Mathematics,5,Teacher
+1055,Behaviour,Mathematics,5,Teacher
+1055,Diligence,Art,4,Teacher
+1055,Engagement,Art,4,Teacher
+1055,Behaviour,Art,4,Teacher
+1055,Diligence,PDHPE,3,Teacher
+1055,Engagement,PDHPE,4,Teacher
+1055,Behaviour,PDHPE,3,Teacher
+1055,Diligence,Food Technology,3,Teacher
+1055,Engagement,Food Technology,3,Teacher
+1055,Behaviour,Food Technology,3,Teacher
+1055,Diligence,English,4,Student
+1055,Engagement,English,5,Student
+1055,Behaviour,English,4,Student
+1055,Diligence,Science,3,Student
+1055,Engagement,Science,4,Student
+1055,Behaviour,Science,4,Student
+1055,Diligence,Mathematics,5,Student
+1055,Engagement,Mathematics,4,Student
+1055,Behaviour,Mathematics,4,Student
+1055,Diligence,Art,4,Student
+1055,Engagement,Art,3,Student
+1055,Behaviour,Art,5,Student
+1055,Diligence,PDHPE,4,Student
+1055,Engagement,PDHPE,4,Student
+1055,Behaviour,PDHPE,5,Student
+1055,Diligence,Food Technology,4,Student
+1055,Engagement,Food Technology,4,Student
+1055,Behaviour,Food Technology,4,Student
