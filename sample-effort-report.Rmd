@@ -74,5 +74,5 @@ effortPlot.bysubject <- function(d) {
 d <- d[d$Student.ID == student.id,]
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(plotly))
-suppressMessages(ggplotly(effortPlot.bysubject(d)))
+ggplotly(effortPlot.bysubject(d))
 ```

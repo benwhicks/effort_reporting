@@ -1,4 +1,4 @@
-effortPlot.bysubject <- function(d) {
+effortPlot.bysubject <- function(d, ctitle = "Chart title") {
   # Recieves a long data frame and returns a ggplot historgram
   # Their must be the following fields:
   #  -- Score : The score (1 to 5, 5 being Outstanding)
@@ -36,6 +36,9 @@ effortPlot.bysubject <- function(d) {
   g <- ggplot(data = d, 
               aes(x = Category, y = Score, fill = Source)) + 
     geom_bar(stat = "identity", position = "dodge", width = 0.6) +
+    ggtitle(ctitle) +
+    guides(fill = guide_legend(title = NULL)) +
+    theme(text = element_text(family = "Helevetica", size = 10)) +
     facet_grid(Subject ~ .) +
     scale_y_discrete(name = "Effort rating", 
                      limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
@@ -46,5 +49,5 @@ effortPlot.bysubject <- function(d) {
 
 
 
-g <- effortPlot.bysubject(efdat[efdat$Student.ID == 1000,])
+g <- effortPlot.bysubject(efdat[efdat$Student.ID == 1000,], "Test chart")
 ggplotly(g)
