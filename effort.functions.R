@@ -1,4 +1,4 @@
-effortPlot.bysubject <- function(d, ctitle = "Chart title") {
+effortPlot <- function(d, ctitle = "Chart title") {
   # Recieves a long data frame and returns a ggplot historgram
   # Their must be the following fields:
   #  -- Score : The score (1 to 5, 5 being Outstanding)
@@ -38,16 +38,29 @@ effortPlot.bysubject <- function(d, ctitle = "Chart title") {
     geom_bar(stat = "identity", position = "dodge", width = 0.6) +
     ggtitle(ctitle) +
     guides(fill = guide_legend(title = NULL)) +
-    theme(text = element_text(family = "Helevetica", size = 10)) +
+    theme(text = element_text(family = "Helvetica", size = 10)) +
     facet_grid(Subject ~ .) +
+    coord_cartesian(ylim = c(1,5)) +
     scale_y_discrete(name = "Effort rating", 
                      limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
-    scale_fill_brewer(palette = "Paired", type = "div")
+    scale_fill_manual(values = c("skyblue","navy"))
   return(g)
 }
 
-
-
-
-g <- effortPlot.bysubject(efdat[efdat$Student.ID == 1000,], "Test chart")
-ggplotly(g)
+overallEffortPlot <- function(d, ctitle = "Overall Effort") {
+  require(dplyr)
+  d <- summarise(group_by(d, Source, Category), mean(Score))
+  names(d) <- c("Source", "Category", "Score")
+  d$Category <- factor(d$Category, levels = c("Diligence", "Engagement", "Behaviour"))
+  # creating the plot
+  g <- ggplot(data = d, aes(x = Category, y = Score, fill = Source)) +
+    geom_bar(stat = "identity", position = "dodge", width = 0.6) +
+    ggtitle(ctitle) +
+    guides(fill = guide_legend(title = NULL)) +
+    theme(text = element_text(family = "Helvetica", size = 10)) +
+    coord_cartesian(ylim = c(1,5)) +
+    scale_y_discrete(name = "Effort rating", 
+                     limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
+    scale_fill_manual(values = c("skyblue","navy"))
+  return(g)
+}
