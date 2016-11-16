@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#######################################\n###### Effort Report Script ###########\n#######################################\n\n# This is one of three files to generate the effort reports\n# The files required are:\n#    1. effort.functions.R\n#    2. effort_report_script.R\n#    3. effort_report_markdown.Rmd\n# The files need to be in the same folder as the ",
+    "created" : 1479241680637.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "1137413442",
+    "id" : "98FD010C",
+    "lastKnownWriteTime" : -4616189618054758394,
+    "last_content_update" : 1479241838683,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
