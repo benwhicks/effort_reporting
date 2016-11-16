@@ -12,14 +12,14 @@
     "path" : null,
     "project_path" : null,
     "properties" : {
-        "cacheKey" : "qnhmigu8ts",
+        "cacheKey" : "oy9g39w88h",
         "caption" : "efdat",
-        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=efdat&cache_key=qnhmigu8ts",
-        "displayedObservations" : 72,
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=efdat&cache_key=oy9g39w88h",
+        "displayedObservations" : "180",
         "environment" : "",
         "object" : "efdat",
-        "totalObservations" : 72,
-        "variables" : 5
+        "totalObservations" : "180",
+        "variables" : "5"
     },
     "relative_order" : 1,
     "source_on_save" : false,

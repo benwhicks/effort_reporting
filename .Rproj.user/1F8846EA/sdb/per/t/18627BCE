@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\noutput: html_document\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = FALSE)\n```\n\n### Effort report for [include name]\n\nstuff",
+    "created" : 1479242014872.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "632764089",
+    "id" : "18627BCE",
+    "lastKnownWriteTime" : 1479242076,
+    "last_content_update" : 1479242076562,
+    "path" : "~/Documents/Data Analysis/R/Effort Reporting/effort_report_markdown.Rmd",
+    "project_path" : "effort_report_markdown.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

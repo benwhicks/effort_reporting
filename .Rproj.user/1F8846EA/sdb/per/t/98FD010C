@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#######################################\n###### Effort Report Script ###########\n#######################################\n\n# This is one of four files to generate the effort reports\n# The files required are:\n#    1. effort.functions.R\n#    2. effort_report_script.R\n#    3. effort_report_markdown.Rmd\n#    4. effort_report_data.csv\n# The files need to be in the same folder. \n\nlibrary(knitr)\nlibrary(rmarkdown)\nlibrary(markdown)\n\n# Creates a directory called 'reports' if it does not already exist\nif (!dir.exists(\"reports\")) {dir.create(\"reports\")}\n\n# Reading in effort data file called 'effort_report_data.csv\"\n# Data should have the following fields:\n#   Student.ID\n#   Category \n#   Subject\n#   Score\n#   Source\neffort.data <- read.csv(\"effort_report_data.csv\")\nstudent.numbers <- unique(effort.data$Student.ID)\n\nfor (ID in student.numbers) {\n  # main loop\n  \n}\n",
+    "created" : 1479241680637.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1550650333",
+    "id" : "98FD010C",
+    "lastKnownWriteTime" : 1479329657,
+    "last_content_update" : 1479329657626,
+    "path" : "~/Documents/Data Analysis/R/Effort Reporting/effort_report_script.R",
+    "project_path" : "effort_report_script.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
