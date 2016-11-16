@@ -70,6 +70,7 @@ Student.ID,Category,Subject,Score,Source
 1055,Behaviour,PDHPE,5,Student
 1055,Diligence,Food Technology,4,Student
 1055,Engagement,Food Technology,4,Student
+<<<<<<< HEAD
 1055,Behaviour,Food Technology,4,Student
 1030,Diligence,English,4,Teacher
 1030,Engagement,English,2,Teacher
@@ -179,3 +180,6 @@ Student.ID,Category,Subject,Score,Source
 1033,Diligence,Food Technology,2,Student
 1033,Engagement,Food Technology,4,Student
 1033,Behaviour,Food Technology,5,Student
+=======
+1055,Behaviour,Food Technology,4,Student
+>>>>>>> ac82f60e51a933aa2f20e47bff487abf9997243c

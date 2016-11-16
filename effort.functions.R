@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 effortPlot <- function(d, ctitle = "Chart title") {
+=======
+effortPlot.bysubject <- function(d) {
+>>>>>>> ac82f60e51a933aa2f20e47bff487abf9997243c
   # Recieves a long data frame and returns a ggplot historgram
   # Their must be the following fields:
   #  -- Score : The score (1 to 5, 5 being Outstanding)
@@ -36,6 +40,7 @@ effortPlot <- function(d, ctitle = "Chart title") {
   g <- ggplot(data = d, 
               aes(x = Category, y = Score, fill = Source)) + 
     geom_bar(stat = "identity", position = "dodge", width = 0.6) +
+<<<<<<< HEAD
     ggtitle(ctitle) +
     guides(fill = guide_legend(title = NULL)) +
     theme(text = element_text(family = "Helvetica", size = 10)) +
@@ -64,3 +69,17 @@ overallEffortPlot <- function(d, ctitle = "Overall Effort") {
     scale_fill_manual(values = c("skyblue","navy"))
   return(g)
 }
+=======
+    facet_grid(Subject ~ .) +
+    scale_y_discrete(name = "Effort rating", 
+                     limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
+    scale_fill_brewer(palette = "Paired", type = "div")
+  return(g)
+}
+
+
+
+
+g <- effortPlot.bysubject(efdat[efdat$Student.ID == 1000,])
+ggplotly(g)
+>>>>>>> ac82f60e51a933aa2f20e47bff487abf9997243c
