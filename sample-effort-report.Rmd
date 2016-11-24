@@ -5,10 +5,8 @@ output: html_document
 
 ``` {r setup, echo = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-<<<<<<< HEAD
 source('effort.functions.R')
-=======
->>>>>>> ac82f60e51a933aa2f20e47bff487abf9997243c
+
 ```
 
 ``` {r}
@@ -70,12 +68,10 @@ effortPlot.bysubject <- function(d) {
     scale_fill_brewer(palette = "Paired", type = "div")
   return(g)
 }
->>>>>>> ac82f60e51a933aa2f20e47bff487abf9997243c
 ```
 
 
 ### Effort report for `r student.name`
-<<<<<<< HEAD
 ``` {r fig.height = 4, fig.width = 7}
 d <- d[d$Student.ID == student.id,]
 suppressPackageStartupMessages(library(dplyr))
@@ -94,7 +90,7 @@ suppressPackageStartupMessages(library(plotly))
 breakdown <- effortPlot(d, "Effort by Subject")
 breakdown
 ```
-=======
+
 
 
 ``` {r}
@@ -103,4 +99,4 @@ suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(plotly))
 suppressMessages(ggplotly(effortPlot.bysubject(d)))
 ```
->>>>>>> ac82f60e51a933aa2f20e47bff487abf9997243c
+
