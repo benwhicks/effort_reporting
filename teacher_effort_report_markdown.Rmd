@@ -1,0 +1,64 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+suppressWarnings(suppressPackageStartupMessages(library(ggplot2)))
+```
+
+
+``` {r}
+# getting the all important graphing functions
+#source(effort.functions.R)
+
+overallEffortPlot <- function(d, ctitle = "All Classes") {
+  require(dplyr)
+  d <- summarise(group_by(d, Source, Category), mean(Score))
+  names(d) <- c("Source", "Category", "Score")
+  d$Category <- factor(d$Category, levels = c("Diligence", "Engagement", "Behaviour"))
+  # creating the plot
+  g <- ggplot(data = d, aes(x = Category, y = Score, fill = Source)) +
+    geom_bar(stat = "identity", position = "dodge", width = 0.6) +
+    ggtitle(ctitle) +
+    guides(fill = guide_legend(title = NULL)) +
+    theme(text = element_text(size = 10)) +
+    coord_cartesian(ylim = c(1,5)) +
+    scale_y_discrete(name = "Effort rating", 
+                     limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
+    scale_fill_manual(values = c("skyblue","navy"))
+  return(g)
+}
+
+effortPlotClass <- function(d, class = "SubjectName") {
+  d$Category <- factor(d$Category, levels = c("Diligence", "Engagement", "Behaviour"))
+  d2 <- merge(d, student.info)
+  g <- ggplot(data = d2, 
+              aes(x = Category, y = Score, fill = Source)) + 
+    geom_bar(stat = "identity", position = "dodge", width = 0.6) +
+    ggtitle(class) +
+    guides(fill = guide_legend(title = NULL)) +
+    theme(text = element_text(size = 10)) +
+    facet_grid(Student.name ~ .) +
+    coord_cartesian(ylim = c(1,5)) +
+    scale_y_discrete(name = "Effort rating", 
+                     limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
+    scale_fill_manual(values = c("skyblue","navy"))
+  return(g)
+}
+
+# ID is the student code from effort_report_script.R
+df <- effort.data[effort.data$Teacher.code == tcode,]
+```
+### Effort report for `r student.name`
+
+``` {r fig.height = 4, fig.width = 8}
+overallEffortPlot(df)
+```
+
+``` {r fig.height = 20, fig.width = 8}
+classes = unique(df$Subject)
+for (class in classes) {
+  effortPlotClass(class)
+}
+```

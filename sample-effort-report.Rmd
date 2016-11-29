@@ -7,6 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = FALSE)
 source('effort.functions.R')
 
+
 ```
 
 ``` {r}
@@ -21,9 +22,6 @@ student.name <- "Jen Eric"
 ```
 
 ```{r}
-
-<<<<<<< HEAD
-=======
 effortPlot.bysubject <- function(d) {
   # Recieves a long data frame and returns a ggplot historgram
   # Their must be the following fields:

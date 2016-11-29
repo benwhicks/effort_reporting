@@ -1,3 +1,17 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+suppressWarnings(suppressPackageStartupMessages(library(ggplot2)))
+```
+
+
+``` {r}
+# getting the all important graphing functions
+#source(effort.functions.R)
+
 effortPlot <- function(d, ctitle = "Chart title") {
   # Recieves a long data frame and returns a ggplot historgram
   # Their must be the following fields:
@@ -65,6 +79,16 @@ overallEffortPlot <- function(d, ctitle = "Overall Effort") {
   return(g)
 }
 
+# ID is the student code from effort_report_script.R
+df <- effort.data[effort.data$Student.code == ID,]
+student.name <- student.info[student.info$Student.code == ID,]$Student.name
+```
+### Effort report for `r student.name`
 
+``` {r fig.height = 4, fig.width = 8}
+overallEffortPlot(df)
+```
 
-
+``` {r fig.height = 13, fig.width = 8}
+effortPlot(df, ctitle = "Effort by Subject")
+```
