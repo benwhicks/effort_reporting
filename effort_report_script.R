@@ -28,16 +28,17 @@ library(markdown)
 effort.data <- read.csv("effort_report_data.csv")
 student.numbers <- unique(effort.data$Student.code)
 teacher.codes <- unique(effort.data$Teacher.code)
+report.dir <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Reporting/Reports"
 
 # Creates a directory called 'reports' if it does not already exist
-if (!dir.exists("reports")) {dir.create("reports")}
+if (!dir.exists(report.dir)) {dir.create(report.dir)}
 
 # Creating student reports
 for (ID in student.numbers) {
   s.name <- student.info[student.info$Student.code == ID,]$Student.name
   rmarkdown::render('student_effort_report_markdown.Rmd',
                     output_file = paste0("Student_Effort_Report_", s.name , "_", Sys.Date(), ".html" ),
-                    output_dir = "reports")
+                    output_dir = report.dir)
 }
 
 # Creating teacher reports
@@ -45,7 +46,7 @@ for (ID in student.numbers) {
 for (tcode in teacher.codes) {
   rmarkdown::render('teacher_effort_report_markdown.Rmd',
                     output_file = paste0("Class_Effort_Report_", tcode, "_", Sys.Date(), ".html" ),
-                    output_dir = "reports")
+                    output_dir = report.dir)
 }
 
 # Creating school reports

@@ -53,7 +53,7 @@ effortPlot <- function(d, ctitle = "Chart title") {
     ggtitle(ctitle) +
     guides(fill = guide_legend(title = NULL)) +
     theme(text = element_text(size = 10)) +
-    facet_grid(Subject ~ .) +
+    facet_wrap(~ Subject, scales = "free") +
     coord_cartesian(ylim = c(1,5)) +
     scale_y_discrete(name = "Effort rating", 
                      limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
@@ -85,10 +85,10 @@ student.name <- student.info[student.info$Student.code == ID,]$Student.name
 ```
 ### Effort report for `r student.name`
 
-``` {r fig.height = 4, fig.width = 8}
+``` {r fig.height = 4, fig.width = 8, fig.align = "center"}
 overallEffortPlot(df)
 ```
 
-``` {r fig.height = 13, fig.width = 8}
+``` {r fig.height = 13, fig.width = 13, fig.align = "center"}
 effortPlot(df, ctitle = "Effort by Subject")
 ```
