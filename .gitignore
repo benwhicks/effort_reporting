@@ -2,8 +2,16 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# ignoring school data
 *.jpeg
 *.pdf
 *.csv
 *.xls
 *.xlsx
+reports/
+
+# except example data
+!sample.effort.csv
+
+
