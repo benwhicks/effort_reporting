@@ -57,12 +57,16 @@ ggplotly(g1 + facet_wrap(~ Subject) +
 ----
 
 ``` {r}
-gg <- ggplot(df.comp, aes(Difference)) + geom_density(bw = 0.5) + theme_tufte()
+gg <- ggplot(df.comp, aes(Difference)) + geom_density(bw = 0.5) + scale_y_continuous(labels = NULL) + theme_tufte()
 gg + ggtitle("Individual score comparison: Student - Teacher")
 ```
 
 ``` {r}
 gg +facet_wrap(~ Subject) + ggtitle("Individual score camparison by Subject: Student - Teacher")
+```
+
+``` {r}
+gg + facet_wrap(~ Student.name) + ggtitle("Individual score comparison by Student: Student - Teacher")
 ```
 
 ### Category, Source, Subject and Gender analysis
@@ -96,3 +100,4 @@ g3_1 + facet_grid(Category ~ Gender) + ggtitle("Gender, Source, Category compari
 ``` {r fig.height = 30, fig.align = "center"}
 g3 + facet_grid(Subject ~ Gender, scales = "free") + ggtitle("Distribution by gender, source and subject")
 ```
+

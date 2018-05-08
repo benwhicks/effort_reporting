@@ -1,0 +1,88 @@
+---
+title: "Effort as forewarning - Year 12 2017 in hindsight"
+author: "Ben Hicks"
+date: "22/11/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source('effort.functions.R')
+suppressPackageStartupMessages(library(tidyr))
+t3dir <- '/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2017 Term 3'
+student.info <- read.csv(paste0(t3dir, '/StudentInfo.csv'))
+df.17t1 <- read.csv('/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2017 Term 3/Past Effort Data/2017 Term 1 Effort Data.csv')
+df.17t1$Date <- as.Date(df.17t1$Date)
+df.17t1.effort <- df.17t1 %>% 
+  group_by(Student.code, Source, Date) %>%
+  summarise(Effort = mean(Score))
+
+df.16t4s <- read.csv('/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2016 Term 4/2016T4 Y12 student effort data.csv') 
+df.16t4t <- read.csv('/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2016 Term 4/2016T4 Y12 teacher effort data.csv')
+df.16t4s$Source <- "Student"
+df.16t4t$Source <- "Teacher"
+df.16t4 <- rbind(df.16t4s,df.16t4t)
+df.16t4 <- df.16t4 %>% gather(Category, Score, Diligence:Behaviour)
+df.16t4$Date <- as.Date("2016-11-15")
+df.16t4.effort <- df.16t4 %>%
+  group_by(Student.code, Source, Date) %>%
+  summarise(Effort = mean(Score))
+
+effort_columns_all <- c("Student.code","Subject","Class.code","Source","Category","Score","Date")
+df.effort.all <- rbind(df.16t4[,effort_columns_all],df.17t1[,effort_columns_all])
+effort_columns <- c("Student.code","Source","Effort","Date")
+df.effort <- rbind(df.16t4.effort[,effort_columns],df.17t1.effort[,effort_columns])
+
+df.effort.change <- df.effort
+df.effort.change$Date <- gsub("2017-03-20", "T1", df.effort.change$Date)
+df.effort.change$Date <- gsub("2016-11-15", "T0", df.effort.change$Date)
+df.effort.change <- df.effort.change %>% unite(temp, Date, Source) %>% spread(temp, Effort)
+df.effort.change$Teacher_Change <- df.effort.change$T1_Teacher - df.effort.change$T0_Teacher
+df.effort.change$Student_Change <- df.effort.change$T1_Student - df.effort.change$T0_Student
+
+df.atar.est <- read.csv('/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2017 Term 3/Past Effort Data/atar.predictions.2017.cohort.csv')
+df.atar.est <- merge(student.info, df.atar.est, by = "Student.name", all.y = T)
+df.atar.est[,c("Student.name","Student.code",
+"ATAR.2016.Prediction","ATAR.2015.Prediction","ATAR.Prediction.Change")]
+# hacking the double gender issue
+df.atar.est$Gender <- df.atar.est$Gender.x
+df.atar.est$Gender.x <- NULL
+df.atar.est$Gender.y <- NULL
+
+df.individual.students <- merge(df.atar.est, df.effort.change)
+df.ind.for.pairs_gender <- subset(df.individual.students, select = c("ATAR.Prediction.Change","ATAR.2016.Prediction", "Teacher_Change","Student_Change", "T1_Teacher", "T1_Student", "Gender"))
+df.ind.for.pairs <- subset(df.individual.students, select = c("ATAR.Prediction.Change","ATAR.2016.Prediction", "Teacher_Change","Student_Change", "T1_Teacher", "T1_Student"))
+
+students.of.concern <- c(2340,19618,2383,2191,2618,2012,2415,2541,7471)
+```
+
+The drop in the predicted ATAR results for the 2017 HSC cohort instigated rapid reform in the final HSC program, with the adoption of Exam Club and an urgency over the last months of the HSC. This report looks at whether or not the fledgling effort reporting system could have provided an early warning system.
+
+## Data and Methodology
+
+In 2016 Term 4 (T0) and 2017 Term 1 (T1) students and teachers reported on the students' effort in each course. Both teachers and students report on three categories (Diligence, Engagement and Behaviour) on a 1 to 5 scale (5 being high). Seperate to this, ATAR prediction are made *How???? - add this* and *When??? - add this*.
+
+To begin with specific examples of students are looked at, to see if particular stories can be found and then generalised to the group. This helps inform how the data is to be aggregated in order to be explored.
+
+The data is then split into two randomnly chosen sets. The first set is used to perform an exploratory analysis to see what factors from the effort data could have predicted any ATAR prediction change. The second set of data is used to validate any findings from the exploration.
+
+## Findings
+
+### Method 1 - Aggregating effort changes and building linear model
+
+Examining some of the largest changes in ATAR prediction several indicated a drop in the overall student reported effort. Those that did not often had a low teacher effort. So it seemed reasonable to look for a relationship between the ATAR prediction change and the effort scores (in T1) or the change in effort.
+
+``` {r warning = F}
+suppressPackageStartupMessages(library(GGally))
+df.ind.for.pairs$low.pred <- df.ind.for.pairs$ATAR.2016.Prediction < 60
+df.ind.for.pairs$neg.chng <- df.ind.for.pairs$ATAR.Prediction.Change < -2
+df.ind.for.pairs$Concern <- df.ind.for.pairs$low.pred | df.ind.for.pairs$neg.chng
+df.ind.for.pairs$low.pred <- NULL
+df.ind.for.pairs$neg.chng <- NULL
+df.ind.for.pairs$Concern <- as.factor(df.ind.for.pairs$Concern)
+ggpairs(df.ind.for.pairs, aes(colour = Concern, alpha = 0.2)) + theme(text = element_text(size = 8)) #+ geom_smooth(method = "lm")
+```
+
+``` {r warning = F}
+
+```

@@ -1,94 +1,69 @@
 ---
-output: html_document
+output: 
+  pdf_document:
+    latex_engine: xelatex
+sansfont: Arial
+geometry: margin=1in
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-suppressWarnings(suppressPackageStartupMessages(library(ggplot2)))
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+# datdir, effort.data needs to be set from script
+
+source('effort.functions.R')
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
 ```
 
 
-``` {r}
-# getting the all important graphing functions
-#source(effort.functions.R)
+``` {r eval = TRUE}
+# This markdown file needs:
+#    The data set:          effort.data
+#    Student info:          student.info
+#    The student id number: ID
+# report based on student id number - this will be automated for mail out
 
-effortPlot <- function(d, ctitle = "Chart title") {
-  # Recieves a long data frame and returns a ggplot historgram
-  # Their must be the following fields:
-  #  -- Score : The score (1 to 5, 5 being Outstanding)
-  #  -- Subject : The subject (such as 'English')
-  #  -- Source : Either Student or Teacher
-  #  -- Category : One of Diligence, Behaviour or Effort
-  require(ggplot2)
-  # Setting up reording of subjects - more may need to be added as the system is run
-  slist <- c("English","English Standard", "English Advanced", "English Extension 1", "English Extension 2",
-             "Mathematics", "Mathematics General", "Mathematics Extension 1", "Mathematics Extension 2",
-             "Science", "Biology", "Chemistry", "Physics",
-             "History", "History Ancient", "History Modern", "History Extension",
-             "Geography", "Economics", "Legal Studies", "Business Studies",
-             "Cornerstone",
-             "Music", "Music 1 & 2",
-             "French", "French Continuers",
-             "Design and Technology", "Design & Technology", "Engineering Studies",
-             "Media Technology",
-             "Food Technology",
-             "Grahpics Technology",
-             "Visual Arts",
-             "Drama",
-             "PDHPE",
-             "Distance Education", "TVET")
-  subject.orders <- data.frame(Subject = slist, Order = seq(length(slist)))
-  d <- merge(d, subject.orders)
-  forOrder <- unique(data.frame(Subject = d$Subject, Order = d$Order))
-  forOrder <- forOrder[order(forOrder$Order),]
-  facetOrder <- forOrder$Subject
-  d$Subject <- factor(d$Subject, levels = facetOrder)
-  
-  d$Category <- factor(d$Category, levels = c("Diligence", "Engagement", "Behaviour"))
-  
-  # Creating the actual plot
-  g <- ggplot(data = d, 
-              aes(x = Category, y = Score, fill = Source)) + 
-    geom_bar(stat = "identity", position = "dodge", width = 0.6) +
-    ggtitle(ctitle) +
-    guides(fill = guide_legend(title = NULL)) +
-    theme(text = element_text(size = 10)) +
-    facet_wrap(~ Subject, scales = "free") +
-    coord_cartesian(ylim = c(1,5)) +
-    scale_y_discrete(name = "Effort rating", 
-                     limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
-    scale_fill_manual(values = c("skyblue","navy"))
-  return(g)
-}
-
-overallEffortPlot <- function(d, ctitle = "Overall Effort") {
-  require(dplyr)
-  d <- summarise(group_by(d, Source, Category), mean(Score))
-  names(d) <- c("Source", "Category", "Score")
-  d$Category <- factor(d$Category, levels = c("Diligence", "Engagement", "Behaviour"))
-  # creating the plot
-  g <- ggplot(data = d, aes(x = Category, y = Score, fill = Source)) +
-    geom_bar(stat = "identity", position = "dodge", width = 0.6) +
-    ggtitle(ctitle) +
-    guides(fill = guide_legend(title = NULL)) +
-    theme(text = element_text(size = 10)) +
-    coord_cartesian(ylim = c(1,5)) +
-    scale_y_discrete(name = "Effort rating", 
-                     limits = c("Unsatisfactory", "Fair", "Good", "Very Good", "Outstanding")) +
-    scale_fill_manual(values = c("skyblue","navy"))
-  return(g)
-}
-
-# ID is the student code from effort_report_script.R
 df <- effort.data[effort.data$Student.code == ID,]
 student.name <- student.info[student.info$Student.code == ID,]$Student.name
+cohort <- student.info[student.info$Student.code == ID,]$Cohort
 ```
+
+``` {r fig.env='marginfigure', fig.height = 1, fig.width = 1}
+logo <- png::readPNG("images/oxleycrest.png")
+grid::grid.raster(logo)
+```
+
+# `r student.name`
+
+## Effort Report - `r reportingPeriod`
+
+Students and teachers reported against the same three categories: _Diligence_, _Engagement_ and _Behaviour_.
+
+* _Diligence_ measures the student's self-discipline, self-reflection, independent motivation, persistence, conscientious application to classwork and homework. 
+
+* _Engagement_ measures their classroom focus, communication (verbal, body language), punctuality, and participation and contribution in groups and class.
+
+* _Behaviour_ measures their classroom conduct and attitude, politeness and respect, and consideration of the learning of others.
+
+The first graph shows the average of the student's self reported scores, and their teachers' scores, across all subjects. The second graph shows the breakdown per subject. The third graph shows the effort progress over time compared to the student's cohort.
+
+&nbsp;
+
 ### Effort report for `r student.name`
 
 ``` {r fig.height = 4, fig.width = 8, fig.align = "center"}
 overallEffortPlot(df)
 ```
 
-``` {r fig.height = 13, fig.width = 13, fig.align = "center"}
+``` {r fig.height = 15, fig.width = 13, fig.align = "center"}
 effortPlot(df, ctitle = "Effort by Subject")
+```
+
+--------
+
+``` {r fig.height = 4, fig.width = 8, fig.align = "center"}
+g.timeline <- suppressWarnings(
+  effortIndividualTimeline(all.effort.data,ID, title = paste0("Effort timeline for ",student.name, ", with cohort comparison in gray"), student.info = student.info)
+)
+g.timeline
 ```

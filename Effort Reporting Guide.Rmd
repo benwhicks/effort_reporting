@@ -1,0 +1,47 @@
+---
+title: "Effort Reporting Guide"
+author: "Ben Hicks"
+date: "02/06/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Edval data
+
+1. Retreive the data from Edval by selecting _Classes_, _Export: Class lists_, then having the only option checked as _include emails_ and the others all unchecked. Click _Ok_ and save in the form *edval enrollments yyyy.mm.dd.csv*. 
+
+2. The data then needs to be filtered, which is best done manually from **Excel**. Filter based on the _Subject_ and appropriate _Year_ then select all the remaining and paste into a new spreadsheet, saving in the form *edval Y12 2017T2.csv* or similar. 
+
+3. Fix any subject names - such as *Mathematics + Ext* which should just be *Mathematics*. Easiest way to do this is find and replace in **Excel**. Make sure you find and replace on entire contents of the cell. 
+
+4. You will need to remove any semicolons and brackets from the *Teacher name* field. You will also need to find any blank teacher spaces and fill that with *No teacher*.
+
+5. Check to see that the _Subject_ in the edval data appears in the code for `effortPlot` which is in the `effort_functions.r` file. The actual object in `effortPlot` is called `slist` and is a list of the Subjects. It is **very important** that you check that each subject in your edval data appears in `slist` within `effortPlot`, otherwise the plots will not generate (although they should throw an error that says what subject was missing)
+
+6. You will then need to change the field names in the first row of the excel data to: *student_code, student_surname, student_firstname, student_year, student_email, class_code, class_year, teacher_code, teacher_name, subject*. 
+
+## Edumate data
+
+1. Go to *Contacts* in Edumate, then in *Filters* select *School* and then *7-12*. The select *Print* and then *Generate list*. You will need to select the fields *Student #*, *Email address*, *Firstname Lastname*, *House*, *Gender*, *Form*, *Tutor roll/class* and then finally *Carers / Parents (REPORTS) Email*. Then export to csv.
+
+2. Open the csv file in Excel, and change the headings to include *Student.code*, *Student.name*, *Email.student*, *Email.carers*. You will also need to change *Form* to *Cohort*, and also find and replace in that column so that it is just an integer of the year that those students will graduate.
+
+3. Save the file as *edumate_info_20xxtn.csv*, for the year and term number.
+
+## Generating the survey forms
+
+1. Open the Google script called *Effort Survey* and click *Publish* then *Deploy as web app*, select the *Version* option and select *New* then click *update*. It may ask for permissions to access your Google drive which you will need to accept. If in doubt create a new Google account for this purpose. This should generate at url for you to go to.
+
+2. Go to the Google App url for the *Effort Survey* and upload the data using the upload option. This can be a difficult place to get errors - if something doesn't work it is likely that the data is in part formatted incorrectly. Past errors have been; semi-colons in emails, field names not being recognised.
+
+3. Run each of the 'generate' buttons that you need, and download the mail merge csv documents.
+
+## Emailing the survey links
+
+1. Create a Word document to type in your email, and using the *Mailings* option mail merge the csv file that you downloaded to send out the links. Note that you will need to format the message as html (usually the last option before sending) so that the link appears as a hyperlink, and it also helps if you put the link in it's own paragraph.
+
+## Downloading and validating the data
+

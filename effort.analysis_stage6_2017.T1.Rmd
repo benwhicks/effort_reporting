@@ -1,0 +1,115 @@
+---
+title: "Stage 6 Effort Analysis"
+subtitle: "Term 1 2017"
+author: "Ben Hicks"
+output:
+  tufte::tufte_handout: default
+  tufte::tufte_html: default
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, echo = FALSE, warning = FALSE, 
+                      message = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+suppressWarnings(suppressPackageStartupMessages(library(ggplot2)))
+suppressWarnings(suppressPackageStartupMessages(library(ggthemes)))
+suppressWarnings(suppressPackageStartupMessages(library(plotly)))
+suppressWarnings(suppressPackageStartupMessages(library(dplyr)))
+suppressWarnings(suppressPackageStartupMessages(library(tidyr)))
+
+# Getting data 
+datdir <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2017 Term 1"
+df <- read.csv(paste0(paste0(datdir, "/Stage 6 Effort Data FINAL.csv")))
+student.info <- read.csv(paste0(datdir,"/StudentNameAndNumber.csv"))
+
+# Processing data for comparisons
+df$Category <- factor(df$Category, levels = c("Diligence", "Engagement", "Behaviour"))
+df <- merge(df, student.info)
+
+df.total <- df %>% spread(Category, Score)
+df.total$Effort <- df.total$Diligence + df.total$Engagement + df.total$Behaviour
+df.total <- subset(df.total, select = -c(Diligence, Engagement, Behaviour))
+df.total <- merge(df.total, student.info)
+
+df.overall <- df.total %>% group_by(Student.name, Subject, Source, Gender) %>% summarise(Effort = mean(Effort))
+
+df.overall <- df.overall %>% group_by(Student.name, Source) %>% summarise(Effort = mean(Effort))
+
+df.total.wide <- df.overall %>% spread(Source, Effort)
+df.total.wide <- merge(df.total.wide, student.info)
+
+df.comp <- df %>% spread(Source, Score)
+df.comp$Difference <- df.comp$Student - df.comp$Teacher
+```
+
+# Whole School overview
+
+``` {r fig.align = "center"}
+g1 <- ggplot(data = df, aes(x = Category, y = Score, color = Source, label = Student.name)) + 
+  geom_jitter(width = 0.3, alpha = 0.5) + 
+  scale_color_brewer(palette = "Set2")+
+  facet_wrap(~Source) + theme_tufte()
+ggplotly(g1 + ggtitle("Distribution of effort grades"))
+```
+
+``` {marginfigure}
+At first glance it seems that teachers are scoring students slightly higher across the board
+```
+----
+
+``` {r fig.width = 10, fig.height = 10, fig.align = "center"}
+ggplotly(g1 + facet_wrap(~ Subject) + 
+           theme(legend.position = "none") + 
+           ggtitle("Distribution by Subject") + 
+           scale_x_discrete(labels = c("D", "E", "B")))
+```
+
+----
+
+``` {r}
+gg <- ggplot(df.comp, aes(Difference)) + geom_density(bw = 0.5) + scale_y_continuous(labels = NULL) + theme_tufte()
+gg + ggtitle("Individual score comparison: Student - Teacher")
+```
+
+``` {r}
+gg +facet_wrap(~ Subject) + ggtitle("Individual score camparison by Subject: Student - Teacher")
+```
+
+``` {r}
+gg + facet_wrap(~ Student.name) + ggtitle("Individual score comparison by Student: Student - Teacher")
+```
+
+## Category, Source, Subject and Gender analysis
+
+Distribution of total effort score (Diligence + Engagement + Behaviour), broken down in various ways by Source (Teacher or Student), Subject or Gender.
+
+``` {r fig.align = "center"}
+g2 <- ggplot(df.total.wide, aes(x = Teacher, y = Student, color = Gender, label = Student.name)) + 
+  geom_jitter(width = 0.5, height = 0.5, alpha = 0.4, size = 2.5) + 
+  coord_fixed(ratio = 1, xlim = c(3,15), ylim = c(3,15)) + theme_tufte()
+ggplotly(g2 + ggtitle("Teacher vs Student effort score"))
+```
+
+----
+
+``` {r fig.align = "center"}
+g3 <- ggplot(df.total, aes(Effort, color = Gender, linetype = Source)) + geom_density(bw = 0.5) + theme_tufte()
+g3 + facet_grid(. ~ Gender) + ggtitle("Distribution by gender and source")
+```
+
+----
+
+``` {r fig.align = "center"}
+g3_1 <- ggplot(df, aes(Score, color = Gender, linetype = Source)) +
+  geom_density(bw = 0.5) + theme_tufte()
+g3_1 + facet_grid(Category ~ Gender) + ggtitle("Gender, Source, Category comparison") + ggtitle("Distribution by category, source and gender")
+```
+
+----
+
+``` {r fig.height = 30, fig.align = "center"}
+g3 + facet_grid(Subject ~ Gender, scales = "free") + ggtitle("Distribution by gender, source and subject")
+```
+

@@ -1,0 +1,1221 @@
+Student.code,Teacher.code,Subject,Source,Category,Score
+1971,CUNP,Drama,Teacher,Diligence,4
+1971,HAY,English Advanced,Teacher,Diligence,4
+1971,MCV,History Extension,Teacher,Diligence,3
+1971,DOB,Mathematics,Teacher,Diligence,3
+1971,MCN,History Modern,Teacher,Diligence,4
+1971,CAM,Physics,Teacher,Diligence,4
+1971,CUNP,Drama,Teacher,Engagement,4
+1971,HAY,English Advanced,Teacher,Engagement,5
+1971,MCV,History Extension,Teacher,Engagement,4
+1971,DOB,Mathematics,Teacher,Engagement,5
+1971,MCN,History Modern,Teacher,Engagement,4
+1971,CAM,Physics,Teacher,Engagement,5
+1971,CUNP,Drama,Teacher,Behaviour,4
+1971,HAY,English Advanced,Teacher,Behaviour,5
+1971,MCV,History Extension,Teacher,Behaviour,4
+1971,DOB,Mathematics,Teacher,Behaviour,4
+1971,MCN,History Modern,Teacher,Behaviour,2
+1971,CAM,Physics,Teacher,Behaviour,5
+1971,CUNP,Drama,Student,Diligence,4
+1971,HAY,English Advanced,Student,Diligence,4
+1971,MCV,History Extension,Student,Diligence,4
+1971,DOB,Mathematics,Student,Diligence,4
+1971,MCN,History Modern,Student,Diligence,4
+1971,CAM,Physics,Student,Diligence,4
+1971,CUNP,Drama,Student,Engagement,4
+1971,HAY,English Advanced,Student,Engagement,4
+1971,MCV,History Extension,Student,Engagement,3
+1971,DOB,Mathematics,Student,Engagement,5
+1971,MCN,History Modern,Student,Engagement,5
+1971,CAM,Physics,Student,Engagement,3
+1971,CUNP,Drama,Student,Behaviour,3
+1971,HAY,English Advanced,Student,Behaviour,4
+1971,MCV,History Extension,Student,Behaviour,3
+1971,DOB,Mathematics,Student,Behaviour,3
+1971,MCN,History Modern,Student,Behaviour,3
+1971,CAM,Physics,Student,Behaviour,4
+1972,CARN,English Advanced,Teacher,Diligence,5
+1972,CARL,English Extension 1,Teacher,Diligence,5
+1972,RIN,English Extension 2,Teacher,Diligence,3
+1972,MIC,French Continuers,Teacher,Diligence,3
+1972,MCV,History Extension,Teacher,Diligence,4
+1972,HIC,Mathematics,Teacher,Diligence,4
+1972,HIC,Mathematics Extension 1,Teacher,Diligence,5
+1972,HIC,Mathematics Extension 2,Teacher,Diligence,4
+1972,MCN,History Modern,Teacher,Diligence,5
+1972,CARN,English Advanced,Teacher,Engagement,5
+1972,CARL,English Extension 1,Teacher,Engagement,5
+1972,RIN,English Extension 2,Teacher,Engagement,5
+1972,MIC,French Continuers,Teacher,Engagement,4
+1972,MCV,History Extension,Teacher,Engagement,4
+1972,HIC,Mathematics,Teacher,Engagement,4
+1972,HIC,Mathematics Extension 1,Teacher,Engagement,4
+1972,HIC,Mathematics Extension 2,Teacher,Engagement,5
+1972,MCN,History Modern,Teacher,Engagement,5
+1972,CARN,English Advanced,Teacher,Behaviour,5
+1972,CARL,English Extension 1,Teacher,Behaviour,5
+1972,RIN,English Extension 2,Teacher,Behaviour,5
+1972,MIC,French Continuers,Teacher,Behaviour,4
+1972,MCV,History Extension,Teacher,Behaviour,5
+1972,HIC,Mathematics,Teacher,Behaviour,4
+1972,HIC,Mathematics Extension 1,Teacher,Behaviour,4
+1972,HIC,Mathematics Extension 2,Teacher,Behaviour,5
+1972,MCN,History Modern,Teacher,Behaviour,5
+1972,CARN,English Advanced,Student,Diligence,3
+1972,CARL,English Extension 1,Student,Diligence,3
+1972,RIN,English Extension 2,Student,Diligence,3
+1972,MIC,French Continuers,Student,Diligence,2
+1972,MCV,History Extension,Student,Diligence,3
+1972,HIC,Mathematics,Student,Diligence,4
+1972,HIC,Mathematics Extension 1,Student,Diligence,4
+1972,HIC,Mathematics Extension 2,Student,Diligence,3
+1972,MCN,History Modern,Student,Diligence,3
+1972,CARN,English Advanced,Student,Engagement,4
+1972,CARL,English Extension 1,Student,Engagement,4
+1972,RIN,English Extension 2,Student,Engagement,4
+1972,MIC,French Continuers,Student,Engagement,3
+1972,MCV,History Extension,Student,Engagement,4
+1972,HIC,Mathematics,Student,Engagement,4
+1972,HIC,Mathematics Extension 1,Student,Engagement,4
+1972,HIC,Mathematics Extension 2,Student,Engagement,4
+1972,MCN,History Modern,Student,Engagement,4
+1972,CARN,English Advanced,Student,Behaviour,4
+1972,CARL,English Extension 1,Student,Behaviour,4
+1972,RIN,English Extension 2,Student,Behaviour,4
+1972,MIC,French Continuers,Student,Behaviour,2
+1972,MCV,History Extension,Student,Behaviour,4
+1972,HIC,Mathematics,Student,Behaviour,3
+1972,HIC,Mathematics Extension 1,Student,Behaviour,3
+1972,HIC,Mathematics Extension 2,Student,Behaviour,4
+1972,MCN,History Modern,Student,Behaviour,4
+1981,MCV,History Ancient,Teacher,Diligence,4
+1981,GAU,Business Studies,Teacher,Diligence,4
+1981,LAN,Design and Technology,Teacher,Diligence,4
+1981,COX,English Advanced,Teacher,Diligence,4
+1981,MCV,History Extension,Teacher,Diligence,4
+1981,MCG,Mathematics General,Teacher,Diligence,4
+1981,MCV,History Ancient,Teacher,Engagement,4
+1981,GAU,Business Studies,Teacher,Engagement,3
+1981,LAN,Design and Technology,Teacher,Engagement,5
+1981,COX,English Advanced,Teacher,Engagement,5
+1981,MCV,History Extension,Teacher,Engagement,3
+1981,MCG,Mathematics General,Teacher,Engagement,4
+1981,MCV,History Ancient,Teacher,Behaviour,5
+1981,GAU,Business Studies,Teacher,Behaviour,5
+1981,LAN,Design and Technology,Teacher,Behaviour,5
+1981,COX,English Advanced,Teacher,Behaviour,5
+1981,MCV,History Extension,Teacher,Behaviour,5
+1981,MCG,Mathematics General,Teacher,Behaviour,5
+1981,MCV,History Ancient,Student,Diligence,4
+1981,GAU,Business Studies,Student,Diligence,4
+1981,LAN,Design and Technology,Student,Diligence,4
+1981,COX,English Advanced,Student,Diligence,3
+1981,MCV,History Extension,Student,Diligence,4
+1981,MCG,Mathematics General,Student,Diligence,4
+1981,MCV,History Ancient,Student,Engagement,4
+1981,GAU,Business Studies,Student,Engagement,5
+1981,LAN,Design and Technology,Student,Engagement,4
+1981,COX,English Advanced,Student,Engagement,3
+1981,MCV,History Extension,Student,Engagement,4
+1981,MCG,Mathematics General,Student,Engagement,4
+1981,MCV,History Ancient,Student,Behaviour,4
+1981,GAU,Business Studies,Student,Behaviour,4
+1981,LAN,Design and Technology,Student,Behaviour,4
+1981,COX,English Advanced,Student,Behaviour,4
+1981,MCV,History Extension,Student,Behaviour,4
+1981,MCG,Mathematics General,Student,Behaviour,4
+2007,SCH,Biology,Teacher,Diligence,3
+2007,BEV,Chemistry,Teacher,Diligence,2
+2007,HAY,English Advanced,Teacher,Diligence,3
+2007,MARN,Engineering Studies,Teacher,Diligence,3
+2007,MCG,Mathematics General,Teacher,Diligence,3
+2007,SCH,Biology,Teacher,Engagement,3
+2007,BEV,Chemistry,Teacher,Engagement,4
+2007,HAY,English Advanced,Teacher,Engagement,3
+2007,MARN,Engineering Studies,Teacher,Engagement,3
+2007,MCG,Mathematics General,Teacher,Engagement,3
+2007,SCH,Biology,Teacher,Behaviour,3
+2007,BEV,Chemistry,Teacher,Behaviour,3
+2007,HAY,English Advanced,Teacher,Behaviour,4
+2007,MARN,Engineering Studies,Teacher,Behaviour,3
+2007,MCG,Mathematics General,Teacher,Behaviour,4
+2007,SCH,Biology,Student,Diligence,3
+2007,BEV,Chemistry,Student,Diligence,3
+2007,HAY,English Advanced,Student,Diligence,2
+2007,MARN,Engineering Studies,Student,Diligence,3
+2007,MCG,Mathematics General,Student,Diligence,4
+2007,SCH,Biology,Student,Engagement,4
+2007,BEV,Chemistry,Student,Engagement,3
+2007,HAY,English Advanced,Student,Engagement,1
+2007,MARN,Engineering Studies,Student,Engagement,4
+2007,MCG,Mathematics General,Student,Engagement,5
+2007,SCH,Biology,Student,Behaviour,2
+2007,BEV,Chemistry,Student,Behaviour,2
+2007,HAY,English Advanced,Student,Behaviour,2
+2007,MARN,Engineering Studies,Student,Behaviour,3
+2007,MCG,Mathematics General,Student,Behaviour,4
+2012,SCH,Biology,Teacher,Diligence,2
+2012,BEV,Chemistry,Teacher,Diligence,2
+2012,CUNP,Drama,Teacher,Diligence,4
+2012,CARN,English Advanced,Teacher,Diligence,3
+2012,MCG,Mathematics General,Teacher,Diligence,4
+2012,STP,PDHPE,Teacher,Diligence,3
+2012,SCH,Biology,Teacher,Engagement,2
+2012,BEV,Chemistry,Teacher,Engagement,3
+2012,CUNP,Drama,Teacher,Engagement,4
+2012,CARN,English Advanced,Teacher,Engagement,5
+2012,MCG,Mathematics General,Teacher,Engagement,3
+2012,STP,PDHPE,Teacher,Engagement,3
+2012,SCH,Biology,Teacher,Behaviour,2
+2012,BEV,Chemistry,Teacher,Behaviour,3
+2012,CUNP,Drama,Teacher,Behaviour,4
+2012,CARN,English Advanced,Teacher,Behaviour,4
+2012,MCG,Mathematics General,Teacher,Behaviour,2
+2012,STP,PDHPE,Teacher,Behaviour,4
+2012,SCH,Biology,Student,Diligence,3
+2012,BEV,Chemistry,Student,Diligence,3
+2012,CUNP,Drama,Student,Diligence,5
+2012,CARN,English Advanced,Student,Diligence,4
+2012,MCG,Mathematics General,Student,Diligence,3
+2012,STP,PDHPE,Student,Diligence,3
+2012,SCH,Biology,Student,Engagement,3
+2012,BEV,Chemistry,Student,Engagement,3
+2012,CUNP,Drama,Student,Engagement,5
+2012,CARN,English Advanced,Student,Engagement,4
+2012,MCG,Mathematics General,Student,Engagement,3
+2012,STP,PDHPE,Student,Engagement,5
+2012,SCH,Biology,Student,Behaviour,4
+2012,BEV,Chemistry,Student,Behaviour,4
+2012,CUNP,Drama,Student,Behaviour,4
+2012,CARN,English Advanced,Student,Behaviour,4
+2012,MCG,Mathematics General,Student,Behaviour,4
+2012,STP,PDHPE,Student,Behaviour,4
+2026,SCH,Biology,Teacher,Diligence,3
+2026,CUNP,Drama,Teacher,Diligence,5
+2026,MCV,History Extension,Teacher,Diligence,4
+2026,MCN,History Modern,Teacher,Diligence,4
+2026,PUG,Visual Arts,Teacher,Diligence,4
+2026,SCH,Biology,Teacher,Engagement,4
+2026,CUNP,Drama,Teacher,Engagement,4
+2026,MCV,History Extension,Teacher,Engagement,4
+2026,MCN,History Modern,Teacher,Engagement,5
+2026,PUG,Visual Arts,Teacher,Engagement,4
+2026,SCH,Biology,Teacher,Behaviour,4
+2026,CUNP,Drama,Teacher,Behaviour,4
+2026,MCV,History Extension,Teacher,Behaviour,4
+2026,MCN,History Modern,Teacher,Behaviour,4
+2026,PUG,Visual Arts,Teacher,Behaviour,4
+2026,SCH,Biology,Student,Diligence,4
+2026,CUNP,Drama,Student,Diligence,5
+2026,COX,English Advanced,Student,Diligence,4
+2026,MCV,History Extension,Student,Diligence,4
+2026,MCN,History Modern,Student,Diligence,5
+2026,PUG,Visual Arts,Student,Diligence,5
+2026,SCH,Biology,Student,Engagement,3
+2026,CUNP,Drama,Student,Engagement,5
+2026,COX,English Advanced,Student,Engagement,4
+2026,MCV,History Extension,Student,Engagement,4
+2026,MCN,History Modern,Student,Engagement,5
+2026,PUG,Visual Arts,Student,Engagement,4
+2026,SCH,Biology,Student,Behaviour,4
+2026,CUNP,Drama,Student,Behaviour,5
+2026,COX,English Advanced,Student,Behaviour,3
+2026,MCV,History Extension,Student,Behaviour,4
+2026,MCN,History Modern,Student,Behaviour,4
+2026,PUG,Visual Arts,Student,Behaviour,4
+2039,MCV,History Ancient,Teacher,Diligence,4
+2039,COX,English Advanced,Teacher,Diligence,4
+2039,CARL,English Extension 1,Teacher,Diligence,4
+2039,SHE,Geography,Teacher,Diligence,4
+2039,MCV,History Extension,Teacher,Diligence,3
+2039,MCG,Mathematics General,Teacher,Diligence,4
+2039,BOL,Studies of Religion 1,Teacher,Diligence,5
+2039,MCV,History Ancient,Teacher,Engagement,4
+2039,COX,English Advanced,Teacher,Engagement,5
+2039,CARL,English Extension 1,Teacher,Engagement,4
+2039,SHE,Geography,Teacher,Engagement,4
+2039,MCV,History Extension,Teacher,Engagement,4
+2039,MCG,Mathematics General,Teacher,Engagement,4
+2039,BOL,Studies of Religion 1,Teacher,Engagement,5
+2039,MCV,History Ancient,Teacher,Behaviour,5
+2039,COX,English Advanced,Teacher,Behaviour,5
+2039,CARL,English Extension 1,Teacher,Behaviour,4
+2039,SHE,Geography,Teacher,Behaviour,4
+2039,MCV,History Extension,Teacher,Behaviour,4
+2039,MCG,Mathematics General,Teacher,Behaviour,5
+2039,BOL,Studies of Religion 1,Teacher,Behaviour,5
+2039,MCV,History Ancient,Student,Diligence,5
+2039,COX,English Advanced,Student,Diligence,4
+2039,CARL,English Extension 1,Student,Diligence,4
+2039,SHE,Geography,Student,Diligence,4
+2039,MCV,History Extension,Student,Diligence,4
+2039,MCG,Mathematics General,Student,Diligence,5
+2039,BOL,Studies of Religion 1,Student,Diligence,5
+2039,MCV,History Ancient,Student,Engagement,5
+2039,COX,English Advanced,Student,Engagement,5
+2039,CARL,English Extension 1,Student,Engagement,5
+2039,SHE,Geography,Student,Engagement,4
+2039,MCV,History Extension,Student,Engagement,4
+2039,MCG,Mathematics General,Student,Engagement,5
+2039,BOL,Studies of Religion 1,Student,Engagement,5
+2039,MCV,History Ancient,Student,Behaviour,5
+2039,COX,English Advanced,Student,Behaviour,5
+2039,CARL,English Extension 1,Student,Behaviour,5
+2039,SHE,Geography,Student,Behaviour,4
+2039,MCV,History Extension,Student,Behaviour,4
+2039,MCG,Mathematics General,Student,Behaviour,5
+2039,BOL,Studies of Religion 1,Student,Behaviour,5
+2054,SCH,Biology,Teacher,Diligence,5
+2054,BOL,Business Studies,Teacher,Diligence,4
+2054,COX,English Advanced,Teacher,Diligence,4
+2054,SHE,Geography,Teacher,Diligence,4
+2054,MCG,Mathematics General,Teacher,Diligence,4
+2054,STP,PDHPE,Teacher,Diligence,4
+2054,SCH,Biology,Teacher,Engagement,5
+2054,BOL,Business Studies,Teacher,Engagement,4
+2054,COX,English Advanced,Teacher,Engagement,4
+2054,SHE,Geography,Teacher,Engagement,5
+2054,MCG,Mathematics General,Teacher,Engagement,3
+2054,STP,PDHPE,Teacher,Engagement,4
+2054,SCH,Biology,Teacher,Behaviour,4
+2054,BOL,Business Studies,Teacher,Behaviour,5
+2054,COX,English Advanced,Teacher,Behaviour,4
+2054,SHE,Geography,Teacher,Behaviour,5
+2054,MCG,Mathematics General,Teacher,Behaviour,5
+2054,STP,PDHPE,Teacher,Behaviour,4
+2054,SCH,Biology,Student,Diligence,5
+2054,BOL,Business Studies,Student,Diligence,4
+2054,COX,English Advanced,Student,Diligence,3
+2054,SHE,Geography,Student,Diligence,4
+2054,MCG,Mathematics General,Student,Diligence,5
+2054,STP,PDHPE,Student,Diligence,4
+2054,SCH,Biology,Student,Engagement,5
+2054,BOL,Business Studies,Student,Engagement,4
+2054,COX,English Advanced,Student,Engagement,3
+2054,SHE,Geography,Student,Engagement,4
+2054,MCG,Mathematics General,Student,Engagement,5
+2054,STP,PDHPE,Student,Engagement,4
+2054,SCH,Biology,Student,Behaviour,4
+2054,BOL,Business Studies,Student,Behaviour,4
+2054,COX,English Advanced,Student,Behaviour,4
+2054,SHE,Geography,Student,Behaviour,5
+2054,MCG,Mathematics General,Student,Behaviour,5
+2054,STP,PDHPE,Student,Behaviour,5
+2057,SCH,Biology,Teacher,Diligence,4
+2057,CUNP,Drama,Teacher,Diligence,4
+2057,HAY,English Advanced,Teacher,Diligence,4
+2057,CARL,English Extension 1,Teacher,Diligence,4
+2057,RIN,English Extension 2,Teacher,Diligence,3
+2057,SIND,Music,Teacher,Diligence,4
+2057,BOL,Studies of Religion 1,Teacher,Diligence,4
+2057,SCH,Biology,Teacher,Engagement,5
+2057,CUNP,Drama,Teacher,Engagement,5
+2057,HAY,English Advanced,Teacher,Engagement,4
+2057,CARL,English Extension 1,Teacher,Engagement,4
+2057,RIN,English Extension 2,Teacher,Engagement,4
+2057,SIND,Music,Teacher,Engagement,5
+2057,BOL,Studies of Religion 1,Teacher,Engagement,4
+2057,SCH,Biology,Teacher,Behaviour,5
+2057,CUNP,Drama,Teacher,Behaviour,5
+2057,HAY,English Advanced,Teacher,Behaviour,5
+2057,CARL,English Extension 1,Teacher,Behaviour,4
+2057,RIN,English Extension 2,Teacher,Behaviour,5
+2057,SIND,Music,Teacher,Behaviour,5
+2057,BOL,Studies of Religion 1,Teacher,Behaviour,5
+2057,SCH,Biology,Student,Diligence,4
+2057,CUNP,Drama,Student,Diligence,5
+2057,HAY,English Advanced,Student,Diligence,4
+2057,CARL,English Extension 1,Student,Diligence,4
+2057,RIN,English Extension 2,Student,Diligence,4
+2057,SIND,Music,Student,Diligence,5
+2057,BOL,Studies of Religion 1,Student,Diligence,4
+2057,SCH,Biology,Student,Engagement,4
+2057,CUNP,Drama,Student,Engagement,5
+2057,HAY,English Advanced,Student,Engagement,3
+2057,CARL,English Extension 1,Student,Engagement,4
+2057,RIN,English Extension 2,Student,Engagement,5
+2057,SIND,Music,Student,Engagement,5
+2057,BOL,Studies of Religion 1,Student,Engagement,4
+2057,SCH,Biology,Student,Behaviour,4
+2057,CUNP,Drama,Student,Behaviour,4
+2057,HAY,English Advanced,Student,Behaviour,4
+2057,CARL,English Extension 1,Student,Behaviour,5
+2057,RIN,English Extension 2,Student,Behaviour,5
+2057,SIND,Music,Student,Behaviour,5
+2057,BOL,Studies of Religion 1,Student,Behaviour,4
+2063,GAU,Economics,Teacher,Diligence,3
+2063,HAY,English Advanced,Teacher,Diligence,5
+2063,SHE,Geography,Teacher,Diligence,5
+2063,SIM,Legal Studies,Teacher,Diligence,5
+2063,MCG,Mathematics General,Teacher,Diligence,4
+2063,MCN,History Modern,Teacher,Diligence,5
+2063,GAU,Economics,Teacher,Engagement,4
+2063,HAY,English Advanced,Teacher,Engagement,5
+2063,SHE,Geography,Teacher,Engagement,5
+2063,SIM,Legal Studies,Teacher,Engagement,5
+2063,MCG,Mathematics General,Teacher,Engagement,3
+2063,MCN,History Modern,Teacher,Engagement,5
+2063,GAU,Economics,Teacher,Behaviour,5
+2063,HAY,English Advanced,Teacher,Behaviour,5
+2063,SHE,Geography,Teacher,Behaviour,5
+2063,SIM,Legal Studies,Teacher,Behaviour,5
+2063,MCG,Mathematics General,Teacher,Behaviour,5
+2063,MCN,History Modern,Teacher,Behaviour,5
+2063,GAU,Economics,Student,Diligence,4
+2063,HAY,English Advanced,Student,Diligence,4
+2063,SHE,Geography,Student,Diligence,5
+2063,SIM,Legal Studies,Student,Diligence,4
+2063,MCG,Mathematics General,Student,Diligence,3
+2063,MCN,History Modern,Student,Diligence,5
+2063,GAU,Economics,Student,Engagement,4
+2063,HAY,English Advanced,Student,Engagement,5
+2063,SHE,Geography,Student,Engagement,5
+2063,SIM,Legal Studies,Student,Engagement,4
+2063,MCG,Mathematics General,Student,Engagement,3
+2063,MCN,History Modern,Student,Engagement,4
+2063,GAU,Economics,Student,Behaviour,5
+2063,HAY,English Advanced,Student,Behaviour,5
+2063,SHE,Geography,Student,Behaviour,5
+2063,SIM,Legal Studies,Student,Behaviour,5
+2063,MCG,Mathematics General,Student,Behaviour,4
+2063,MCN,History Modern,Student,Behaviour,4
+2078,GAU,Economics,Teacher,Diligence,4
+2078,COX,English Advanced,Teacher,Diligence,4
+2078,MARN,Engineering Studies,Teacher,Diligence,4
+2078,DOB,Mathematics,Teacher,Diligence,4
+2078,STP,PDHPE,Teacher,Diligence,4
+2078,CAM,Physics,Teacher,Diligence,3
+2078,GAU,Economics,Teacher,Engagement,5
+2078,COX,English Advanced,Teacher,Engagement,4
+2078,MARN,Engineering Studies,Teacher,Engagement,4
+2078,DOB,Mathematics,Teacher,Engagement,4
+2078,STP,PDHPE,Teacher,Engagement,4
+2078,CAM,Physics,Teacher,Engagement,4
+2078,GAU,Economics,Teacher,Behaviour,5
+2078,COX,English Advanced,Teacher,Behaviour,4
+2078,MARN,Engineering Studies,Teacher,Behaviour,4
+2078,DOB,Mathematics,Teacher,Behaviour,5
+2078,STP,PDHPE,Teacher,Behaviour,3
+2078,CAM,Physics,Teacher,Behaviour,5
+2078,GAU,Economics,Student,Diligence,4
+2078,COX,English Advanced,Student,Diligence,4
+2078,MARN,Engineering Studies,Student,Diligence,4
+2078,DOB,Mathematics,Student,Diligence,4
+2078,STP,PDHPE,Student,Diligence,5
+2078,CAM,Physics,Student,Diligence,4
+2078,GAU,Economics,Student,Engagement,5
+2078,COX,English Advanced,Student,Engagement,4
+2078,MARN,Engineering Studies,Student,Engagement,5
+2078,DOB,Mathematics,Student,Engagement,4
+2078,STP,PDHPE,Student,Engagement,5
+2078,CAM,Physics,Student,Engagement,4
+2078,GAU,Economics,Student,Behaviour,4
+2078,COX,English Advanced,Student,Behaviour,4
+2078,MARN,Engineering Studies,Student,Behaviour,5
+2078,DOB,Mathematics,Student,Behaviour,5
+2078,STP,PDHPE,Student,Behaviour,4
+2078,CAM,Physics,Student,Behaviour,4
+2080,GAU,Economics,Teacher,Diligence,3
+2080,CARN,English Advanced,Teacher,Diligence,3
+2080,CARL,English Extension 1,Teacher,Diligence,3
+2080,RIN,English Extension 2,Teacher,Diligence,3
+2080,MCG,Mathematics General,Teacher,Diligence,2
+2080,CAM,Physics,Teacher,Diligence,3
+2080,BOL,Studies of Religion 1,Teacher,Diligence,4
+2080,GAU,Economics,Teacher,Engagement,3
+2080,CARN,English Advanced,Teacher,Engagement,3
+2080,CARL,English Extension 1,Teacher,Engagement,3
+2080,RIN,English Extension 2,Teacher,Engagement,3
+2080,MCG,Mathematics General,Teacher,Engagement,3
+2080,CAM,Physics,Teacher,Engagement,5
+2080,BOL,Studies of Religion 1,Teacher,Engagement,4
+2080,GAU,Economics,Teacher,Behaviour,4
+2080,CARN,English Advanced,Teacher,Behaviour,4
+2080,CARL,English Extension 1,Teacher,Behaviour,3
+2080,RIN,English Extension 2,Teacher,Behaviour,5
+2080,MCG,Mathematics General,Teacher,Behaviour,5
+2080,CAM,Physics,Teacher,Behaviour,5
+2080,BOL,Studies of Religion 1,Teacher,Behaviour,5
+2080,GAU,Economics,Student,Diligence,4
+2080,CARN,English Advanced,Student,Diligence,3
+2080,CARL,English Extension 1,Student,Diligence,4
+2080,RIN,English Extension 2,Student,Diligence,4
+2080,MCG,Mathematics General,Student,Diligence,5
+2080,CAM,Physics,Student,Diligence,3
+2080,BOL,Studies of Religion 1,Student,Diligence,4
+2080,GAU,Economics,Student,Engagement,4
+2080,CARN,English Advanced,Student,Engagement,3
+2080,CARL,English Extension 1,Student,Engagement,4
+2080,RIN,English Extension 2,Student,Engagement,4
+2080,MCG,Mathematics General,Student,Engagement,5
+2080,CAM,Physics,Student,Engagement,3
+2080,BOL,Studies of Religion 1,Student,Engagement,4
+2080,GAU,Economics,Student,Behaviour,3
+2080,CARN,English Advanced,Student,Behaviour,5
+2080,CARL,English Extension 1,Student,Behaviour,4
+2080,RIN,English Extension 2,Student,Behaviour,4
+2080,MCG,Mathematics General,Student,Behaviour,5
+2080,CAM,Physics,Student,Behaviour,4
+2080,BOL,Studies of Religion 1,Student,Behaviour,4
+2083,GAU,Business Studies,Teacher,Diligence,2
+2083,LAN,Design and Technology,Teacher,Diligence,3
+2083,RIN,English Standrd,Teacher,Diligence,1
+2083,MCN,History Modern,Teacher,Diligence,2
+2083,GAU,Business Studies,Teacher,Engagement,2
+2083,LAN,Design and Technology,Teacher,Engagement,3
+2083,RIN,English Standrd,Teacher,Engagement,3
+2083,MCN,History Modern,Teacher,Engagement,1
+2083,GAU,Business Studies,Teacher,Behaviour,3
+2083,LAN,Design and Technology,Teacher,Behaviour,2
+2083,RIN,English Standrd,Teacher,Behaviour,2
+2083,MCN,History Modern,Teacher,Behaviour,1
+2083,GAU,Business Studies,Student,Diligence,3
+2083,LAN,Design and Technology,Student,Diligence,4
+2083,MCN,History Modern,Student,Diligence,3
+2083,RIN,English Standrd,Student,Diligence,4
+2083,,TVET,Student,Diligence,3
+2083,GAU,Business Studies,Student,Engagement,3
+2083,LAN,Design and Technology,Student,Engagement,4
+2083,MCN,History Modern,Student,Engagement,3
+2083,RIN,English Standrd,Student,Engagement,4
+2083,,TVET,Student,Engagement,3
+2083,GAU,Business Studies,Student,Behaviour,4
+2083,LAN,Design and Technology,Student,Behaviour,4
+2083,MCN,History Modern,Student,Behaviour,4
+2083,RIN,English Standrd,Student,Behaviour,3
+2083,,TVET,Student,Behaviour,3
+2109,CUNP,Drama,Teacher,Diligence,4
+2109,GAU,Economics,Teacher,Diligence,5
+2109,CARN,English Advanced,Teacher,Diligence,4
+2109,CARL,English Extension 1,Teacher,Diligence,4
+2109,RIN,English Extension 2,Teacher,Diligence,4
+2109,MCG,Mathematics General,Teacher,Diligence,3
+2109,CUNP,Drama,Teacher,Engagement,5
+2109,GAU,Economics,Teacher,Engagement,5
+2109,CARN,English Advanced,Teacher,Engagement,4
+2109,CARL,English Extension 1,Teacher,Engagement,4
+2109,RIN,English Extension 2,Teacher,Engagement,5
+2109,MCG,Mathematics General,Teacher,Engagement,3
+2109,CUNP,Drama,Teacher,Behaviour,5
+2109,GAU,Economics,Teacher,Behaviour,5
+2109,CARN,English Advanced,Teacher,Behaviour,4
+2109,CARL,English Extension 1,Teacher,Behaviour,4
+2109,RIN,English Extension 2,Teacher,Behaviour,5
+2109,MCG,Mathematics General,Teacher,Behaviour,5
+2109,CUNP,Drama,Student,Diligence,4
+2109,GAU,Economics,Student,Diligence,4
+2109,CARN,English Advanced,Student,Diligence,4
+2109,CARL,English Extension 1,Student,Diligence,4
+2109,RIN,English Extension 2,Student,Diligence,4
+2109,MCG,Mathematics General,Student,Diligence,2
+2109,CUNP,Drama,Student,Engagement,3
+2109,GAU,Economics,Student,Engagement,3
+2109,CARN,English Advanced,Student,Engagement,4
+2109,CARL,English Extension 1,Student,Engagement,4
+2109,RIN,English Extension 2,Student,Engagement,4
+2109,MCG,Mathematics General,Student,Engagement,2
+2109,CUNP,Drama,Student,Behaviour,4
+2109,GAU,Economics,Student,Behaviour,4
+2109,CARN,English Advanced,Student,Behaviour,3
+2109,CARL,English Extension 1,Student,Behaviour,5
+2109,RIN,English Extension 2,Student,Behaviour,5
+2109,MCG,Mathematics General,Student,Behaviour,3
+2117,MCV,History Ancient,Teacher,Diligence,4
+2117,CARN,English Advanced,Teacher,Diligence,3
+2117,MCV,History Extension,Teacher,Diligence,2
+2117,MCG,Mathematics General,Teacher,Diligence,2
+2117,STP,PDHPE,Teacher,Diligence,3
+2117,PUG,Visual Arts,Teacher,Diligence,1
+2117,MCV,History Ancient,Teacher,Engagement,4
+2117,CARN,English Advanced,Teacher,Engagement,3
+2117,MCV,History Extension,Teacher,Engagement,4
+2117,MCG,Mathematics General,Teacher,Engagement,1
+2117,STP,PDHPE,Teacher,Engagement,4
+2117,PUG,Visual Arts,Teacher,Engagement,2
+2117,MCV,History Ancient,Teacher,Behaviour,3
+2117,CARN,English Advanced,Teacher,Behaviour,3
+2117,MCV,History Extension,Teacher,Behaviour,4
+2117,MCG,Mathematics General,Teacher,Behaviour,2
+2117,STP,PDHPE,Teacher,Behaviour,3
+2117,PUG,Visual Arts,Teacher,Behaviour,2
+2117,MCV,History Ancient,Student,Diligence,4
+2117,CARN,English Advanced,Student,Diligence,3
+2117,MCV,History Extension,Student,Diligence,4
+2117,MCG,Mathematics General,Student,Diligence,3
+2117,STP,PDHPE,Student,Diligence,3
+2117,PUG,Visual Arts,Student,Diligence,4
+2117,MCV,History Ancient,Student,Engagement,4
+2117,CARN,English Advanced,Student,Engagement,1
+2117,MCV,History Extension,Student,Engagement,4
+2117,MCG,Mathematics General,Student,Engagement,3
+2117,STP,PDHPE,Student,Engagement,2
+2117,PUG,Visual Arts,Student,Engagement,4
+2117,MCV,History Ancient,Student,Behaviour,4
+2117,CARN,English Advanced,Student,Behaviour,4
+2117,MCV,History Extension,Student,Behaviour,5
+2117,MCG,Mathematics General,Student,Behaviour,2
+2117,STP,PDHPE,Student,Behaviour,3
+2117,PUG,Visual Arts,Student,Behaviour,4
+2130,SCH,Biology,Teacher,Diligence,4
+2130,CUNP,Drama,Teacher,Diligence,5
+2130,COX,English Advanced,Teacher,Diligence,5
+2130,CARL,English Extension 1,Teacher,Diligence,4
+2130,RIN,English Extension 2,Teacher,Diligence,4
+2130,DOB,Mathematics,Teacher,Diligence,4
+2130,SCH,Biology,Teacher,Engagement,4
+2130,CUNP,Drama,Teacher,Engagement,5
+2130,COX,English Advanced,Teacher,Engagement,5
+2130,CARL,English Extension 1,Teacher,Engagement,4
+2130,RIN,English Extension 2,Teacher,Engagement,4
+2130,DOB,Mathematics,Teacher,Engagement,5
+2130,SCH,Biology,Teacher,Behaviour,3
+2130,CUNP,Drama,Teacher,Behaviour,5
+2130,COX,English Advanced,Teacher,Behaviour,5
+2130,CARL,English Extension 1,Teacher,Behaviour,4
+2130,RIN,English Extension 2,Teacher,Behaviour,5
+2130,DOB,Mathematics,Teacher,Behaviour,5
+2130,SCH,Biology,Student,Diligence,4
+2130,CUNP,Drama,Student,Diligence,5
+2130,COX,English Advanced,Student,Diligence,5
+2130,CARL,English Extension 1,Student,Diligence,4
+2130,RIN,English Extension 2,Student,Diligence,4
+2130,DOB,Mathematics,Student,Diligence,4
+2130,SCH,Biology,Student,Engagement,3
+2130,CUNP,Drama,Student,Engagement,4
+2130,COX,English Advanced,Student,Engagement,4
+2130,CARL,English Extension 1,Student,Engagement,5
+2130,RIN,English Extension 2,Student,Engagement,5
+2130,DOB,Mathematics,Student,Engagement,4
+2130,SCH,Biology,Student,Behaviour,4
+2130,CUNP,Drama,Student,Behaviour,5
+2130,COX,English Advanced,Student,Behaviour,5
+2130,CARL,English Extension 1,Student,Behaviour,5
+2130,RIN,English Extension 2,Student,Behaviour,5
+2130,DOB,Mathematics,Student,Behaviour,5
+2154,CARN,English Advanced,Teacher,Diligence,4
+2154,MARN,Engineering Studies,Teacher,Diligence,5
+2154,HIC,Mathematics,Teacher,Diligence,4
+2154,HIC,Mathematics Extension 1,Teacher,Diligence,4
+2154,HIC,Mathematics Extension 2,Teacher,Diligence,3
+2154,CAM,Physics,Teacher,Diligence,4
+2154,CARN,English Advanced,Teacher,Engagement,4
+2154,MARN,Engineering Studies,Teacher,Engagement,4
+2154,HIC,Mathematics,Teacher,Engagement,4
+2154,HIC,Mathematics Extension 1,Teacher,Engagement,4
+2154,HIC,Mathematics Extension 2,Teacher,Engagement,5
+2154,CAM,Physics,Teacher,Engagement,5
+2154,CARN,English Advanced,Teacher,Behaviour,4
+2154,MARN,Engineering Studies,Teacher,Behaviour,4
+2154,HIC,Mathematics,Teacher,Behaviour,5
+2154,HIC,Mathematics Extension 1,Teacher,Behaviour,5
+2154,HIC,Mathematics Extension 2,Teacher,Behaviour,5
+2154,CAM,Physics,Teacher,Behaviour,5
+2154,CARN,English Advanced,Student,Diligence,4
+2154,MARN,Engineering Studies,Student,Diligence,5
+2154,HIC,Mathematics,Student,Diligence,4
+2154,HIC,Mathematics Extension 1,Student,Diligence,2
+2154,HIC,Mathematics Extension 2,Student,Diligence,3
+2154,CAM,Physics,Student,Diligence,4
+2154,HIC,Mathematics Extension 2,Student,Diligence,3
+2154,CARN,English Advanced,Student,Engagement,5
+2154,MARN,Engineering Studies,Student,Engagement,5
+2154,HIC,Mathematics,Student,Engagement,3
+2154,HIC,Mathematics Extension 1,Student,Engagement,3
+2154,HIC,Mathematics Extension 2,Student,Engagement,5
+2154,CAM,Physics,Student,Engagement,4
+2154,HIC,Mathematics Extension 2,Student,Engagement,5
+2154,CARN,English Advanced,Student,Behaviour,5
+2154,MARN,Engineering Studies,Student,Behaviour,3
+2154,HIC,Mathematics,Student,Behaviour,5
+2154,HIC,Mathematics Extension 1,Student,Behaviour,4
+2154,HIC,Mathematics Extension 2,Student,Behaviour,5
+2154,CAM,Physics,Student,Behaviour,5
+2154,HIC,Mathematics Extension 2,Student,Behaviour,5
+2163,MCV,History Ancient,Teacher,Diligence,4
+2163,CUNP,Drama,Teacher,Diligence,4
+2163,LAN,Design and Technology,Teacher,Diligence,5
+2163,COX,English Advanced,Teacher,Diligence,5
+2163,CARL,English Extension 1,Teacher,Diligence,4
+2163,RIN,English Extension 2,Teacher,Diligence,4
+2163,STP,PDHPE,Teacher,Diligence,4
+2163,MCV,History Ancient,Teacher,Engagement,4
+2163,CUNP,Drama,Teacher,Engagement,5
+2163,LAN,Design and Technology,Teacher,Engagement,5
+2163,COX,English Advanced,Teacher,Engagement,5
+2163,CARL,English Extension 1,Teacher,Engagement,4
+2163,RIN,English Extension 2,Teacher,Engagement,5
+2163,STP,PDHPE,Teacher,Engagement,5
+2163,MCV,History Ancient,Teacher,Behaviour,4
+2163,CUNP,Drama,Teacher,Behaviour,5
+2163,LAN,Design and Technology,Teacher,Behaviour,5
+2163,COX,English Advanced,Teacher,Behaviour,5
+2163,CARL,English Extension 1,Teacher,Behaviour,4
+2163,RIN,English Extension 2,Teacher,Behaviour,5
+2163,STP,PDHPE,Teacher,Behaviour,5
+2163,MCV,History Ancient,Student,Diligence,5
+2163,CUNP,Drama,Student,Diligence,5
+2163,LAN,Design and Technology,Student,Diligence,5
+2163,COX,English Advanced,Student,Diligence,5
+2163,CARL,English Extension 1,Student,Diligence,5
+2163,RIN,English Extension 2,Student,Diligence,5
+2163,STP,PDHPE,Student,Diligence,5
+2163,MCV,History Ancient,Student,Engagement,4
+2163,CUNP,Drama,Student,Engagement,5
+2163,LAN,Design and Technology,Student,Engagement,5
+2163,COX,English Advanced,Student,Engagement,5
+2163,CARL,English Extension 1,Student,Engagement,5
+2163,RIN,English Extension 2,Student,Engagement,5
+2163,STP,PDHPE,Student,Engagement,5
+2163,MCV,History Ancient,Student,Behaviour,5
+2163,CUNP,Drama,Student,Behaviour,5
+2163,LAN,Design and Technology,Student,Behaviour,5
+2163,COX,English Advanced,Student,Behaviour,5
+2163,CARL,English Extension 1,Student,Behaviour,5
+2163,RIN,English Extension 2,Student,Behaviour,5
+2163,STP,PDHPE,Student,Behaviour,5
+2169,SCH,Biology,Teacher,Diligence,4
+2169,CUNP,Drama,Teacher,Diligence,5
+2169,CARN,English Advanced,Teacher,Diligence,4
+2169,CARL,English Extension 1,Teacher,Diligence,4
+2169,RIN,English Extension 2,Teacher,Diligence,3
+2169,MCN,History Modern,Teacher,Diligence,5
+2169,PUG,Visual Arts,Teacher,Diligence,5
+2169,SCH,Biology,Teacher,Engagement,3
+2169,CUNP,Drama,Teacher,Engagement,5
+2169,CARN,English Advanced,Teacher,Engagement,4
+2169,CARL,English Extension 1,Teacher,Engagement,4
+2169,RIN,English Extension 2,Teacher,Engagement,5
+2169,MCN,History Modern,Teacher,Engagement,5
+2169,PUG,Visual Arts,Teacher,Engagement,5
+2169,SCH,Biology,Teacher,Behaviour,4
+2169,CUNP,Drama,Teacher,Behaviour,5
+2169,CARN,English Advanced,Teacher,Behaviour,4
+2169,CARL,English Extension 1,Teacher,Behaviour,4
+2169,RIN,English Extension 2,Teacher,Behaviour,5
+2169,MCN,History Modern,Teacher,Behaviour,5
+2169,PUG,Visual Arts,Teacher,Behaviour,5
+2169,SCH,Biology,Student,Diligence,4
+2169,CUNP,Drama,Student,Diligence,4
+2169,CARN,English Advanced,Student,Diligence,4
+2169,CARL,English Extension 1,Student,Diligence,4
+2169,RIN,English Extension 2,Student,Diligence,4
+2169,MCN,History Modern,Student,Diligence,5
+2169,PUG,Visual Arts,Student,Diligence,5
+2169,SCH,Biology,Student,Engagement,4
+2169,CUNP,Drama,Student,Engagement,5
+2169,CARN,English Advanced,Student,Engagement,4
+2169,CARL,English Extension 1,Student,Engagement,5
+2169,RIN,English Extension 2,Student,Engagement,5
+2169,MCN,History Modern,Student,Engagement,5
+2169,PUG,Visual Arts,Student,Engagement,5
+2169,SCH,Biology,Student,Behaviour,4
+2169,CUNP,Drama,Student,Behaviour,5
+2169,CARN,English Advanced,Student,Behaviour,5
+2169,CARL,English Extension 1,Student,Behaviour,5
+2169,RIN,English Extension 2,Student,Behaviour,5
+2169,MCN,History Modern,Student,Behaviour,5
+2169,PUG,Visual Arts,Student,Behaviour,4
+2191,BOL,Business Studies,Teacher,Diligence,3
+2191,CUNP,Drama,Teacher,Diligence,4
+2191,COX,English Advanced,Teacher,Diligence,4
+2191,DOB,Mathematics,Teacher,Diligence,2
+2191,STP,PDHPE,Teacher,Diligence,4
+2191,BOL,Business Studies,Teacher,Engagement,4
+2191,CUNP,Drama,Teacher,Engagement,4
+2191,COX,English Advanced,Teacher,Engagement,4
+2191,DOB,Mathematics,Teacher,Engagement,3
+2191,STP,PDHPE,Teacher,Engagement,4
+2191,BOL,Business Studies,Teacher,Behaviour,5
+2191,CUNP,Drama,Teacher,Behaviour,5
+2191,COX,English Advanced,Teacher,Behaviour,4
+2191,DOB,Mathematics,Teacher,Behaviour,3
+2191,STP,PDHPE,Teacher,Behaviour,4
+2191,BOL,Business Studies,Student,Diligence,3
+2191,CUNP,Drama,Student,Diligence,4
+2191,COX,English Advanced,Student,Diligence,3
+2191,DOB,Mathematics,Student,Diligence,3
+2191,STP,PDHPE,Student,Diligence,4
+2191,BOL,Business Studies,Student,Engagement,3
+2191,CUNP,Drama,Student,Engagement,4
+2191,COX,English Advanced,Student,Engagement,3
+2191,DOB,Mathematics,Student,Engagement,3
+2191,STP,PDHPE,Student,Engagement,4
+2191,BOL,Business Studies,Student,Behaviour,3
+2191,CUNP,Drama,Student,Behaviour,5
+2191,COX,English Advanced,Student,Behaviour,4
+2191,DOB,Mathematics,Student,Behaviour,3
+2191,STP,PDHPE,Student,Behaviour,4
+2193,MCV,History Ancient,Teacher,Diligence,4
+2193,LAN,Design and Technology,Teacher,Diligence,4
+2193,COX,English Advanced,Teacher,Diligence,4
+2193,STP,PDHPE,Teacher,Diligence,5
+2193,PUG,Visual Arts,Teacher,Diligence,5
+2193,MCV,History Ancient,Teacher,Engagement,4
+2193,LAN,Design and Technology,Teacher,Engagement,4
+2193,COX,English Advanced,Teacher,Engagement,4
+2193,STP,PDHPE,Teacher,Engagement,4
+2193,PUG,Visual Arts,Teacher,Engagement,4
+2193,MCV,History Ancient,Teacher,Behaviour,4
+2193,LAN,Design and Technology,Teacher,Behaviour,3
+2193,COX,English Advanced,Teacher,Behaviour,4
+2193,STP,PDHPE,Teacher,Behaviour,5
+2193,PUG,Visual Arts,Teacher,Behaviour,5
+2193,MCV,History Ancient,Student,Diligence,4
+2193,LAN,Design and Technology,Student,Diligence,3
+2193,COX,English Advanced,Student,Diligence,3
+2193,STP,PDHPE,Student,Diligence,4
+2193,PUG,Visual Arts,Student,Diligence,4
+2193,MCV,History Ancient,Student,Engagement,4
+2193,LAN,Design and Technology,Student,Engagement,3
+2193,COX,English Advanced,Student,Engagement,3
+2193,STP,PDHPE,Student,Engagement,4
+2193,PUG,Visual Arts,Student,Engagement,3
+2193,MCV,History Ancient,Student,Behaviour,4
+2193,LAN,Design and Technology,Student,Behaviour,3
+2193,COX,English Advanced,Student,Behaviour,4
+2193,STP,PDHPE,Student,Behaviour,4
+2193,PUG,Visual Arts,Student,Behaviour,4
+2207,CUNP,Drama,Teacher,Diligence,5
+2207,GAU,Economics,Teacher,Diligence,4
+2207,HAY,English Advanced,Teacher,Diligence,4
+2207,CARL,English Extension 1,Teacher,Diligence,4
+2207,RIN,English Extension 2,Teacher,Diligence,3
+2207,MIC,French Continuers,Teacher,Diligence,2
+2207,BAI,Mathematics General,Teacher,Diligence,4
+2207,CUNP,Drama,Teacher,Engagement,5
+2207,GAU,Economics,Teacher,Engagement,4
+2207,HAY,English Advanced,Teacher,Engagement,4
+2207,CARL,English Extension 1,Teacher,Engagement,4
+2207,RIN,English Extension 2,Teacher,Engagement,5
+2207,MIC,French Continuers,Teacher,Engagement,3
+2207,BAI,Mathematics General,Teacher,Engagement,3
+2207,CUNP,Drama,Teacher,Behaviour,5
+2207,GAU,Economics,Teacher,Behaviour,4
+2207,HAY,English Advanced,Teacher,Behaviour,4
+2207,CARL,English Extension 1,Teacher,Behaviour,4
+2207,RIN,English Extension 2,Teacher,Behaviour,5
+2207,MIC,French Continuers,Teacher,Behaviour,3
+2207,BAI,Mathematics General,Teacher,Behaviour,3
+2207,CUNP,Drama,Student,Diligence,5
+2207,GAU,Economics,Student,Diligence,3
+2207,HAY,English Advanced,Student,Diligence,3
+2207,CARL,English Extension 1,Student,Diligence,3
+2207,RIN,English Extension 2,Student,Diligence,4
+2207,MIC,French Continuers,Student,Diligence,3
+2207,BAI,Mathematics General,Student,Diligence,3
+2207,CUNP,Drama,Student,Engagement,4
+2207,GAU,Economics,Student,Engagement,4
+2207,HAY,English Advanced,Student,Engagement,3
+2207,CARL,English Extension 1,Student,Engagement,4
+2207,RIN,English Extension 2,Student,Engagement,4
+2207,MIC,French Continuers,Student,Engagement,3
+2207,BAI,Mathematics General,Student,Engagement,4
+2207,CUNP,Drama,Student,Behaviour,3
+2207,GAU,Economics,Student,Behaviour,4
+2207,HAY,English Advanced,Student,Behaviour,3
+2207,CARL,English Extension 1,Student,Behaviour,4
+2207,RIN,English Extension 2,Student,Behaviour,5
+2207,MIC,French Continuers,Student,Behaviour,3
+2207,BAI,Mathematics General,Student,Behaviour,3
+2215,GAU,Business Studies,Teacher,Diligence,2
+2215,LAN,Design and Technology,Teacher,Diligence,2
+2215,RIN,English Standrd,Teacher,Diligence,1
+2215,MCN,History Modern,Teacher,Diligence,3
+2215,STP,PDHPE,Teacher,Diligence,3
+2215,GAU,Business Studies,Teacher,Engagement,2
+2215,LAN,Design and Technology,Teacher,Engagement,1
+2215,RIN,English Standrd,Teacher,Engagement,2
+2215,MCN,History Modern,Teacher,Engagement,2
+2215,STP,PDHPE,Teacher,Engagement,3
+2215,GAU,Business Studies,Teacher,Behaviour,4
+2215,LAN,Design and Technology,Teacher,Behaviour,2
+2215,RIN,English Standrd,Teacher,Behaviour,2
+2215,MCN,History Modern,Teacher,Behaviour,2
+2215,STP,PDHPE,Teacher,Behaviour,4
+2215,GAU,Business Studies,Student,Diligence,2
+2215,LAN,Design and Technology,Student,Diligence,2
+2215,MCN,History Modern,Student,Diligence,2
+2215,STP,PDHPE,Student,Diligence,3
+2215,RIN,,Student,Diligence,3
+2215,GAU,Business Studies,Student,Engagement,3
+2215,LAN,Design and Technology,Student,Engagement,3
+2215,MCN,History Modern,Student,Engagement,3
+2215,STP,PDHPE,Student,Engagement,3
+2215,RIN,,Student,Engagement,3
+2215,GAU,Business Studies,Student,Behaviour,3
+2215,LAN,Design and Technology,Student,Behaviour,3
+2215,MCN,History Modern,Student,Behaviour,3
+2215,STP,PDHPE,Student,Behaviour,3
+2215,RIN,,Student,Behaviour,3
+2217,CUNP,Drama,Teacher,Diligence,5
+2217,CARN,English Advanced,Teacher,Diligence,5
+2217,CARL,English Extension 1,Teacher,Diligence,5
+2217,RIN,English Extension 2,Teacher,Diligence,3
+2217,MCV,History Extension,Teacher,Diligence,2
+2217,MCN,History Modern,Teacher,Diligence,4
+2217,PUG,Visual Arts,Teacher,Diligence,4
+2217,CUNP,Drama,Teacher,Engagement,5
+2217,CARN,English Advanced,Teacher,Engagement,4
+2217,CARL,English Extension 1,Teacher,Engagement,5
+2217,RIN,English Extension 2,Teacher,Engagement,4
+2217,MCV,History Extension,Teacher,Engagement,4
+2217,MCN,History Modern,Teacher,Engagement,4
+2217,PUG,Visual Arts,Teacher,Engagement,4
+2217,CUNP,Drama,Teacher,Behaviour,5
+2217,CARN,English Advanced,Teacher,Behaviour,4
+2217,CARL,English Extension 1,Teacher,Behaviour,5
+2217,RIN,English Extension 2,Teacher,Behaviour,5
+2217,MCV,History Extension,Teacher,Behaviour,4
+2217,MCN,History Modern,Teacher,Behaviour,2
+2217,PUG,Visual Arts,Teacher,Behaviour,3
+2217,CUNP,Drama,Student,Diligence,3
+2217,CARN,English Advanced,Student,Diligence,5
+2217,CARL,English Extension 1,Student,Diligence,5
+2217,RIN,English Extension 2,Student,Diligence,5
+2217,MCV,History Extension,Student,Diligence,2
+2217,MCN,History Modern,Student,Diligence,4
+2217,PUG,Visual Arts,Student,Diligence,3
+2217,CUNP,Drama,Student,Engagement,4
+2217,CARN,English Advanced,Student,Engagement,4
+2217,CARL,English Extension 1,Student,Engagement,5
+2217,RIN,English Extension 2,Student,Engagement,5
+2217,MCV,History Extension,Student,Engagement,5
+2217,MCN,History Modern,Student,Engagement,4
+2217,PUG,Visual Arts,Student,Engagement,2
+2217,CUNP,Drama,Student,Behaviour,5
+2217,CARN,English Advanced,Student,Behaviour,4
+2217,CARL,English Extension 1,Student,Behaviour,5
+2217,RIN,English Extension 2,Student,Behaviour,5
+2217,MCV,History Extension,Student,Behaviour,5
+2217,MCN,History Modern,Student,Behaviour,3
+2217,PUG,Visual Arts,Student,Behaviour,3
+2223,BEV,Chemistry,Teacher,Diligence,4
+2223,COX,English Advanced,Teacher,Diligence,5
+2223,CARL,English Extension 1,Teacher,Diligence,4
+2223,HIC,Mathematics,Teacher,Diligence,4
+2223,HIC,Mathematics Extension 1,Teacher,Diligence,4
+2223,HIC,Mathematics Extension 2,Teacher,Diligence,4
+2223,CAM,Physics,Teacher,Diligence,3
+2223,BEV,Chemistry,Teacher,Engagement,4
+2223,COX,English Advanced,Teacher,Engagement,5
+2223,CARL,English Extension 1,Teacher,Engagement,4
+2223,HIC,Mathematics,Teacher,Engagement,4
+2223,HIC,Mathematics Extension 1,Teacher,Engagement,4
+2223,HIC,Mathematics Extension 2,Teacher,Engagement,4
+2223,CAM,Physics,Teacher,Engagement,5
+2223,BEV,Chemistry,Teacher,Behaviour,4
+2223,COX,English Advanced,Teacher,Behaviour,5
+2223,CARL,English Extension 1,Teacher,Behaviour,4
+2223,HIC,Mathematics,Teacher,Behaviour,5
+2223,HIC,Mathematics Extension 1,Teacher,Behaviour,5
+2223,HIC,Mathematics Extension 2,Teacher,Behaviour,5
+2223,CAM,Physics,Teacher,Behaviour,5
+2223,BEV,Chemistry,Student,Diligence,4
+2223,COX,English Advanced,Student,Diligence,3
+2223,CARL,English Extension 1,Student,Diligence,4
+2223,HIC,Mathematics,Student,Diligence,3
+2223,HIC,Mathematics Extension 1,Student,Diligence,4
+2223,HIC,Mathematics Extension 2,Student,Diligence,3
+2223,CAM,Physics,Student,Diligence,3
+2223,BEV,Chemistry,Student,Engagement,4
+2223,COX,English Advanced,Student,Engagement,3
+2223,CARL,English Extension 1,Student,Engagement,4
+2223,HIC,Mathematics,Student,Engagement,4
+2223,HIC,Mathematics Extension 1,Student,Engagement,4
+2223,HIC,Mathematics Extension 2,Student,Engagement,4
+2223,CAM,Physics,Student,Engagement,4
+2223,BEV,Chemistry,Student,Behaviour,5
+2223,COX,English Advanced,Student,Behaviour,4
+2223,CARL,English Extension 1,Student,Behaviour,5
+2223,HIC,Mathematics,Student,Behaviour,4
+2223,HIC,Mathematics Extension 1,Student,Behaviour,4
+2223,HIC,Mathematics Extension 2,Student,Behaviour,5
+2223,CAM,Physics,Student,Behaviour,4
+2231,CARN,English Advanced,Teacher,Diligence,4
+2231,HIC,Mathematics,Teacher,Diligence,5
+2231,HIC,Mathematics Extension 1,Teacher,Diligence,5
+2231,HIC,Mathematics Extension 2,Teacher,Diligence,5
+2231,CAM,Physics,Teacher,Diligence,5
+2231,PUG,Visual Arts,Teacher,Diligence,5
+2231,CARN,English Advanced,Teacher,Engagement,4
+2231,HIC,Mathematics,Teacher,Engagement,5
+2231,HIC,Mathematics Extension 1,Teacher,Engagement,5
+2231,HIC,Mathematics Extension 2,Teacher,Engagement,5
+2231,CAM,Physics,Teacher,Engagement,5
+2231,PUG,Visual Arts,Teacher,Engagement,5
+2231,CARN,English Advanced,Teacher,Behaviour,5
+2231,HIC,Mathematics,Teacher,Behaviour,5
+2231,HIC,Mathematics Extension 1,Teacher,Behaviour,5
+2231,HIC,Mathematics Extension 2,Teacher,Behaviour,5
+2231,CAM,Physics,Teacher,Behaviour,5
+2231,PUG,Visual Arts,Teacher,Behaviour,5
+2231,CARN,English Advanced,Student,Diligence,4
+2231,HIC,Mathematics,Student,Diligence,5
+2231,HIC,Mathematics Extension 1,Student,Diligence,5
+2231,HIC,Mathematics Extension 2,Student,Diligence,5
+2231,CAM,Physics,Student,Diligence,5
+2231,PUG,Visual Arts,Student,Diligence,4
+2231,CARN,English Advanced,Student,Engagement,5
+2231,HIC,Mathematics,Student,Engagement,5
+2231,HIC,Mathematics Extension 1,Student,Engagement,5
+2231,HIC,Mathematics Extension 2,Student,Engagement,5
+2231,CAM,Physics,Student,Engagement,5
+2231,PUG,Visual Arts,Student,Engagement,5
+2231,CARN,English Advanced,Student,Behaviour,5
+2231,HIC,Mathematics,Student,Behaviour,5
+2231,HIC,Mathematics Extension 1,Student,Behaviour,5
+2231,HIC,Mathematics Extension 2,Student,Behaviour,5
+2231,CAM,Physics,Student,Behaviour,5
+2231,PUG,Visual Arts,Student,Behaviour,5
+2262,MCV,History Ancient,Teacher,Diligence,2
+2262,LAN,Design and Technology,Teacher,Diligence,3
+2262,CARN,English Advanced,Teacher,Diligence,3
+2262,MARN,Engineering Studies,Teacher,Diligence,4
+2262,MCG,Mathematics General,Teacher,Diligence,4
+2262,PUG,Visual Arts,Teacher,Diligence,3
+2262,MCV,History Ancient,Teacher,Engagement,4
+2262,LAN,Design and Technology,Teacher,Engagement,3
+2262,CARN,English Advanced,Teacher,Engagement,4
+2262,MARN,Engineering Studies,Teacher,Engagement,3
+2262,MCG,Mathematics General,Teacher,Engagement,4
+2262,PUG,Visual Arts,Teacher,Engagement,3
+2262,MCV,History Ancient,Teacher,Behaviour,4
+2262,LAN,Design and Technology,Teacher,Behaviour,4
+2262,CARN,English Advanced,Teacher,Behaviour,4
+2262,MARN,Engineering Studies,Teacher,Behaviour,4
+2262,MCG,Mathematics General,Teacher,Behaviour,5
+2262,PUG,Visual Arts,Teacher,Behaviour,4
+2262,MCV,History Ancient,Student,Diligence,4
+2262,LAN,Design and Technology,Student,Diligence,3
+2262,CARN,English Advanced,Student,Diligence,4
+2262,MARN,Engineering Studies,Student,Diligence,4
+2262,MCG,Mathematics General,Student,Diligence,3
+2262,PUG,Visual Arts,Student,Diligence,2
+2262,MCV,History Ancient,Student,Engagement,5
+2262,LAN,Design and Technology,Student,Engagement,3
+2262,CARN,English Advanced,Student,Engagement,3
+2262,MARN,Engineering Studies,Student,Engagement,4
+2262,MCG,Mathematics General,Student,Engagement,3
+2262,PUG,Visual Arts,Student,Engagement,3
+2262,MCV,History Ancient,Student,Behaviour,4
+2262,LAN,Design and Technology,Student,Behaviour,2
+2262,CARN,English Advanced,Student,Behaviour,4
+2262,MARN,Engineering Studies,Student,Behaviour,5
+2262,MCG,Mathematics General,Student,Behaviour,2
+2262,PUG,Visual Arts,Student,Behaviour,3
+2295,CARN,English Advanced,Teacher,Diligence,4
+2295,MIC,French Continuers,Teacher,Diligence,3
+2295,HIC,Mathematics,Teacher,Diligence,4
+2295,HIC,Mathematics Extension 1,Teacher,Diligence,3
+2295,CAM,Physics,Teacher,Diligence,3
+2295,CARN,English Advanced,Teacher,Engagement,4
+2295,MIC,French Continuers,Teacher,Engagement,3
+2295,HIC,Mathematics,Teacher,Engagement,5
+2295,HIC,Mathematics Extension 1,Teacher,Engagement,5
+2295,CAM,Physics,Teacher,Engagement,5
+2295,CARN,English Advanced,Teacher,Behaviour,5
+2295,MIC,French Continuers,Teacher,Behaviour,4
+2295,HIC,Mathematics,Teacher,Behaviour,5
+2295,HIC,Mathematics Extension 1,Teacher,Behaviour,5
+2295,CAM,Physics,Teacher,Behaviour,5
+2295,CARN,English Advanced,Student,Diligence,4
+2295,MIC,French Continuers,Student,Diligence,3
+2295,HIC,Mathematics,Student,Diligence,3
+2295,HIC,Mathematics Extension 1,Student,Diligence,4
+2295,CAM,Physics,Student,Diligence,4
+2295,CARN,English Advanced,Student,Engagement,4
+2295,MIC,French Continuers,Student,Engagement,4
+2295,HIC,Mathematics,Student,Engagement,3
+2295,HIC,Mathematics Extension 1,Student,Engagement,3
+2295,CAM,Physics,Student,Engagement,4
+2295,CARN,English Advanced,Student,Behaviour,4
+2295,MIC,French Continuers,Student,Behaviour,4
+2295,HIC,Mathematics,Student,Behaviour,4
+2295,HIC,Mathematics Extension 1,Student,Behaviour,3
+2295,CAM,Physics,Student,Behaviour,4
+2297,CUNP,Drama,Teacher,Diligence,4
+2297,COX,English Advanced,Teacher,Diligence,4
+2297,MCV,History Extension,Teacher,Diligence,3
+2297,BAI,Mathematics General,Teacher,Diligence,4
+2297,MCN,History Modern,Teacher,Diligence,4
+2297,SIND,Music,Teacher,Diligence,4
+2297,CUNP,Drama,Teacher,Engagement,4
+2297,COX,English Advanced,Teacher,Engagement,4
+2297,MCV,History Extension,Teacher,Engagement,4
+2297,BAI,Mathematics General,Teacher,Engagement,3
+2297,MCN,History Modern,Teacher,Engagement,4
+2297,SIND,Music,Teacher,Engagement,3
+2297,CUNP,Drama,Teacher,Behaviour,4
+2297,COX,English Advanced,Teacher,Behaviour,4
+2297,MCV,History Extension,Teacher,Behaviour,4
+2297,BAI,Mathematics General,Teacher,Behaviour,3
+2297,MCN,History Modern,Teacher,Behaviour,4
+2297,SIND,Music,Teacher,Behaviour,4
+2297,CUNP,Drama,Student,Diligence,4
+2297,COX,English Advanced,Student,Diligence,3
+2297,MCV,History Extension,Student,Diligence,5
+2297,BAI,Mathematics General,Student,Diligence,2
+2297,MCN,History Modern,Student,Diligence,4
+2297,SIND,Music,Student,Diligence,3
+2297,CUNP,Drama,Student,Engagement,3
+2297,COX,English Advanced,Student,Engagement,2
+2297,MCV,History Extension,Student,Engagement,4
+2297,BAI,Mathematics General,Student,Engagement,3
+2297,MCN,History Modern,Student,Engagement,4
+2297,SIND,Music,Student,Engagement,3
+2297,CUNP,Drama,Student,Behaviour,3
+2297,COX,English Advanced,Student,Behaviour,3
+2297,MCV,History Extension,Student,Behaviour,4
+2297,BAI,Mathematics General,Student,Behaviour,2
+2297,MCN,History Modern,Student,Behaviour,3
+2297,SIND,Music,Student,Behaviour,3
+2335,RIN,English Standrd,Teacher,Diligence,1
+2335,HAVI,Food Technology,Teacher,Diligence,3
+2335,BAI,Mathematics General,Teacher,Diligence,3
+2335,MCN,History Modern,Teacher,Diligence,3
+2335,STP,PDHPE,Teacher,Diligence,3
+2335,RIN,English Standrd,Teacher,Engagement,1
+2335,HAVI,Food Technology,Teacher,Engagement,3
+2335,BAI,Mathematics General,Teacher,Engagement,3
+2335,MCN,History Modern,Teacher,Engagement,2
+2335,STP,PDHPE,Teacher,Engagement,3
+2335,RIN,English Standrd,Teacher,Behaviour,4
+2335,HAVI,Food Technology,Teacher,Behaviour,5
+2335,BAI,Mathematics General,Teacher,Behaviour,3
+2335,MCN,History Modern,Teacher,Behaviour,2
+2335,STP,PDHPE,Teacher,Behaviour,4
+2335,HAVI,Food Technology,Student,Diligence,3
+2335,BAI,Mathematics General,Student,Diligence,3
+2335,MCN,History Modern,Student,Diligence,2
+2335,STP,PDHPE,Student,Diligence,4
+2335,RIN,English Standrd,Student,Diligence,3
+2335,HAVI,Food Technology,Student,Engagement,3
+2335,BAI,Mathematics General,Student,Engagement,3
+2335,STP,PDHPE,Student,Engagement,4
+2335,RIN,English Standrd,Student,Engagement,3
+2335,HAVI,Food Technology,Student,Behaviour,4
+2335,BAI,Mathematics General,Student,Behaviour,4
+2335,MCN,History Modern,Student,Behaviour,3
+2335,STP,PDHPE,Student,Behaviour,3
+2335,RIN,English Standrd,Student,Behaviour,3
+2340,CARN,English Advanced,Teacher,Diligence,4
+2340,CARL,English Extension 1,Teacher,Diligence,4
+2340,RIN,English Extension 2,Teacher,Diligence,3
+2340,MCV,History Extension,Teacher,Diligence,4
+2340,SIM,Legal Studies,Teacher,Diligence,5
+2340,MCG,Mathematics General,Teacher,Diligence,4
+2340,MCN,History Modern,Teacher,Diligence,5
+2340,CARN,English Advanced,Teacher,Engagement,5
+2340,CARL,English Extension 1,Teacher,Engagement,4
+2340,RIN,English Extension 2,Teacher,Engagement,3
+2340,MCV,History Extension,Teacher,Engagement,4
+2340,SIM,Legal Studies,Teacher,Engagement,5
+2340,MCG,Mathematics General,Teacher,Engagement,4
+2340,MCN,History Modern,Teacher,Engagement,5
+2340,CARN,English Advanced,Teacher,Behaviour,5
+2340,CARL,English Extension 1,Teacher,Behaviour,4
+2340,RIN,English Extension 2,Teacher,Behaviour,5
+2340,MCV,History Extension,Teacher,Behaviour,5
+2340,SIM,Legal Studies,Teacher,Behaviour,5
+2340,MCG,Mathematics General,Teacher,Behaviour,5
+2340,MCN,History Modern,Teacher,Behaviour,4
+2340,CARN,English Advanced,Student,Diligence,4
+2340,CARL,English Extension 1,Student,Diligence,3
+2340,RIN,English Extension 2,Student,Diligence,5
+2340,MCV,History Extension,Student,Diligence,4
+2340,SIM,Legal Studies,Student,Diligence,4
+2340,MCG,Mathematics General,Student,Diligence,4
+2340,MCN,History Modern,Student,Diligence,5
+2340,CARN,English Advanced,Student,Engagement,5
+2340,CARL,English Extension 1,Student,Engagement,5
+2340,RIN,English Extension 2,Student,Engagement,4
+2340,MCV,History Extension,Student,Engagement,4
+2340,SIM,Legal Studies,Student,Engagement,4
+2340,MCG,Mathematics General,Student,Engagement,4
+2340,MCN,History Modern,Student,Engagement,5
+2340,CARN,English Advanced,Student,Behaviour,4
+2340,CARL,English Extension 1,Student,Behaviour,5
+2340,RIN,English Extension 2,Student,Behaviour,5
+2340,MCV,History Extension,Student,Behaviour,5
+2340,SIM,Legal Studies,Student,Behaviour,5
+2340,MCG,Mathematics General,Student,Behaviour,4
+2340,MCN,History Modern,Student,Behaviour,4
+2358,MCV,History Ancient,Teacher,Diligence,4
+2358,HAN,Biology,Teacher,Diligence,4
+2358,HAY,English Advanced,Teacher,Diligence,5
+2358,CARL,English Extension 1,Teacher,Diligence,4
+2358,RIN,English Extension 2,Teacher,Diligence,3
+2358,MCV,History Extension,Teacher,Diligence,2
+2358,STP,PDHPE,Teacher,Diligence,4
+2358,MCV,History Ancient,Teacher,Engagement,4
+2358,HAN,Biology,Teacher,Engagement,4
+2358,HAY,English Advanced,Teacher,Engagement,5
+2358,CARL,English Extension 1,Teacher,Engagement,4
+2358,RIN,English Extension 2,Teacher,Engagement,3
+2358,MCV,History Extension,Teacher,Engagement,3
+2358,STP,PDHPE,Teacher,Engagement,4
+2358,MCV,History Ancient,Teacher,Behaviour,4
+2358,HAN,Biology,Teacher,Behaviour,5
+2358,HAY,English Advanced,Teacher,Behaviour,5
+2358,CARL,English Extension 1,Teacher,Behaviour,4
+2358,RIN,English Extension 2,Teacher,Behaviour,5
+2358,MCV,History Extension,Teacher,Behaviour,4
+2358,STP,PDHPE,Teacher,Behaviour,4
+2358,MCV,History Ancient,Student,Diligence,4
+2358,HAN,Biology,Student,Diligence,4
+2358,HAY,English Advanced,Student,Diligence,5
+2358,CARL,English Extension 1,Student,Diligence,3
+2358,RIN,English Extension 2,Student,Diligence,4
+2358,MCV,History Extension,Student,Diligence,3
+2358,STP,PDHPE,Student,Diligence,4
+2358,MCV,History Ancient,Student,Engagement,4
+2358,HAN,Biology,Student,Engagement,3
+2358,HAY,English Advanced,Student,Engagement,4
+2358,CARL,English Extension 1,Student,Engagement,4
+2358,RIN,English Extension 2,Student,Engagement,4
+2358,MCV,History Extension,Student,Engagement,3
+2358,STP,PDHPE,Student,Engagement,3
+2358,MCV,History Ancient,Student,Behaviour,4
+2358,HAN,Biology,Student,Behaviour,5
+2358,HAY,English Advanced,Student,Behaviour,5
+2358,CARL,English Extension 1,Student,Behaviour,5
+2358,RIN,English Extension 2,Student,Behaviour,4
+2358,MCV,History Extension,Student,Behaviour,5
+2358,STP,PDHPE,Student,Behaviour,4
+2364,COX,English Advanced,Teacher,Diligence,5
+2364,SHE,Geography,Teacher,Diligence,4
+2364,MCV,History Extension,Teacher,Diligence,4
+2364,BAI,Mathematics General,Teacher,Diligence,5
+2364,MCN,History Modern,Teacher,Diligence,5
+2364,STP,PDHPE,Teacher,Diligence,5
+2364,COX,English Advanced,Teacher,Engagement,5
+2364,SHE,Geography,Teacher,Engagement,4
+2364,MCV,History Extension,Teacher,Engagement,4
+2364,BAI,Mathematics General,Teacher,Engagement,5
+2364,MCN,History Modern,Teacher,Engagement,5
+2364,STP,PDHPE,Teacher,Engagement,4
+2364,COX,English Advanced,Teacher,Behaviour,5
+2364,SHE,Geography,Teacher,Behaviour,4
+2364,MCV,History Extension,Teacher,Behaviour,4
+2364,BAI,Mathematics General,Teacher,Behaviour,5
+2364,MCN,History Modern,Teacher,Behaviour,4
+2364,STP,PDHPE,Teacher,Behaviour,5
+2364,COX,English Advanced,Student,Diligence,5
+2364,SHE,Geography,Student,Diligence,5
+2364,MCV,History Extension,Student,Diligence,4
+2364,BAI,Mathematics General,Student,Diligence,3
+2364,MCN,History Modern,Student,Diligence,5
+2364,STP,PDHPE,Student,Diligence,5
+2364,COX,English Advanced,Student,Engagement,5
+2364,SHE,Geography,Student,Engagement,5
+2364,MCV,History Extension,Student,Engagement,4
+2364,BAI,Mathematics General,Student,Engagement,3
+2364,MCN,History Modern,Student,Engagement,5
+2364,STP,PDHPE,Student,Engagement,4
+2364,COX,English Advanced,Student,Behaviour,5
+2364,SHE,Geography,Student,Behaviour,5
+2364,MCV,History Extension,Student,Behaviour,4
+2364,BAI,Mathematics General,Student,Behaviour,5
+2364,MCN,History Modern,Student,Behaviour,5
+2364,STP,PDHPE,Student,Behaviour,4

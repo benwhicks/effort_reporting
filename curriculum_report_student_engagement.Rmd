@@ -1,0 +1,157 @@
+---
+title: "Curriculum Area Effort Summary"
+output:
+  tufte::tufte_handout: default
+  tufte::tufte_pdf: default
+---
+
+``` {r echo = F}
+department <- 'Mathemtatics'
+```
+
+```{r setup, include=FALSE}
+#####
+# This file requires input of:
+# department: the name of the curriculum area
+
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE,  cache.extra = packageVersion('tufte'))
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+options(htmltools.dir.version = FALSE)
+suppressWarnings(suppressPackageStartupMessages(library(ggplot2)))
+suppressWarnings(suppressPackageStartupMessages(library(ggthemes)))
+suppressWarnings(suppressPackageStartupMessages(library(dplyr)))
+suppressWarnings(suppressPackageStartupMessages(library(tidyr)))
+
+# Setting paths
+datdir <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2018 Term 1/"
+effort.path <- paste0(datdir, "2018 Term 1 Effort Data.csv")
+edumate.data.path <- paste0(datdir, "edumate_student_data_180312.csv")
+# Getting the data
+effort.data <- read.csv(effort.path)
+student.info <- read.csv(edumate.data.path, col.names = c("Student.code", "Student.email", "Firstname","Lastname","Student.name","House","Gender","Form","Tutor.group","Reports.email"))
+
+
+pastEffortPath <- paste0(datdir,"Past Effort Data/")
+old_effort_files <- list.files(pastEffortPath, pattern = "*.csv", full.names = T)
+past.effort.data <- do.call(rbind,lapply(old_effort_files, read.csv))
+ednames <- c("Student.code","Subject","Score","Category","Source","Class.code","Teacher.code","Date")
+past.effort.data$Date <- as.Date(past.effort.data$Date)
+past.effort.data <- past.effort.data[,names(past.effort.data) %in% ednames]
+effort.data <- effort.data[,names(effort.data) %in% ednames]
+effort.data <- unique(effort.data)
+
+# Merging data
+all.effort.data <- rbind(past.effort.data, effort.data)
+# Tidying data types
+all.effort.data$Student.code <- as.factor(all.effort.data$Student.code)
+all.effort.data$Category <- factor(all.effort.data$Category, levels = c("Diligence", "Engagement","Behaviour"))
+dates <- sort(unique(all.effort.data$Date))
+last4dates <- dates[min(1,length(dates)-1):length(dates)]
+t1 <- dates[length(dates)]
+t0 <- dates[length(dates)-1]
+
+# Filtering for classes based on depratment - currently set to Mathematics
+department.effort.data <- all.effort.data[grepl("MA",all.effort.data$Class.code),]
+
+
+df.means <- department.effort.data %>% group_by(Student.code, Date, Category, Source) %>% summarise(Score = mean(Score))
+df.means <- merge(df.means, student.info, all.x = T)
+
+df.teacher <- df.means[df.means$Source == "Teacher",]
+df.teacher$Source <- NULL
+df.teacher <- df.teacher %>% spread(key = Category, value = Score)
+df.teacher$Effort <- rowMeans(df.teacher[,c("Diligence","Engagement","Behaviour")])
+
+df.student <- df.means[df.means$Source == "Student",]
+df.student$Source <- NULL
+df.student <- df.student %>% spread(key = Category, value = Score)
+df.student$Effort <- rowMeans(df.student[,c("Diligence","Engagement","Behaviour")])
+```
+
+
+``` {r}
+# Setting up functions for generating house specific reports
+# These will already be filterd for Source
+topFive <- function(d, category = "Effort", n = 5, top = TRUE) {
+  # houseSummaryData as prepared earlier in file - must have the fields:
+    # If top = FALSE then this function returns the bottom n students
+  # sorting data
+  d <- d[order(d[,category], decreasing = top),]
+  d <- d[,c("Student.name","House","Form","Gender",category)]
+  # outputting top n
+  n <- min(length(d[,category]),n)
+  d <- d[1:n,]
+  return(d)
+}
+
+effortChange <- function(d, category = "Effort") {
+  dates <- sort(unique(d$Date))
+  if (length(dates) < 2) {stop("Less than two dates present: insufficient for change comparison.")}
+  t_1 <- dates[length(dates)]
+  t_0 <- dates[length(dates)-1]
+  d <- d[,c("Student.code","Student.name","Date","Form","Gender",category)]
+  d.previous <- d[d$Date == t_0,]
+  d.latest <- d[d$Date == t_1,]
+  d.previous$Date <- NULL
+  d.latest$Date <- NULL
+  d.previous[,paste0("Previous.",category)] <- d.previous[,category]
+  d.previous[,category] <- NULL
+  d.latest[,paste0("Latest.",category)] <- d.latest[,category]
+  d.latest[,category] <- NULL
+  d <- merge(d.latest, d.previous)
+  d[,paste0(category, ".Change")] <- d[,paste0("Latest.",category)] - d[,paste0("Previous.",category)]
+  return(d)
+}
+
+bigMovers <- function(d, c = "Effort",up = TRUE, n = 5) {
+  d <- effortChange(d, category = c)
+  d <- d[order(d[,paste0(c,".Change")], decreasing = up),]
+  n <- min(length(d[,paste0(c,".Change")]), n)
+  d$Student.code <- NULL
+  return(d[1:n,])
+}
+
+formToYear <- function(form) {
+  require(dplyr)
+  # Works with form in the, ahum, 'form':
+  # "2018 Year 09"
+  # Extracting last 2 digits as number
+  form <- as.character(form)
+  year <- as.numeric(substr(form, nchar(form)-1, nchar(form)))
+  return(year)
+}
+```
+
+``` {r}
+school_n <- 15
+```
+
+## Top `r school_n` for Student Engagement in `r department`
+``` {r}
+knitr::kable(topFive(df.student[df.student$Date == t1, ], category = "Engagement", n = school_n), row.names = FALSE, digits = 3)
+```
+
+## Bottom `r school_n` for Student Engagment in `r department`
+``` {r}
+knitr::kable(topFive(df.student[df.student$Date == t1, ], category = "Engagement", n = school_n, top = FALSE), row.names = FALSE, digits = 3)
+```
+
+\pagebreak
+
+# Student engagment in `r department`: Biggest movers
+
+## Big movers up
+``` {r}
+td <- bigMovers(df.student, c = "Engagement", up = TRUE, n = school_n)
+knitr::kable(td, row.names = FALSE, digits = 3)
+```
+
+## Big movers down
+
+``` {r}
+knitr::kable(bigMovers(df.student, c = "Engagement", up = FALSE, n = school_n), row.names = FALSE, digits = 3)
+```
