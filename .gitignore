@@ -5,6 +5,7 @@
 
 # ignoring school data
 *.jpeg
+*.png
 *.pdf
 *.csv
 *.xls
