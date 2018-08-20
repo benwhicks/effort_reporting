@@ -10,9 +10,10 @@
 *.csv
 *.xls
 *.xlsx
-reports/
+
 
 # except example data
 !sample.effort.csv
-
+!sample.student.report.pdf
+!sample.teacher.report.pdf
 
