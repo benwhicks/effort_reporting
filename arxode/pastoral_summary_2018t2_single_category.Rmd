@@ -1,0 +1,484 @@
+---
+title: "Pastoral Behaviour Summary - 2018 Term 2"
+author: "Ben Hicks"
+header-includes:
+  \usepackage{fancyhdr}
+  \pagestyle{fancy}
+  \fancyfoot[CO,CE]{For internal use only. Do not share analysis with students.}
+output:
+  tufte::tufte_handout: default
+  tufte::tufte_pdf: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+effcat <- 'Behaviour'
+
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE,  cache.extra = packageVersion('tufte'))
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+options(htmltools.dir.version = FALSE)
+suppressWarnings(suppressPackageStartupMessages(library(ggplot2)))
+suppressWarnings(suppressPackageStartupMessages(library(ggthemes)))
+suppressWarnings(suppressPackageStartupMessages(library(dplyr)))
+suppressWarnings(suppressPackageStartupMessages(library(tidyr)))
+
+# Setting paths
+datdir <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2018 Term 2/"
+effort.path <- paste0(datdir, "2018 Term 2 Effort Data.csv")
+edumate.data.path <- paste0(datdir, "edumate_student_data_180530.csv")
+# Getting the data
+effort.data <- read.csv(effort.path)
+student.info <- read.csv(edumate.data.path)
+student.info <- plyr::rename(student.info,c("Student.."="Student.code",
+                                            "Email.Address"="Student.email",
+                                            "Firstname.Lastname"="Student.name",
+                                            "Tutor...Roll.Class"="Tutor.group",
+                                            "Carers...Parents..REPORTS..Email"="Reports.email"))
+houses <- c("Dobell","Durack","Florey","Mawson","Monash","Oodgeroo")
+house_colours <- c("#33CC33","#6600CC","#DDDD00","#0099FF","#CC0000","#FF9900")
+house_colours_alt <- c("#338833","#550088","#999900","#0055BB","#880000","#BB5500")
+
+pastEffortPath <- paste0(datdir,"Past Effort Data/")
+old_effort_files <- list.files(pastEffortPath, pattern = "*.csv", full.names = T)
+past.effort.data <- do.call(rbind,lapply(old_effort_files, read.csv))
+ednames <- c("Student.code","Subject","Score","Category","Source","Class.code","Teacher.code","Date")
+past.effort.data$Date <- as.Date(past.effort.data$Date)
+past.effort.data <- past.effort.data[,names(past.effort.data) %in% ednames]
+effort.data <- effort.data[,names(effort.data) %in% ednames]
+effort.data <- unique(effort.data)
+
+# Merging data
+all.effort.data <- rbind(past.effort.data, effort.data)
+# Tidying data types
+all.effort.data$Student.code <- as.factor(all.effort.data$Student.code)
+all.effort.data$Category <- factor(all.effort.data$Category, levels = c("Diligence", "Engagement","Behaviour"))
+dates <- sort(unique(all.effort.data$Date))
+last4dates <- dates[min(1,length(dates)-1):length(dates)]
+t1 <- dates[length(dates)]
+t0 <- dates[length(dates)-1]
+
+df.means <- all.effort.data %>% group_by(Student.code, Date, Category, Source) %>% summarise(Score = mean(Score))
+
+df.teacher <- df.means[df.means$Source == "Teacher",]
+df.teacher$Source <- NULL
+df.teacher <- df.teacher %>% spread(key = Category, value = Score)
+
+###### ------------------------------- ############
+# Changing 'effort' data to copy of single category
+df.teacher$Effort <- df.teacher[[effcat]]
+
+###### ------------------------------- ############
+
+df.house.summary <- merge(df.teacher, student.info[,c("Student.code","Student.name","House","Form","Gender")])
+df.house.summary <- df.house.summary[df.house.summary$House %in% houses,]
+
+df.cohort.percentiles <- df.house.summary %>% group_by(Form, Date) %>% mutate(pr = 100*percent_rank(Effort))
+df.cohort.percentiles$pr <- round(df.cohort.percentiles$pr, 1)
+
+df.cohort.percentiles <- df.cohort.percentiles[df.cohort.percentiles$Date >= t0, c("Student.code","Date","pr")]
+df.cohort.percentiles <- df.cohort.percentiles %>% spread(key = Date, value = pr)
+names(df.cohort.percentiles) <- c("Student.code", "t0", "t1")
+df.cohort.percentiles <- df.cohort.percentiles %>% mutate(P.Change = paste0(t0, " to ", t1) )
+df.cohort.percentiles$t1 <- NULL
+df.cohort.percentiles$t0 <- NULL
+
+
+#write.csv(df.house.summary, file = paste0(datdir, "pastoral_summary_2018t1.csv"), row.names = F)
+```
+
+
+``` {r}
+# Setting up functions for generating house specific reports
+topFive <- function(houseSummaryData, date, house = NA, n = 5, top = TRUE) {
+  # houseSummaryData as prepared earlier in file - must have the fields:
+  # Student.code, Date, Diligence, Engagement, Behaviour, Effort, Student.name, House, Form and Gender
+  # If top = FALSE then this function returns the bottom n students
+  d <- houseSummaryData[houseSummaryData$Date == date,]
+  if (!(is.na(house))) {d <- d[d$House == house,]}
+  # Cleaning unwanted fields
+  d$Date <- NULL
+  d$Student.code <- NULL
+  # sorting data
+  d <- d[order(d$Effort, decreasing = top),]
+  d <- d[,c("Student.name","House","Form","Gender","Effort")]
+  # outputting top n
+  n <- min(length(d$Effort),n)
+  d <- d[1:n,]
+  return(d)
+}
+
+effortChange <- function(houseSummaryData) {
+  require(knitr)
+  dates <- sort(unique(houseSummaryData$Date))
+  if (length(dates) < 2) {stop("Less than two dates present: insufficient for change comparison.")}
+  t_1 <- dates[length(dates)]
+  t_0 <- dates[length(dates)-1]
+  d <- houseSummaryData[,c("Student.code","Student.name","Date","House","Form","Gender","Effort")]
+  d.previous <- d[d$Date == t_0,]
+  d.latest <- d[d$Date == t_1,]
+  d.previous$Date <- NULL
+  d.latest$Date <- NULL
+  d.previous$Previous.Effort <- d.previous$Effort
+  d.previous$Effort <- NULL
+  d.latest$Latest.Effort <- d.latest$Effort
+  d.latest$Effort <- NULL
+  d <- merge(d.latest, d.previous)
+  d$Change <- d$Latest.Effort - d$Previous.Effort
+  d <- merge(d, df.cohort.percentiles, all.x = T)
+  return(d)
+}
+
+bigMovers <- function(houseSummaryData, house = NA, up = TRUE, n = 5) {
+  d <- effortChange(houseSummaryData)
+  if (!is.na(house)) {d <- d[d$House == house,]}
+  d <- d[order(d$Change, decreasing = up),]
+  n <- min(length(d$Change), n)
+  d$Student.code <- NULL
+  return(d[1:n,])
+}
+
+formToYear <- function(form) {
+  require(dplyr)
+  # Works with form in the, ahum, 'form':
+  # "2018 Year 09"
+  # Extracting last 2 digits as number
+  form <- as.character(form)
+  year <- as.numeric(substr(form, nchar(form)-1, nchar(form)))
+  return(year)
+}
+
+houseTimelinePlot <- function(houseSummaryData, house, colour1, colour2) {
+  require(ggplot2)
+  a_lev <- 0.2
+  df <- houseSummaryData[houseSummaryData$House == house,] %>% mutate(Year = formToYear(Form))
+  g <- ggplot(df, aes(x = Date, y = Effort, fill = Year, colour = Year, group = Student.code)) 
+  g <- g + geom_line(alpha = a_lev) + geom_point(alpha = a_lev)
+  g <- g + scale_fill_gradient(low = colour1, high = colour2)
+  g <- g + scale_colour_gradient(low = colour1, high = colour2)
+  g <- g + scale_y_continuous(limits = c(1,5), labels = c("U","F","G","VG","O"))
+  g <- g + ggthemes::theme_tufte()
+  g <- g + theme(legend.position = "none") + theme(text = element_text(size = 6))
+  return(g)
+}
+```
+
+
+## `r effcat` distribution by house and gender for `r t1`
+
+```{marginfigure, echo = TRUE}
+All effort scores are the teacher reported effort scores unless otherwise noted.
+```
+
+``` {r}
+g.hd <- ggplot(data = df.house.summary[df.house.summary$Date == t1,]) + geom_histogram(aes(Effort, fill = House), binwidth = 0.25)
+g.hd <- g.hd + scale_fill_manual(values = house_colours) + ggthemes::theme_tufte()
+g.hd <- g.hd + scale_x_continuous(limits = c(1,5), labels = c("U","F","G","VG","O"))
+g.hd <- g.hd + facet_grid(House ~ Gender)
+g.hd <- g.hd + theme(legend.position = "none") + theme(text = element_text(size = 4))
+g.hd
+```
+
+## `r effcat` house distribution from `r min(last4dates)` to `r t1`
+
+``` {r fig.fullwidth = T, fig.height = 2}
+g.ht <- ggplot(data = df.house.summary[df.house.summary$Date %in% last4dates,]) + geom_histogram(aes(Effort, fill = House) ,binwidth = 0.25)
+g.ht <- g.ht + scale_fill_manual(values = house_colours) + ggthemes::theme_tufte()
+g.ht <- g.ht + scale_x_continuous(limits = c(1,5), labels = c("U","F","G","VG","O"))
+g.ht <- g.ht + facet_grid(House ~ Date)
+g.ht <- g.ht + theme(legend.position = "none") + theme(text = element_text(size = 4))
+g.ht
+```
+
+\pagebreak
+
+# Whole school: top, bottom
+
+``` {r}
+school_n <- 15
+```
+
+## Top `r school_n` 
+``` {r}
+knitr::kable(topFive(df.house.summary, date = t1, n = school_n), row.names = FALSE, digits = 2)
+```
+
+## Bottom `r school_n`
+``` {r}
+knitr::kable(topFive(df.house.summary, date = t1, n = school_n, top = FALSE), row.names = FALSE, digits = 2)
+```
+
+\pagebreak
+
+# Whole school: Biggest movers
+
+## Big movers up
+``` {r}
+knitr::kable(bigMovers(df.house.summary, up = TRUE, n = school_n), row.names = FALSE, digits = 2)
+```
+
+## Big movers down
+
+``` {r}
+knitr::kable(bigMovers(df.house.summary, up = FALSE, n = school_n), row.names = FALSE, digits = 2)
+```
+
+\pagebreak
+
+# Dobell
+
+## Top 5
+
+``` {marginfigure, echo = T}
+Timelines for Dobell
+```
+
+``` {r}
+t5Dobell <- topFive(df.house.summary, house = "Dobell", date = t1, n = 5)
+t5Dobell$House <- NULL
+knitr::kable(t5Dobell, row.names = FALSE, digits = 2)
+```
+
+
+``` {r fig.margin = T, fig.height = 5}
+houseTimelinePlot(df.house.summary, "Dobell", colour1 = house_colours[[1]], colour2 = house_colours_alt[[1]])
+```
+
+## Bottom 5
+``` {r}
+b5Dobell <- topFive(df.house.summary, house = "Dobell",date = t1, n = 5, top = FALSE)
+b5Dobell$House <- NULL
+knitr::kable(b5Dobell, row.names = FALSE, digits = 2)
+```
+
+## Big movers up
+``` {r}
+upDobell <- bigMovers(df.house.summary, house = "Dobell", up = TRUE, n = 5)
+upDobell$House <- NULL
+knitr::kable(upDobell, row.names = FALSE, digits = 2)
+```
+
+## Big movers down
+
+``` {r}
+downDobell <- bigMovers(df.house.summary, house = "Dobell", up = FALSE, n = 5)
+downDobell$House <- NULL
+knitr::kable(downDobell, row.names = F, digits = 2)
+```
+
+\pagebreak
+
+# Durack
+
+## Top 5
+
+``` {marginfigure, echo = T}
+Timelines for Durack
+```
+
+``` {r}
+t5Durack <- topFive(df.house.summary, house = "Durack", date = t1, n = 5)
+t5Durack$House <- NULL
+knitr::kable(t5Durack, row.names = FALSE, digits = 2)
+```
+
+
+``` {r fig.margin = T, fig.height = 5}
+houseTimelinePlot(df.house.summary, "Durack", colour1 = house_colours[[2]], colour2 = house_colours_alt[[2]])
+```
+
+## Bottom 5
+``` {r}
+b5Durack <- topFive(df.house.summary, house = "Durack",date = t1, n = 5, top = FALSE)
+b5Durack$House <- NULL
+knitr::kable(b5Durack, row.names = FALSE, digits = 2)
+```
+
+## Big movers up
+``` {r}
+upDurack <- bigMovers(df.house.summary, house = "Durack", up = TRUE, n = 5)
+upDurack$House <- NULL
+knitr::kable(upDurack, row.names = FALSE, digits = 2)
+```
+
+## Big movers down
+
+``` {r}
+downDurack <- bigMovers(df.house.summary, house = "Durack", up = FALSE, n = 5)
+downDurack$House <- NULL
+knitr::kable(downDurack, row.names = F, digits = 2)
+```
+
+\pagebreak
+
+# Florey
+
+## Top 5
+
+``` {marginfigure, echo = T}
+Timelines for Florey
+```
+
+``` {r}
+t5Florey <- topFive(df.house.summary, house = "Florey", date = t1, n = 5)
+t5Florey$House <- NULL
+knitr::kable(t5Florey, row.names = FALSE, digits = 2)
+```
+
+
+``` {r fig.margin = T, fig.height = 5}
+houseTimelinePlot(df.house.summary, "Florey", colour1 = house_colours[[3]], colour2 = house_colours_alt[[3]])
+```
+
+## Bottom 5
+``` {r}
+b5Florey <- topFive(df.house.summary, house = "Florey",date = t1, n = 5, top = FALSE)
+b5Florey$House <- NULL
+knitr::kable(b5Florey, row.names = FALSE, digits = 2)
+```
+
+## Big movers up
+``` {r}
+upFlorey <- bigMovers(df.house.summary, house = "Florey", up = TRUE, n = 5)
+upFlorey$House <- NULL
+knitr::kable(upFlorey, row.names = FALSE, digits = 2)
+```
+
+## Big movers down
+
+``` {r}
+downFlorey <- bigMovers(df.house.summary, house = "Florey", up = FALSE, n = 5)
+downFlorey$House <- NULL
+knitr::kable(downFlorey, row.names = F, digits = 2)
+```
+
+\pagebreak
+
+# Mawson
+
+## Top 5
+
+``` {marginfigure, echo = T}
+Timelines for Mawson
+```
+
+``` {r}
+t5Mawson <- topFive(df.house.summary, house = "Mawson", date = t1, n = 5)
+t5Mawson$House <- NULL
+knitr::kable(t5Mawson, row.names = FALSE, digits = 2)
+```
+
+``` {r fig.margin = T, fig.height = 5}
+houseTimelinePlot(df.house.summary, "Mawson", colour1 = house_colours[[4]], colour2 = house_colours_alt[[4]])
+```
+
+## Bottom 5
+``` {r}
+b5Mawson <- topFive(df.house.summary, house = "Mawson",date = t1, n = 5, top = FALSE)
+b5Mawson$House <- NULL
+knitr::kable(b5Mawson, row.names = FALSE, digits = 2)
+```
+
+## Big movers up
+``` {r}
+upMawson <- bigMovers(df.house.summary, house = "Mawson", up = TRUE, n = 5)
+upMawson$House <- NULL
+knitr::kable(upMawson, row.names = FALSE, digits = 2)
+```
+
+## Big movers down
+
+``` {r}
+downMawson <- bigMovers(df.house.summary, house = "Mawson", up = FALSE, n = 5)
+downMawson$House <- NULL
+knitr::kable(downMawson, row.names = F, digits = 2)
+```
+
+\pagebreak
+
+# Monash
+
+## Top 5
+
+``` {marginfigure, echo = T}
+Timelines for Monash
+```
+
+``` {r}
+t5Monash <- topFive(df.house.summary, house = "Monash", date = t1, n = 5)
+t5Monash$House <- NULL
+knitr::kable(t5Monash, row.names = FALSE, digits = 2)
+```
+
+``` {r fig.margin = T, fig.height = 5}
+houseTimelinePlot(df.house.summary, "Monash", colour1 = house_colours[[5]], colour2 = house_colours_alt[[5]])
+```
+
+## Bottom 5
+``` {r}
+b5Monash <- topFive(df.house.summary, house = "Monash",date = t1, n = 5, top = FALSE)
+b5Monash$House <- NULL
+knitr::kable(b5Monash, row.names = FALSE, digits = 2)
+```
+
+## Big movers up
+``` {r}
+upMonash <- bigMovers(df.house.summary, house = "Monash", up = TRUE, n = 5)
+upMonash$House <- NULL
+knitr::kable(upMonash, row.names = FALSE, digits = 2)
+```
+
+## Big movers down
+
+``` {r}
+downMonash <- bigMovers(df.house.summary, house = "Monash", up = FALSE, n = 5)
+downMonash$House <- NULL
+knitr::kable(downMonash, row.names = F, digits = 2)
+```
+
+
+\pagebreak
+
+# Oodgeroo
+
+## Top 5
+
+``` {marginfigure, echo = T}
+Timelines for Oodgeroo
+```
+
+``` {r}
+t5Oo <- topFive(df.house.summary, house = "Oodgeroo", date = t1, n = 5)
+t5Oo$House <- NULL
+knitr::kable(t5Oo, row.names = FALSE, digits = 2)
+```
+
+``` {r fig.margin = T, fig.height = 5}
+houseTimelinePlot(df.house.summary, "Oodgeroo", colour1 = house_colours[[6]], colour2 = house_colours_alt[[6]])
+```
+
+## Bottom 5
+``` {r}
+b5Oo <- topFive(df.house.summary, house = "Oodgeroo",date = t1, n = 5, top = FALSE)
+b5Oo$House <- NULL
+knitr::kable(b5Oo, row.names = FALSE, digits = 2)
+```
+
+## Big movers up
+``` {r}
+upOo <- bigMovers(df.house.summary, house = "Oodgeroo", up = TRUE, n = 5)
+upOo$House <- NULL
+knitr::kable(upOo, row.names = FALSE, digits = 2)
+```
+
+## Big movers down
+
+``` {r}
+downOo <- bigMovers(df.house.summary, house = "Oodgeroo", up = FALSE, n = 5)
+downOo$House <- NULL
+knitr::kable(downOo, row.names = F, digits = 2)
+```
+
