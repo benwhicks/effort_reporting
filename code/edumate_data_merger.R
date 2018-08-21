@@ -20,22 +20,9 @@ studentData <- plyr::rename(studentData, replace = c(
   "Student.." = "StudentID"
 ))
 # Upload data should have the following fields:
-  # Student ID	
-  # Gender	
-  # Gender ID	
-  # Student Firstname	
-  # Student Surname	
-  # StudentEmail	
-  # YEAR	
-  # Tutor Group	
-  # Cohort	
-  # Course	
-  # CLASS	
-  # CLASS_CODE	
-  # Teacher Title	
-  # Teacher Firstname	
-  # Teacher Surname	
-  # Teacher Email
+  # Student ID	# Gender	# Gender ID	# Student Firstname	# Student Surname	# StudentEmail	
+  # YEAR	# Tutor Group	# Cohort	# Course	# CLASS	  # CLASS_CODE	
+  # Teacher Title	# Teacher Firstname	# Teacher Surname	# Teacher Email
 # Merging data
 uploadData <- merge(enrolData, studentData, all.x = TRUE)
 # Writing data to csv

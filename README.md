@@ -15,12 +15,58 @@ The less relevant parts are:
 
 ## Wrangling data for _Effort Tracking_ system
 
-The _Effort Tracking_ system specifies a template for the csv upload that it needs. Note that all files should be saved into the *data* folder with sensible names. The process is as follows:
+The _Effort Tracking_ system specifies a template for the csv upload that it needs. The following process goes through extracting the data from Edumate and preparing it for the *Effort Tracking* system. 
 
-1. Extract enrolment data from Eduamte. This is done with the script called *edumate_enrolment_oxley.sql* but can also be found in *Reports - Enrolment Reports* on Edumate. The query is called *Current enrolments for effort reporting*. Unfortunately it does not include the *House* information for the students, so we have to run a seperate query (part 2) and then merge them together (part 4).
-2. Extract student information from Edumate (primarily to get House / Pastoral data). This is done entirely through Edumate by generating a custom report and selecting required fields - the main being *Student ID* and *House*. At this stage it is just the *House* information that needs to be added to the enrolment data to upload to the *Effort Tracking* site. 
-3. ~~Extract academic data.~~ This is currently not possible.
-4. Merge Edumate csv files into relevant format for _Effort Tracking_ system. This is done by running the script *edumate_data_merger.R*. You will need to read the script before running it. This script will output a file in the *data* folder.
-5. Upload the output csv file from step 4 to the _Effort Tracking_ site.
+### 0. Initial set up
+
+1. Install Rstudio and the *plyr* package. To install this within R type `install.packages("plyr")` into the *Console* (where the `>` is) in RStudio and hit *Enter*. It should download and install automatically. To check it is installed type `library(plyr)` into the *Console* and hit enter - it should look like nothing happens if it is working correctly, and should throw an error if not.
+
+2. Download this repository (which is an *R Project*). Go to the top of this screen and selecting *Download as zip*, then extract that folder and save it somewhere easy to find. You will need to open the file called *Effort Reporting.Rproj* from the extracted folder - which should open in RStudio.
+
+Note that all files should be saved into the *data* folder within the downloaded folder, and with sensible names. 
+
+### 1. Extract enrolment data from Edumate. 
+
+This is done with the script called *edumate_enrolment_oxley.sql* but can also be found in *Reports - Enrolment Reports* on Edumate. The query is called *Current enrolments for effort reporting*. Unfortunately it does not include the *House* information for the students, so we have to run a seperate query (part 2) and then merge them together (part 4).
+
+### 2. Extract student information from Edumate.
+
+This is primarily to get the House field which is not extracted from the sql query in step 1. This is done entirely through Edumate by generating a custom report and selecting required fields - the main being *Student ID* and *House*. At the moment of writing this this is done through *Contacts -> Print -> Generate List* in Edumate. At this stage it is just the *House* information that needs to be added to the enrolment data to upload to the *Effort Tracking* site, however it is also good to add *Form*, *Tutor Group*, *Gender*. 
+
+## 3. ~~Extract academic data.~~ 
+
+This is currently not possible.
+
+### 4. Merge Edumate csv files 
+
+This step is done in the R programming environment, which is run through the program *Rstudio*. We want to merge the two (three eventually) csv files from steps 1 - 3 into relevant format for _Effort Tracking_ system. 
+
+To merge the files we need to run the script *edumate_data_merger.R*.  Once in RStudio (having opened the R Project *Effort Reporting*) look for the *Files* section (within one of the 3 or 4 main windows, not in the normal File menu) where you should be able to navigate to the folder called *code* by clicking on the text *code*. Once there click on *edumate_data_merger.R* which should open the script in the editor window. 
+
+Near the top of the *edumate_data_merger.R* file is the following section of code:
+
+``` r
+############# CHANGE THESE AS REQUIRED ###################
+Enrolment_Data_Path <- "data/edumate_enrolment_data_2018t3.csv"
+Student_Info_Path <- "data/edumate_student_data_2018t3.csv"
+Effort_Tracking_Uploader_Filename <- "effort_tracking_data_2018t3.csv"
+##########################################################
+```
+
+The test within the quotes is the only part of the code that you need to change. The first line should point to the Edumate enrolment data file (file from step 1), and the second line should point to the student info data (file from step 2). The third line is the name of the output file (this will also be placed in the *data* folder).
+
+Once the names have been adjusted run the script by clicking 'Run'. If you want to all the code in one go use Ctrl-a and then hit 'Run'. 
+
+### 5. Add data to *Effort Tracking* upload template
+
+Open the file generated by the *edumate_data_merger.R* script and check that it looks like the data you should be uploading. This will need to be added to the template provided by the *Effort Tracking* site. The best way to do this is to just copy the columns required across to the template, keeping the headings in the template. Currently there is some fiddling to do here, that could possibly be scripted into the R script at a future date:
+
+* Generating the *Year* data by using *Form* (in the format `2018 Year 11`) and find and replace "2018 Year " with "". 
+* Extracting the first letter of the *Gender* field for the *Gender ID* field. This can be done in Excel by using the formula `=LEFT(A1,1)` or similar.
+
+### 6. Upload to *Effort Tracking*
+
+Upload the output csv file from step 5 to the _Effort Tracking_ site.
+
 
 
