@@ -5,8 +5,8 @@ The following documents using the [Effort Tracking](https://efforttracking.com/)
 The most relevant parts of this repository are:
 
 * _code_ folder. This contains relevant __sql__ and __r__ scripts to use, either for wrangling data or performing analysis.
-* _data_ folder. Directory for storing data, including sample data. School data is not uploaded to repo.
-* _reports_ folder. Directory for outputting reports, including sample reports. School reports and analysis not uploaded to repo.
+* _data_ folder. Directory for storing data, including any sample data. School data is not uploaded to this repo.
+* _reports_ folder. Directory for outputting reports, including any sample reports. School reports and analysis not uploaded to this repo.
 
 The less relevant parts are:
 
