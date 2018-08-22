@@ -6,6 +6,7 @@ WITH student_classes AS
         view_student_class_enrolment.student_id, 
         class.class AS CLASS_NAME, 
         course.code||'_'||class.identifier AS CLASS_CODE, 
+        course.code AS COURSE_CODE,
         class.class_id,
         REPLACE(salutation.salutation,'Unspecified','') AS TEACHER_TITLE,
         contact.firstname AS TEACHER_FIRSTNAME,
@@ -31,6 +32,7 @@ SELECT distinct
      REPLACE(REPLACE(contact.gender_id, 2, 'Male'), 3, 'Female') AS gender,
      contact.email_address,
      class,
+     course,
      -- starting tutor group 
      --roll.class ROLL_CLASS,
      -- end tutor group

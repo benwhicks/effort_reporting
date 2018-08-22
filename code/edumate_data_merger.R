@@ -3,9 +3,9 @@
 # uploaded to the Effort Tracking website
 
 ############# CHANGE THESE AS REQUIRED ###################
-Enrolment_Data_Path <- "data/edumate_enrolment_data_2018t3.csv"
-Student_Info_Path <- "data/edumate_student_data_2018t3.csv"
-Effort_Tracking_Uploader_Filename <- "effort_tracking_data_2018t3.csv"
+Enrolment_Data_Path <- "data/2018T3_edumate_enrolment_data.csv"
+Student_Info_Path <- "data/2018T3_edumate_student_data.csv"
+Effort_Tracking_Uploader_Filename <- "2018T3_merged_enrolment_data.csv"
 ##########################################################
 
 # Reading in Edumate data
@@ -19,11 +19,13 @@ enrolData <- plyr::rename(enrolData, replace = c(
 studentData <- plyr::rename(studentData, replace = c(
   "Student.." = "StudentID"
 ))
-# Upload data should have the following fields:
-  # Student ID	# Gender	# Gender ID	# Student Firstname	# Student Surname	# StudentEmail	
-  # YEAR	# Tutor Group	# Cohort	# Course	# CLASS	  # CLASS_CODE	
-  # Teacher Title	# Teacher Firstname	# Teacher Surname	# Teacher Email
+
 # Merging data
 uploadData <- merge(enrolData, studentData, all.x = TRUE)
+
+# Creating GenderID and Year
+uploadData$GenderID <- substring(uploadData$Gender, 1, 1)
+uploadData$Form <- as.character(uploadData$Form)
+uploadData$Year <- as.numeric(substring(uploadData$Form, nchar(uploadData$Form) - 1, nchar(uploadData)))
 # Writing data to csv
 write.csv(uploadData, file = paste0("data/",Effort_Tracking_Uploader_Filename), row.names = F)
