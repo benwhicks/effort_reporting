@@ -31,7 +31,15 @@ This is done with the script called *edumate_enrolment_oxley.sql* but can also b
 
 ### 2. Extract student information from Edumate.
 
-This is primarily to get the House field which is not extracted from the sql query in step 1. This is done entirely through Edumate by generating a custom report and selecting required fields - the main being *Student ID* and *House*. At the moment of writing this this is done through *Contacts -> Print -> Generate List* in Edumate. At this stage it is just the *House* information that needs to be added to the enrolment data to upload to the *Effort Tracking* site, however it is also good to add *Form*, *Tutor Group*, *Gender*. 
+This is primarily to get the House field which is not extracted from the sql query in step 1. This is done entirely through Edumate by generating a custom report and selecting required fields: 
+
+* *Student ID*
+* *House*
+* *Tutor Group*
+* *Form* 
+* *Gender*
+
+At the moment of writing this this is done through *Contacts -> Print -> Generate List* in Edumate. 
 
 ## 3. ~~Extract academic data.~~ 
 
