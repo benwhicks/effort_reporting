@@ -72,22 +72,25 @@ WHERE
     and NOT (upper(class.class) LIKE '%TUTOR%' OR upper(class.class) LIKE '%BASKETBALL%')
     and NOT (upper(class.class) LIKE '%POLO%' OR upper(class.class) LIKE '%ASSEMBLY%')
     and NOT (upper(class.class) LIKE '%DISTANCE%' OR upper(class.class) LIKE '%WIDE%')
+    and NOT (upper(class.class) LIKE '%PRODUCTION%')
+    and NOT (upper(class.class) LIKE '%ISA %')
+    and NOT (upper(class.class) LIKE '%FILM%')
     and NOT (upper(class.class) LIKE '%SENIOR%') -- for Senior Science course
       
     and student_classes.class_code = (course.code || '_' || class.identifier)
     and (   
             class.CLASS_TYPE_ID IN (1,2)
-  		    or 
-  		    ((class.COURSE_ID, form_run.FORM_RUN_ID)  not in 
-			       (select rpc.COURSE_ID, rpf.FORM_RUN_ID from report_period rp 
-			    	join REPORT_PERIOD_COURSE rpc on rp.REPORT_PERIOD_ID = rpc.REPORT_PERIOD_ID
-			    	join REPORT_PERIOD_FORM_RUN rpf on rpf.REPORT_PERIOD_ID =rp.REPORT_PERIOD_ID
-			    	join ACADEMIC_YEAR ay on ay.ACADEMIC_YEAR_ID = rp.ACADEMIC_YEAR_ID
-			    	where year(  current_date ) =ay.ACADEMIC_YEAR 			    	 
-			       )
-			)
-			or upper(class.class) like '%STUDY%'
+            or 
+            ((class.COURSE_ID, form_run.FORM_RUN_ID)  not in 
+                   (select rpc.COURSE_ID, rpf.FORM_RUN_ID from report_period rp 
+                    join REPORT_PERIOD_COURSE rpc on rp.REPORT_PERIOD_ID = rpc.REPORT_PERIOD_ID
+                    join REPORT_PERIOD_FORM_RUN rpf on rpf.REPORT_PERIOD_ID =rp.REPORT_PERIOD_ID
+                    join ACADEMIC_YEAR ay on ay.ACADEMIC_YEAR_ID = rp.ACADEMIC_YEAR_ID
+                    where year(  current_date ) =ay.ACADEMIC_YEAR                    
+                   )
+            )
+            or upper(class.class) like '%STUDY%'
                         or upper(class.class) like '%LEARNING PLUS%'
-		)
+        )
 ORDER BY
     form_run, student_number, class
