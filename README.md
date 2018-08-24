@@ -27,7 +27,7 @@ Note that all files should be saved into the *data* folder within the downloaded
 
 ### 1. Extract enrolment data from Edumate. 
 
-This is done with the script called *edumate_enrolment_oxley.sql* but can also be found in *Reports - Enrolment Reports* on Edumate. The query is called *Current enrolments for effort reporting*. Unfortunately it does not include the *House* information for the students, so we have to run a seperate query (part 2) and then merge them together (part 4).
+This is done with the script called *edumate_enrolment_ox.sql* but can also be found in *Reports - Enrolment Reports* on Edumate. The query is called *Current enrolments for effort reporting*. Unfortunately it does not include the *House* information for the students, so we have to run a seperate query (part 2) and then merge them together (part 4).
 
 ### 2. Extract student information from Edumate.
 
@@ -41,9 +41,9 @@ This is primarily to get the House field which is not extracted from the sql que
 
 At the moment of writing this this is done through *Contacts -> Print -> Generate List* in Edumate. 
 
-## 3. Extract academic data.
+### 3. Extract academic data.
 
-The sql query *edumate_academic_oxley.sql* should extract all the academic data (i.e. assessment task marks) for the current academic year. This is found in *Reports - Academic Reports* on Edumate and is called *Academic Data Export for Effort Reporting*. In future, this will be used to upload the academic data to the Effort Tracking system, however this is yet to be implemented.
+The sql query *edumate_academic_ox.sql* should extract all the academic data (i.e. assessment task marks) for the current academic year. This is found in *Reports - Academic Reports* on Edumate and is called *Academic Data Export for Effort Reporting*. In future, this will be used to upload the academic data to the Effort Tracking system, however this is yet to be implemented.
 
 ### 4. Merge Edumate csv files 
 
