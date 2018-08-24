@@ -35,7 +35,7 @@ This is primarily to get the House field which is not extracted from the sql que
 
 * *Student ID*
 * *House*
-* *Tutor Group*
+* *Tutor Group* - this is extracted from the sql in part 1 but is incorrect
 * *Form* 
 * *Gender*
 
