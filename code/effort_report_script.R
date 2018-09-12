@@ -19,12 +19,12 @@ suppressPackageStartupMessages(library(markdown))
 library(dplyr)
 library(tidyr)
 library(stringr)
-library(plyr)
-source("effort.functions.R")
+source("code/effort.functions.R")
 
 # Changeable fields
 SURVEYDATE <- '2018-08-27'
 EXPORTFILENAME <- '2018 Term 3 Effort Data.csv'
+REPORTING_PERIOD <- '2018 Term 3'
 
 # Paths to data files
 datdir <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2018 Term 3/"
@@ -33,13 +33,11 @@ effortPath <- paste0(datdir,"efforttracking_2018T3_final.csv")
 mail.data.path <- paste0(datdir,"edumate_student_info_2018t3.csv")
 
 
-
-
 # Reading in the data
 effort.tracking.data <- read.csv(effortPath) # in the effort tracking form
 effort.tracking.data$Teacher.name <- paste(effort.tracking.data$TeacherFirstname, effort.tracking.data$TeacherSurname)
-# changing to long format
 
+# changing to long format
 effort.data <- effort.tracking.data %>% 
   gather(key = Type, 
          value = Score, 
@@ -49,7 +47,7 @@ effort.data <- effort.tracking.data %>%
 effort.data$Type <- NULL
 effort.data$Subject <- gsub("Year\\s\\d+\\s","",effort.data$Course)
 effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), effort.data$StudentSurname)
-effort.data <- rename(effort.data, replace = c("StudentID" = "Student.code",
+effort.data <- plyr::rename(effort.data, replace = c("StudentID" = "Student.code",
                                                "CLASS_CODE" = "Class.code"))
 effort.data$Date <- as.Date(SURVEYDATE)
 write.csv(effort.data, file = paste0(datdir, EXPORTFILENAME), row.names = F)
@@ -60,50 +58,42 @@ ednames <- c("Student.code","Student.name","Subject","Score","Category","Source"
 past.effort.data$Date <- as.Date(past.effort.data$Date)
 
 # note that all
-all.effort.data <- rbind.fill(past.effort.data[,names(past.effort.data) %in% ednames], 
+all.effort.data <- plyr::rbind.fill(past.effort.data[,names(past.effort.data) %in% ednames], 
                          effort.data[,names(effort.data) %in% ednames])
 
 # Checking subject list
-setdiff()
+setdiff(unique(effort.data$Subject), subject.order.list)
 
 # Other parameters
 sendMail <- FALSE # change to false if you want to generate the reports but not send the emails
-reportingPeriod <- "Term 3 2017"
-mail_subject <- paste0("Effort Report",reportingPeriod)
+reportingPeriod <- REPORTING_PERIOD
+mail_subject <- paste("Effort Report",reportingPeriod)
 mail_teacherBody <- paste0("Attached is your effort report for ",reportingPeriod ,".\nThanks,\nBen")
 mail_studentBody <- paste0("Attached is your effort report for ",reportingPeriod ,".\n")
   
 mailData <- read.csv(mail.data.path)
+mailData <- plyr::rename(mailData, replace = c("Student.."="Student.code",
+                                               "Firstname.Lastname"="Student.name",
+                                               "Carers...Parents..REPORTS..Email"="Email.carers"))
+student.info <- mailData # used as student.info in pastoral_summary
 report.dir <- paste0(datdir,"Reports")
 student.numbers <- unique(effort.data$Student.code)
-teacher.codes <- unique(effort.data$Teacher.name) # changed to names, works the same
-teacher.codes <- teacher.codes[!(is.na(teacher.codes))]
-teacher.codes <- teacher.codes[!(teacher.codes == "NT")]
-student.info <- read.csv(student.info.path)
-teacher.info <- read.csv(teacher.mail.data.path) # this will be sourced from elsewhere
-
-# Checking for student info
-for (ID in student.numbers) {
-  if (!(ID %in% unique(student.info$Student.code))) {
-    print(paste0("No student info for ",ID, " ", getStudentName(ID)))
-  }
-}
-
+teachers <- unique(effort.data$Teacher.name) 
 
 # Creates a directory called 'reports' if it does not already exist
 if (!dir.exists(report.dir)) {dir.create(report.dir)}
 
 # Creating student reports  -change to student.numbers
-for (ID in student.numbers) {
-  s.name <- student.info[student.info$Student.code == ID,]$Student.name
-  studentFileName <- paste0("Student_Effort_Report_", s.name , "_", Sys.Date(), ".pdf" )
+for (ID in student.numbers[351:length(student.numbers)]) {
+  s.name <- unique(effort.data[effort.data$Student.code == ID,]$Student.name)
+  studentFileName <- paste0("Student_Effort_Report_", s.name , "_", REPORTING_PERIOD, ".pdf" )
   studentFilePath <- paste0(report.dir ,"/" , studentFileName)
-  rmarkdown::render('student_effort_report_markdown.Rmd',
+  rmarkdown::render('markdown_templates/student_effort_report_markdown.Rmd',
                     output_file = studentFileName,
                     output_dir = report.dir)
   if (sendMail) {
     # Do stuff to send mail
-    mailTo <- as.character(mailData[mailData$Student.code == ID, ]$Email.student)
+    mailTo <- as.character(unique(effort.data[effort.data$Student.code == ID, ]$StudentEmail))
     mailCc <- strsplit(as.character(mailData[mailData$Student.code == ID, ]$Email.carers), split = "; ")
     mailSubject <- paste0("Effort report for ", s.name)
     mailBody <- paste0("Dear ", s.name,",\n\n",
@@ -127,11 +117,12 @@ for (ID in student.numbers) {
 
 
 # Creating teacher reports
-for (tcode in teacher.codes) {
-  fn <- paste0("Teacher_Effort_Report_", tcode, "_", Sys.Date(), ".pdf" )
+for (tcode in teachers) {
+  fn <- paste0("Teacher_Effort_Report_", tcode, "_", REPORTING_PERIOD, ".pdf" )
   fpath <- paste0(report.dir, "/", fn)
-  mailto <- paste0("<",teacher.info[teacher.info$Teacher.code == tcode,"Email"],">")
-  rmarkdown::render('teacher_effort_report_markdown.Rmd',
+  tmail <- unique(effort.data[effort.data$Teacher.name == tcode,]$TeacherEmail)
+  mailto <- paste0("<",tmail,">")
+  rmarkdown::render('markdown_templates/teacher_effort_report_markdown.Rmd',
                     output_file = fn,
                     output_dir = report.dir)
   if (sendMail) {
@@ -149,7 +140,8 @@ for (tcode in teacher.codes) {
   }
 }
 
-# Creating teacher term review for reporting
+# Creating teacher term review for reporting - currently conflicts with 
+# teacher.codes or teachers (names) 
 effort.data <- read.csv(effortPath)
 effort.data <- effort.data[complete.cases(effort.data),]
 year <- "11"
@@ -157,7 +149,7 @@ effort.data <-  effort.data[substr(effort.data$Class.code,1,2)==year,]
 teacher.codes <- unique(effort.data$Teacher.code)
 sendMail <- FALSE
 for (tcode in teacher.codes) {
-  fn <- paste0("Class_Effort_Average_Y11_2017T1_", tcode, "_", Sys.Date(), ".pdf" )
+  fn <- paste0("Class_Effort_Average_Y11_2017T1_", tcode, "_", REPORTING_PERIOD, ".pdf" )
   fpath <- paste0(report.dir, "/", fn)
   rmarkdown::render('teacher_effort_averages.Rmd',
                     output_file = fn,
@@ -182,5 +174,10 @@ for (tcode in teacher.codes) {
 }
 
 # Creating school reports
-
+pfname <- paste0("Pastoral Summary ", REPORTING_PERIOD, '.pdf')
+pfpath <- paste0(report.dir, "/", pfname)
+rmarkdown::render('markdown_templates/pastoral_summary.Rmd',
+                  output_file = pfname,
+                  output_dir = report.dir
+                  )
 # To be implemented

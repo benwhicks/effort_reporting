@@ -9,6 +9,12 @@ toclip <- function(x,row.names=FALSE,col.names=TRUE,...) {
   close(clip)
 }
 
+simpleCap <- function(x) {
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1,1)), substring(s, 2),
+        sep="", collapse=" ")
+}
+
 viewMissing <- function(x) {
   x <- x[!(is.na(x)),]
   View(x[!(complete.cases(x)),])
@@ -152,10 +158,12 @@ effortPlot <- function(d, ctitle = "Chart title", slist = subject.order.list) {
 }
 
 overallEffortPlot <- function(d, ctitle = "Overall Effort") {
+  # You will get strange errors if plyr is loaded after dplyr
+ # detach(package:plyr)
   require(dplyr)
   d$Source <- factor(d$Source, levels = c("Student", "Teacher"))
-  d <- summarise(group_by(d, Source, Category), mean(Score, na.rm = T))
-  names(d) <- c("Source", "Category", "Score")
+  d <- d[,c("Source","Category", "Score")]
+  d <- summarize(group_by(d, Source, Category), Score = mean(Score, na.rm = T))
   d$Category <- factor(d$Category, levels = c("Diligence", "Engagement", "Behaviour"))
   # creating the plot
   g <- ggplot(data = d, aes(x = Category, y = Score, fill = Source)) +
@@ -227,8 +235,8 @@ effortIndividualTimeline <- function(d, ID, title = "Effort Timeline", student.i
   d$Source <- factor(d$Source, levels = c("Student", "Teacher"))
   d.student <- d[d$ID == ID,]
   
-  cohort <- student.info[student.info$Student.code == ID,]$Form
-  cohort.ids <- unique(student.info[student.info$Form == cohort,"Student.code"])
+  cohort <- student.info[student.info$Student.code == ID,]$Cohort
+  cohort.ids <- unique(student.info[student.info$Cohort == cohort,"Student.code"])
   
   d.cohort <- d[d$ID %in% cohort.ids & d$Source == "Teacher",]
   d.cohort$ID <- as.factor(d.cohort$ID)
