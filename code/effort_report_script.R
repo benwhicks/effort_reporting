@@ -69,7 +69,7 @@ sendMail <- FALSE # change to false if you want to generate the reports but not 
 reportingPeriod <- REPORTING_PERIOD
 mail_subject <- paste("Effort Report",reportingPeriod)
 mail_teacherBody <- paste0("Attached is your effort report for ",reportingPeriod ,".\nThanks,\nBen")
-mail_studentBody <- paste0("Attached is your effort report for ",reportingPeriod ,".\n")
+mail_studentBody <- paste0("Attached is your effort report for ",reportingPeriod ,". This is being resent as the final graph was missing Term 2 data. \n")
   
 mailData <- read.csv(mail.data.path)
 mailData <- plyr::rename(mailData, replace = c("Student.."="Student.code",
@@ -84,7 +84,7 @@ teachers <- unique(effort.data$Teacher.name)
 if (!dir.exists(report.dir)) {dir.create(report.dir)}
 
 # Creating student reports  -change to student.numbers
-for (ID in student.numbers[351:length(student.numbers)]) {
+for (ID in student.numbers) {
   s.name <- unique(effort.data[effort.data$Student.code == ID,]$Student.name)
   studentFileName <- paste0("Student_Effort_Report_", s.name , "_", REPORTING_PERIOD, ".pdf" )
   studentFilePath <- paste0(report.dir ,"/" , studentFileName)

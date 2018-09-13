@@ -180,7 +180,7 @@ knitr::kable(topFive(df.house.summary, date = t1, n = school_n, top = FALSE), ro
 
 \pagebreak
 
-# Whole school: Biggest movers
+# Whole school: Biggest movers from `r t0` to `r t1`
 
 ## Big movers up
 ``` {r}
