@@ -1,0 +1,239 @@
+---
+title: "Student Effort Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: scroll
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+source("../code/effort.functions.R")
+library(tidyverse)
+library(wesanderson)
+```
+
+``` {r global, include=FALSE}
+PATH_TO_ALL_EFFORT_DATA <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/oxley.all.effort.data.csv"
+PATH_TO_ALL_STUDENT_INFO <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/oxley.all.student.info.csv"
+PATH_TO_ALL_ACADEMIC_DATA <- ""
+ 
+trim_pref_name <- function(x) {
+  x <- gsub( " *\\(.*?\\) *", "", x)
+  return(x)
+}
+
+all.effort.data <- readr::read_csv(PATH_TO_ALL_EFFORT_DATA)
+student.info <- readr::read_csv(PATH_TO_ALL_STUDENT_INFO)
+all.effort.data$Student.name <- trim_pref_name(
+  stringr::str_to_title(all.effort.data$Student.name))
+all.effort.data$Source <- factor(all.effort.data$Source, levels = c("Student", "Teacher"))
+
+# removing unwanted fields
+all.effort.data$Teacher.code <- NULL
+all.effort.data$Teacher.name <- NULL
+student.info$Student.name <- trim_pref_name(
+  stringr::str_to_title(student.info$Student.name)
+  )
+students <- unique(all.effort.data[complete.cases(all.effort.data),c("Student.name","Student.code")])
+students <- students[order(students$Student.name),]
+
+effort.means <- all.effort.data %>% 
+  group_by(Student.code, Student.name, Source, Date) %>% 
+  summarise(Effort = mean(Score, na.rm = T))
+
+effort.means.category <- all.effort.data %>% 
+  group_by(Student.code, Student.name, Source, Category, Date) %>% 
+  summarise(Effort = mean(Score, na.rm = T))
+```
+
+Inputs {.sidebar}
+-----------------------------------------------------------------------
+
+``` {r}
+selectInput("studentName", label = h4("Student:"), 
+    choices = students$Student.name, selected = students$Student.name[[1]])
+
+
+id <- reactive({
+  mean(unique(all.effort.data[
+    all.effort.data$Student.name == input$studentName,
+    ]$Student.code), na.rm = T)
+})
+
+cohort.ids <- reactive({
+  s.form <- as.character(student.info[student.info$Student.code == id(), "Form"])
+  unique(student.info[student.info$Form == s.form, "Student.code"])
+})
+  
+renderText({paste0("ID: ", as.character(id()))})
+```
+
+
+Row {.tabset}
+-----------------------------------------------------------------------
+
+### Latest result
+
+```{r}
+renderPlot({
+  s.date <- max(all.effort.data[all.effort.data$Student.code == id(),]$Date)
+  effortPlot(all.effort.data[
+    all.effort.data$Student.code == id() & all.effort.data$Date == s.date,
+    c("Score","Subject","Source","Category")
+  ], ctitle = paste0(input$studentName, ": ", s.date))
+})
+```
+
+### Teacher - Student (Latest)
+
+``` {r}
+renderPlot({
+  s.date <- max(effort.means[effort.means$Student.code == id(),]$Date)
+  d <- effort.means[effort.means$Date == s.date,] %>% spread(Source, Effort)
+  d <- merge(d, student.info[,c("Student.code", "Gender")])
+  d.student <- d[d$Student.code == id(),]
+  g <- ggplot(data = d) +
+    geom_point(aes(x = Student, y = Teacher, colour = Gender), alpha = 0.3) +
+    geom_point(data = d.student, aes(x = Student, y = Teacher), colour = "#1E2132", size = 3.) +
+    geom_rug(aes(x = Student, y = Teacher, colour = Gender), alpha = 0.3) +
+    scale_x_continuous(limits = c(1,5), labels = c("Unsatisfactory","Fair","Good","Very Good","Outstanding")) + 
+    scale_y_continuous(limits = c(1,5), labels = c("Unsatisfactory","Fair","Good","Very Good","Outstanding")) +
+    scale_color_manual(values = wes_palette("Darjeeling1")) +
+    geom_smooth(aes(x = Student, y = Teacher), alpha = 0.2, colour = "#1E2132", size = .3) +
+    theme(panel.background = element_rect(fill = "white"),
+            panel.grid.major = element_line(linetype = "dotted",size = 0.2, colour = "light gray"))
+  
+  g
+})
+```
+
+### Teacher - Student (All)
+
+``` {r}
+renderPlot({
+  d <- effort.means %>% spread(Source, Effort)
+  d <- merge(d, student.info[,c("Student.code", "Gender")])
+  d.student <- d[d$Student.code == id(),]
+  g <- ggplot(data = d) +
+    geom_point(aes(x = Student, y = Teacher, colour = Gender), alpha = 0.3) +
+    geom_point(data = d.student, aes(x = Student, y = Teacher), colour = "#1E2132", size = 4.) +
+    geom_rug(aes(x = Student, y = Teacher, colour = Gender), alpha = 0.2) +
+    scale_x_continuous(limits = c(1,5), labels = c("Unsatisfactory","Fair","Good","Very Good","Outstanding")) + 
+    scale_y_continuous(limits = c(1,5), labels = c("Unsatisfactory","Fair","Good","Very Good","Outstanding")) +
+    scale_color_manual(values = wes_palette("Darjeeling1")) +
+    geom_smooth(aes(x = Student, y = Teacher), alpha = 0.2, colour = "#1E2132", size = .3) +
+    theme(panel.background = element_rect(fill = "white"),
+            panel.grid.major = element_line(linetype = "dotted",size = 0.2, colour = "light gray"))
+  
+  g
+})
+```
+
+Column {data-width=650, .tabset}
+-----------------------------------------------------------------------
+
+### Timeline with Cohort
+
+```{r}
+d.student <- reactive({
+ effort.means[effort.means$Student.code == id() & effort.means$Source == "Teacher",] 
+})
+
+d.cohort <- reactive({
+  s.form <- student.info[student.info$Student.code == id(),]$Form
+  c.ids <- unique(student.info[student.info$Form == s.form,]$Student.code)
+  d.c <- effort.means[
+    effort.means$Student.code %in% c.ids & effort.means$Source == "Teacher",
+    ,]
+  d.c$ID <- as.factor(d.c$Student.code)
+  d.c
+})
+
+alphaLevel <- reactive({
+  min(1.0,0.1/length(cohort.ids()))
+  })
+
+renderPlot({
+  g <- ggplot() +
+      geom_line(data = d.student(),
+                aes(x = Date, y = Effort), colour = "#1E2132") + 
+      geom_point(d = d.student(), aes(x = Date, y = Effort), colour = "#1E2132") +
+      geom_line(data = d.cohort(),
+                aes(x = Date, y = Effort, group = ID) , alpha = alphaLevel())+
+      geom_point(d = d.cohort(),
+                 aes(x = Date, y = Effort, group = ID), alpha = alphaLevel()/2) +
+      scale_y_continuous(limits = c(1,5), labels = c("Unsatisfactory","Fair","Good","Very Good","Outstanding"))+
+    #  ggtitle(title) +
+      theme(panel.background = element_rect(fill = "white"),
+            panel.grid.major = element_line(linetype = "dotted",size = 0.2, colour = "light gray"))
+    g
+})
+
+```
+
+### Timeline by category
+
+```{r}
+d.student.cat <- reactive({
+ dcat <- effort.means.category[
+   effort.means.category$Student.code == id() & 
+     effort.means.category$Source == "Teacher",
+   ] 
+})
+
+renderPlot({
+  dfcat <- d.student.cat()
+  dfcat$Category <- factor(dfcat$Category, levels = c("Diligence", "Engagement", "Behaviour"))
+  g <- ggplot() +
+      geom_line(data = dfcat,
+                aes(x = Date, y = Effort, colour = Category), alpha = 0.8) + # other colour is "#ECA41A"
+#    geom_smooth(data = d.student(), aes(Date, Effort), method = "loess") +
+      geom_point(data = dfcat, aes(x = Date, y = Effort, colour = Category), alpha = 0.8) +
+      scale_y_continuous(limits = c(1,5), labels = c("Unsatisfactory","Fair","Good","Very Good","Outstanding"))+
+    scale_colour_manual(values = c("#1E2132","#ECA41A", "#1D6527")) +
+      theme(panel.background = element_rect(fill = "white"),
+            panel.grid.major = element_line(linetype = "dotted",size = 0.2, colour = "light gray"),
+            legend.position = "bottom")
+    g
+})
+```
+
+### Student reported timeline
+
+```{r}
+d.student.sr <- reactive({
+ effort.means[effort.means$Student.code == id() & effort.means$Source == "Student",] 
+})
+
+d.cohort.sr <- reactive({
+  s.form <- student.info[student.info$Student.code == id(),]$Form
+  c.ids <- unique(student.info[student.info$Form == s.form,]$Student.code)
+  d.c <- effort.means[
+    effort.means$Student.code %in% c.ids & effort.means$Source == "Student",
+    ,]
+  d.c$ID <- as.factor(d.c$Student.code)
+  d.c
+})
+
+alphaLevel <- reactive({
+  min(1.0,0.1/length(cohort.ids()))
+  })
+
+renderPlot({
+  g <- ggplot() +
+      geom_line(data = d.student.sr(),
+                aes(x = Date, y = Effort), colour = "#ECA41A") + 
+      geom_point(d = d.student.sr(), aes(x = Date, y = Effort), colour = "#ECA41A") +
+      geom_line(data = d.cohort.sr(),
+                aes(x = Date, y = Effort, group = ID) , alpha = alphaLevel())+
+      geom_point(d = d.cohort.sr(),
+                 aes(x = Date, y = Effort, group = ID), alpha = alphaLevel()/2) +
+      scale_y_continuous(limits = c(1,5), labels = c("Unsatisfactory","Fair","Good","Very Good","Outstanding"))+
+    #  ggtitle(title) +
+      theme(panel.background = element_rect(fill = "white"),
+            panel.grid.major = element_line(linetype = "dotted",size = 0.2, colour = "light gray"))
+    g
+})
+```

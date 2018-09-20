@@ -78,23 +78,6 @@ effLongToWide <- function(d) {
 }
 
 
-# Hunting missing data functions #
-getStudentInfo <- function(ID = NA, name = NA) {
-  if (!(is.na(ID))) {
-    info <- edumateData[edumateData$Student.code == ID, 
-                      names(edumateData) %in% c("Student.code", "Lastname", "Firstname",
-                                              "Form", "Student.email")]
-  }
-  if (!(is.na(name))) {
-    info <- edumateData[edumateData$Student.name == name, 
-                      names(edumateData) %in% c("Student.code", "Lastname", "Firstname",
-                                              "Form", "Student.email")]
-  }
-  return(unique(info))
-}
-
-
-
 # Analysis functions #
 
 # Setting up some default parameters - the main being the factor order
@@ -117,7 +100,7 @@ subject.order.list <- c("English","English Standard", "English Advanced", "Engli
 
 effortPlot <- function(d, ctitle = "Chart title", slist = subject.order.list) {
   # Recieves a long data frame and returns a ggplot historgram
-  # Their must be the following fields:
+  # There must be the following fields:
   #  -- Score : The score (1 to 5, 5 being Outstanding)
   #  -- Subject : The subject (such as 'English')
   #  -- Source : Either Student or Teacher

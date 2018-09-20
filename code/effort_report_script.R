@@ -90,7 +90,8 @@ for (ID in student.numbers) {
   studentFilePath <- paste0(report.dir ,"/" , studentFileName)
   rmarkdown::render('markdown_templates/student_effort_report_markdown.Rmd',
                     output_file = studentFileName,
-                    output_dir = report.dir)
+                    output_dir = report.dir,
+                    quiet = TRUE)
   if (sendMail) {
     # Do stuff to send mail
     mailTo <- as.character(unique(effort.data[effort.data$Student.code == ID, ]$StudentEmail))
@@ -124,7 +125,8 @@ for (tcode in teachers) {
   mailto <- paste0("<",tmail,">")
   rmarkdown::render('markdown_templates/teacher_effort_report_markdown.Rmd',
                     output_file = fn,
-                    output_dir = report.dir)
+                    output_dir = report.dir,
+                    quiet = TRUE)
   if (sendMail) {
     mailR::send.mail(from = "<octemp@oxley.nsw.edu.au>",
               to = c(mailto),
