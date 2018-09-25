@@ -17,7 +17,7 @@ library(wesanderson)
 ``` {r global, include=FALSE}
 PATH_TO_ALL_EFFORT_DATA <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/oxley.all.effort.data.csv"
 PATH_TO_ALL_STUDENT_INFO <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/oxley.all.student.info.csv"
-PATH_TO_ALL_ACADEMIC_DATA <- ""
+PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/School-Assessments/Edumate Export/"
  
 trim_pref_name <- function(x) {
   x <- gsub( " *\\(.*?\\) *", "", x)
@@ -46,6 +46,27 @@ effort.means <- all.effort.data %>%
 effort.means.category <- all.effort.data %>% 
   group_by(Student.code, Student.name, Source, Category, Date) %>% 
   summarise(Effort = mean(Score, na.rm = T))
+
+# School Assessment Data
+assessment.files <- list.files(PATH_TO_ALL_ACADEMIC_DATA_FOLDER, pattern = "*.csv", full.names = TRUE)
+all.assessment.data <- do.call(rbind, lapply(assessment.files, readr::read_csv)) 
+
+# mucking around with assessment data - merging with effort and rounding dates to the nearest 3 months
+eff_merge <- effort.means
+eff_merge$Type = "Effort"
+eff_merge$Score <- eff_merge$Effort
+eff_merge$Effort <- NULL
+eff_merge$Student.name <- NULL
+ach_merge <- select(all.assessment.data, 
+                    Student.code = STUDENT_NUMBER,
+                    Date = DUE_DATE,
+                    Score = Z_SCORE)
+ach_merge$Type = "Achievement"
+ach_merge$Source = "Teacher"
+eff_merge$Score <- (eff_merge$Score - mean(eff_merge$Score, na.rm = T))/sd(eff_merge$Score, na.rm = T)
+ach_v_eff <- bind_rows(ach_merge, eff_merge)
+ach_v_eff$Date <- lubridate::round_date(ach_v_eff$Date, unit = "3 months")
+
 ```
 
 Inputs {.sidebar}
