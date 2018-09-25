@@ -41,6 +41,7 @@ effort.means.category <- all.effort.data %>%
 # School Assessment Data
 assessment.files <- list.files(PATH_TO_ALL_ACADEMIC_DATA_FOLDER, pattern = "*.csv", full.names = TRUE)
 all.assessment.data <- do.call(rbind, lapply(assessment.files, readr::read_csv)) 
+all.assessment.data$MARK_PERCENTAGE <- all.assessment.data$RAW_MARK / all.assessment.data$MARK_OUT_OF
 
 # mucking around with assessment data
 eff_merge <- effort.means
@@ -96,3 +97,8 @@ gtest3 <- ggplot(data = em[em$Form != "2017 Year 12",], aes(Effort, colour = Gen
   ggtitle("Distribution by Cohort") +
   facet_grid(Form ~ .)
 #ggsave("~/Desktop/cohort effort teacher student dist.png", gtest3)
+
+
+# Getting course marks for each course per year level
+course.assessment.data <- all.assessment.data
+course.assessment.data
