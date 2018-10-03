@@ -100,5 +100,16 @@ gtest3 <- ggplot(data = em[em$Form != "2017 Year 12",], aes(Effort, colour = Gen
 
 
 # Getting course marks for each course per year level
-course.assessment.data <- all.assessment.data
-course.assessment.data
+# Focusing on 11 to 12 mathematics (data too messy)
+course.assessment.data <- all.assessment.data[all.assessment.data$DUE_DATE > "2017-01-01",]
+maths.assessment.data <- course.assessment.data[grepl("Math", course.assessment.data$COURSE),]
+maths.assessment.data <- maths.assessment.data[
+  0 < maths.assessment.data$WEIGHTING & 
+    maths.assessment.data$WEIGHTING < 100 & 
+    !(is.na(maths.assessment.data$WEIGHTING)),
+  ]
+maths.assessment.data[grepl("Half|half|mid|Mid", maths.assessment.data$TASK),] <- NULL
+maths.assessment.data$WEIGHTED_MARK <- maths.assessment.data$WEIGHTING * maths.assessment.data$MARK_PERCENTAGE
+maths.coursemarks <- maths.assessment.data[grepl("12|11",maths.assessment.data$FORM_RUN),] %>%
+  group_by(STUDENT_NUMBER, STUDENT_FIRSTNAME, STUDENT_SURNAME, FORM_RUN, COURSE) %>%
+  summarise(COURSE_MARK = sum(WEIGHTED_MARK), TOTAL_WEIGHT = sum(WEIGHTING))
