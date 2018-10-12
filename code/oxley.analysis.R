@@ -10,10 +10,9 @@ trim_pref_name <- function(x) {
   return(x)
 }
 
-PATH_TO_ALL_EFFORT_DATA <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/oxley.all.effort.data.csv"
-PATH_TO_ALL_STUDENT_INFO <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/oxley.all.student.info.csv"
-PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/School-Assessments/Edumate Export/"
-
+PATH_TO_ALL_EFFORT_DATA <- "/Users/tahrenhicks/Documents/Data Analysis/Oxley Data/oxley.all.effort.data.csv"
+PATH_TO_ALL_STUDENT_INFO <- "/Users/tahrenhicks/Documents/Data Analysis/Oxley Data/oxley.all.student.info.csv"
+PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/Users/tahrenhicks/Documents/Data Analysis/Oxley Data/Edumate Export/"
 
 all.effort.data <- readr::read_csv(PATH_TO_ALL_EFFORT_DATA)
 student.info <- readr::read_csv(PATH_TO_ALL_STUDENT_INFO)
@@ -101,8 +100,9 @@ gtest3 <- ggplot(data = em[em$Form != "2017 Year 12",], aes(Effort, colour = Gen
 
 # Getting course marks for each course per year level
 # Focusing on 11 to 12 mathematics (data too messy)
-course.assessment.data <- all.assessment.data[all.assessment.data$DUE_DATE > "2017-01-01",]
+course.assessment.data <- all.assessment.data[all.assessment.data$DUE_DATE > "2016-01-01",]
 maths.assessment.data <- course.assessment.data[grepl("Math", course.assessment.data$COURSE),]
+
 maths.assessment.data <- maths.assessment.data[
   0 < maths.assessment.data$WEIGHTING & 
     maths.assessment.data$WEIGHTING < 100 & 
@@ -113,3 +113,26 @@ maths.assessment.data$WEIGHTED_MARK <- maths.assessment.data$WEIGHTING * maths.a
 maths.coursemarks <- maths.assessment.data[grepl("12|11",maths.assessment.data$FORM_RUN),] %>%
   group_by(STUDENT_NUMBER, STUDENT_FIRSTNAME, STUDENT_SURNAME, FORM_RUN, COURSE) %>%
   summarise(COURSE_MARK = sum(WEIGHTED_MARK), TOTAL_WEIGHT = sum(WEIGHTING))
+# Getting rid of non 100 weights and subsetting
+maths.marks <- maths.coursemarks[maths.coursemarks$TOTAL_WEIGHT == 100,]
+maths.marks$FORM_RUN <- gsub("201..Year\\s","",maths.marks$FORM_RUN)
+maths.marks$COURSE <- gsub("Year .. ","", maths.marks$COURSE)
+maths.marks$COURSE <- gsub("General 2", "General", maths.marks$COURSE)
+# Spread based on course
+maths.marks <- maths.marks %>% spread(key = FORM_RUN, value = COURSE_MARK)
+fitm <- lm(`12` ~ `11` ,data = maths.marks)
+g_mathsHSCprogress <- ggplot(data = maths.marks, 
+                             aes(x = `11`, y = `12`, color = COURSE)) + 
+  geom_point() + 
+  geom_rug() +
+  geom_smooth(inherit.aes = FALSE, aes(x = `11`, y = `12`), 
+              color = 'black', 
+              size = 0.2,
+              method = "lm") +
+  scale_x_continuous(limits = c(0,100)) + scale_y_continuous(limits = c(0,100)) +
+  scale_colour_manual(values = wes_palette("Rushmore1")) +
+  theme(panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_line(linetype = "dotted",
+                                        size = 0.2, 
+                                        colour = "light gray")) +
+  ggtitle("HSC Mathematics: Year 11 v Year 12 Marks")
