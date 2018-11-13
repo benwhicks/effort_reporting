@@ -45,7 +45,7 @@ This is primarily to get the House field which is not extracted from the sql que
 
 At the moment of writing this this is done through *Contacts -> Print -> Generate List* in Edumate. 
 
-### 4. Extract academic data.
+### 4. Extract academic data. (Not yet working - omit this step)
 
 The sql query *edumate_academic_ox.sql* should extract all the academic data (i.e. assessment task marks) for the current academic year. This is found in *Reports - Academic Reports* on Edumate and is called *Academic Data Export for Effort Reporting*. In future, this will be used to upload the academic data to the Effort Tracking system, however this is yet to be implemented.
 
