@@ -15,9 +15,9 @@ library(wesanderson)
 ```
 
 ``` {r global, include=FALSE}
-PATH_TO_ALL_EFFORT_DATA <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/oxley.all.effort.data.csv"
-PATH_TO_ALL_STUDENT_INFO <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/oxley.all.student.info.csv"
-PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/School-Assessments/Edumate Export/"
+PATH_TO_ALL_EFFORT_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.effort.data.csv"
+PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.student.info.csv"
+PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/Edumate Export/"
  
 trim_pref_name <- function(x) {
   x <- gsub( " *\\(.*?\\) *", "", x)
@@ -66,6 +66,7 @@ ach_merge$Source = "Teacher"
 eff_merge$Score <- (eff_merge$Score - mean(eff_merge$Score, na.rm = T))/sd(eff_merge$Score, na.rm = T)
 ach_v_eff <- bind_rows(ach_merge, eff_merge)
 ach_v_eff$Date <- lubridate::round_date(ach_v_eff$Date, unit = "3 months")
+
 
 ```
 
@@ -152,6 +153,11 @@ renderPlot({
 })
 ```
 
+
+### Effort v Achievement
+
+``` {r}
+```
 Column {data-width=650, .tabset}
 -----------------------------------------------------------------------
 
