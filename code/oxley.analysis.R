@@ -10,9 +10,9 @@ trim_pref_name <- function(x) {
   return(x)
 }
 
-PATH_TO_ALL_EFFORT_DATA <- "/Users/tahrenhicks/Documents/Data Analysis/Oxley Data/oxley.all.effort.data.csv"
-PATH_TO_ALL_STUDENT_INFO <- "/Users/tahrenhicks/Documents/Data Analysis/Oxley Data/oxley.all.student.info.csv"
-PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/Users/tahrenhicks/Documents/Data Analysis/Oxley Data/Edumate Export/"
+PATH_TO_ALL_EFFORT_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.effort.data.csv"
+PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.student.info.csv"
+PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/Edumate Export/"
 
 all.effort.data <- readr::read_csv(PATH_TO_ALL_EFFORT_DATA)
 student.info <- readr::read_csv(PATH_TO_ALL_STUDENT_INFO)
@@ -136,3 +136,43 @@ g_mathsHSCprogress <- ggplot(data = maths.marks,
                                         size = 0.2, 
                                         colour = "light gray")) +
   ggtitle("HSC Mathematics: Year 11 v Year 12 Marks")
+
+all.engagement <- all.effort.data
+all.engagement <- merge(all.engagement, unique(student.info[,c("Student.code","Form")]))
+all.engagement <- all.engagement[all.engagement$Category == "Engagement" & all.engagement$Source == "Student",]
+# making curriculum areas
+all.engagement$Department <- all.engagement$Subject
+
+subject_to_department <- function(x) {
+  # Removing extension suffix, numeric suffic, stream suffix
+  # This should sort Mathematics and English subjects
+  x <- gsub(" 1| 2", "", x)
+  x <- gsub(" Extension", "", x)
+  x <- gsub(" Advanced", "", x)
+  x <- gsub(" Standard", "", x)
+  x <- gsub(" General", "", x)
+  x <- gsub(" Continuers", "", x)
+  # Technology department
+  x <- gsub("Graphics |Textiles |Design and |Food |Media ", "", x)
+  x <- gsub("Engineering Studies", "Technology", x)
+  # Science department
+  x <- gsub("Biology|Chemistry|Physics|Science Compaction","Science",x)
+  # Humanities
+  x <- gsub("History Modern|Geography|Commerce|Big History|Modern History|History Ancienct|Ancient History", "Humanities", x)
+  x <- gsub("History|Economics|Legal Studies|Studies of Religion|Business Studies","Humanities", x)
+  # Arts
+  x <- gsub("Music|Visual Arts|Drama", "Arts", x)
+  # Distinctives
+  x <- gsub("Cornerstone|SWYM|Global Perspectives|Wide Reading", "Distinctives", x)
+  # Other
+  x <- gsub("PDHPE|French|French|TVET|Distance Education|EXT", "Other", x)
+  
+  return(x)
+}
+
+all.engagement$Department <- subject_to_department(all.engagement$Department)
+all.engagement.means <- all.engagement %>% group_by(Department, Date, Form) %>% summarise(Engagement = mean(Score, na.rm = T))
+g.engagement <- ggplot(data = all.engagement.means[all.engagement.means$Form %in% c("2018 Year 07","2018 Year 08","2018 Year 09","2018 Year 10"),], 
+                       aes(x = Date, y = Engagement, color = Department, group = Department)) +
+  geom_line() + facet_grid(Form ~ Department) + theme_minimal()
+g.engagement + ggtitle("Student Reported Engagement by Form and Department")
