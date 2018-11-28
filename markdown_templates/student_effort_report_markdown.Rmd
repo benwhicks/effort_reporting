@@ -26,16 +26,17 @@ suppressPackageStartupMessages(library(ggplot2))
 df <- effort.data[effort.data$Student.code == ID,]
 student.name <- unique(df[df$Student.code == ID,]$Student.name)
 cohort <- unique(df[df$Student.code == ID,]$Cohort)
+df <- df %>% spread()
 ```
 
 ``` {r fig.env='marginfigure', fig.height = 1, fig.width = 1}
-logo <- png::readPNG("images/oxleycrest.png")
-grid::grid.raster(logo)
+#logo <- jpeg::readJPEG("images/oxley crest.jpg")
+#grid::grid.raster(logo)
 ```
 
 # `r student.name`
 
-## Effort Report - `r reportingPeriod`
+## Effort Report - `r REPORTING_PERIOD`
 
 Students and teachers reported against the same three categories: _Diligence_, _Engagement_ and _Behaviour_.
 

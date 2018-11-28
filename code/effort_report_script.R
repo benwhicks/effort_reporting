@@ -15,78 +15,88 @@
 library(knitr)
 library(rmarkdown)
 library(markdown)
-library(dplyr)
-library(tidyr)
-library(stringr)
+library(tidyverse)
 source("code/effort.functions.R")
 
 # Changeable fields
 SURVEY_DATE <- '2018-11-19'
 EXPORT_FILENAME <- '2018 Term 4 Effort Data.csv'
 REPORTING_PERIOD <- '2018 Term 4'
-PATH_TO_NEW_EFFORT_DATA <- "~/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/2018 Term 4 Effort Data.csv"
-PATH_TO_ALL_EFFORT_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.effort.data.csv"
-PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.student.info.csv"
-PATH_TO_EDUMATE_MAIL_DATA <- ""
+PATH_TO_NEW_EFFORT_DATA <- "~/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/efforttracking_20181127-0107.csv"
+PATH_TO_ALL_EFFORT_DATA <- "~/Documents/Data Analysis/Oxley Effort Data/oxley.all.effort.data.wide.201809.csv"
+NEW_ALL_EFFORT_EXPORT_FILE <- "oxley.all.effort.data.wide.201811.csv"
+PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/oxley.all.student.info.csv"
+PATH_TO_EDUMATE_MAIL_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/edumate.student.data.201811.csv"
 REPORT_DIR <- "~/Documents/Data Analysis/Oxley Effort Data/Reports/"
 
-# Paths to data files
-datdir <- "/Users/benhicks/Documents/Data Analysis/Data-Oxley/Effort Data/2018 Term 3/"
-pastEffortPath <- paste0(datdir,"Past Effort Data/")
-effortPath <- paste0(datdir,"efforttracking_2018T3_final.csv")
+
+# Creates a directory called 'reports' if it does not already exist
+if (!dir.exists(REPORT_DIR)) {dir.create(REPORT_DIR)}
 
 # Reading in the data
-effort.tracking.data <- read.csv(effortPath) # in the effort tracking form
+effort.tracking.data <- read_csv(PATH_TO_NEW_EFFORT_DATA) # in the effort tracking form
 effort.tracking.data$Teacher.name <- paste(effort.tracking.data$TeacherFirstname, effort.tracking.data$TeacherSurname)
 
+
+
+
+
+
+# Need to change this bit 
+
+
+
 # changing to long format
-effort.data <- effort.tracking.data %>% 
+effort.data.long <- effort.tracking.data %>% 
   gather(key = Type, 
          value = Score, 
          Student_DILIGENCE:Teacher_BEHAVIOUR) %>% 
   mutate(Source = gsub("_.*","",Type), 
          Category = str_to_title(gsub("^.*_", "", Type)))
-effort.data$Type <- NULL
-effort.data$Subject <- gsub("Year\\s\\d+\\s","",effort.data$Course)
+effort.data.long$Type <- NULL
+
+
+
+
+
+
+
+
+effort.data$Subject <- gsub("Year\\s\\d+\\s","",effort.data$CLASS)
+effort.data$Subject <- gsub("\\s[OXLEY]$","", effort.data$Subject)
+effort.data$Subject <- gsub("\\s10A","", effort.data$Subject)
 effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), effort.data$StudentSurname)
 effort.data <- plyr::rename(effort.data, replace = c("StudentID" = "Student.code",
                                                "CLASS_CODE" = "Class.code"))
 effort.data$Date <- as.Date(SURVEY_DATE)
-write.csv(effort.data, file = paste0(datdir, EXPORT_FILENAME), row.names = F)
+write_csv(effort.data, path = paste0(REPORT_DIR, EXPORT_FILENAME))
 
-old_effort_files <- list.files(pastEffortPath, pattern = "*.csv", full.names = T)
-past.effort.data <- do.call(rbind,lapply(old_effort_files, read.csv))
-ednames <- c("Student.code","Student.name","Subject","Score","Category","Source","Class.code","Teacher.code","Date","Teacher.name")
+past.effort.data <- read_csv(PATH_TO_ALL_EFFORT_DATA)
+ednames <- c("Student.code","Student.name","Subject","Class.code","Date","Student.Behaviour","Student.Diligence","Student.Engagement","Teacher.Behaviour","Teacher.Diligence","Teacher.Engagement")
 past.effort.data$Date <- as.Date(past.effort.data$Date)
 
 # note that all
 all.effort.data <- plyr::rbind.fill(past.effort.data[,names(past.effort.data) %in% ednames], 
                          effort.data[,names(effort.data) %in% ednames])
+write_csv(all.effort.data, path = paste0(REPORT_DIR, NEW_ALL_EFFORT_EXPORT_FILE))
+
+
+
+
+
 
 # Checking subject list
 setdiff(unique(effort.data$Subject), subject.order.list)
 
 # Other parameters
-sendMail <- FALSE # change to false if you want to generate the reports but not send the emails
-reportingPeriod <- REPORTING_PERIOD
-mail_subject <- paste("Effort Report",reportingPeriod)
-mail_teacherBody <- paste0("Attached is your effort report for ",reportingPeriod ,".\nThanks,\nBen")
-mail_studentBody <- paste0("Attached is your effort report for ",reportingPeriod ,". This is being resent as the final graph was missing Term 2 data. \n")
-  
-mailData <- read.csv(PATH_TO_EDUMATE_MAIL_DATA)
-mailData <- plyr::rename(mailData, replace = c("Student.."="Student.code",
-                                               "Firstname.Lastname"="Student.name",
-                                               "Carers...Parents..REPORTS..Email"="Email.carers"))
+mailData <- read_csv(PATH_TO_EDUMATE_MAIL_DATA)
 student.info <- mailData # used as student.info in pastoral_summary
 
 student.numbers <- unique(effort.data$Student.code)
 teachers <- unique(effort.data$Teacher.name) 
 
-# Creates a directory called 'reports' if it does not already exist
-if (!dir.exists(REPORT_DIR)) {dir.create(REPORT_DIR)}
-
 # Creating student reports  -change to student.numbers
-for (ID in student.numbers) {
+for (ID in student.numbers[1:5]) {
   s.name <- unique(effort.data[effort.data$Student.code == ID,]$Student.name)
   studentFileName <- paste0(ID,"___Student_Effort_Report_", s.name , "_", REPORTING_PERIOD, ".pdf" )
   studentFilePath <- paste0(REPORT_DIR ,"/" , studentFileName)
