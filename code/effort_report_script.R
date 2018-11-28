@@ -29,59 +29,51 @@ PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Effort Da
 PATH_TO_EDUMATE_MAIL_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/edumate.student.data.201811.csv"
 REPORT_DIR <- "~/Documents/Data Analysis/Oxley Effort Data/Reports/"
 
-
 # Creates a directory called 'reports' if it does not already exist
 if (!dir.exists(REPORT_DIR)) {dir.create(REPORT_DIR)}
 
 # Reading in the data
 effort.tracking.data <- read_csv(PATH_TO_NEW_EFFORT_DATA) # in the effort tracking form
+past.effort.data <- read_csv(PATH_TO_ALL_EFFORT_DATA)
+
 effort.tracking.data$Teacher.name <- paste(effort.tracking.data$TeacherFirstname, effort.tracking.data$TeacherSurname)
 
-
-
-
-
-
-# Need to change this bit 
-
-
-
-# changing to long format
-effort.data.long <- effort.tracking.data %>% 
+# changing to long format and tidying up
+effort.data <- effort.tracking.data %>% 
   gather(key = Type, 
          value = Score, 
          Student_DILIGENCE:Teacher_BEHAVIOUR) %>% 
   mutate(Source = gsub("_.*","",Type), 
          Category = str_to_title(gsub("^.*_", "", Type)))
-effort.data.long$Type <- NULL
-
-
-
-
-
-
-
-
+effort.data$Type <- NULL
 effort.data$Subject <- gsub("Year\\s\\d+\\s","",effort.data$CLASS)
 effort.data$Subject <- gsub("\\s[OXLEY]$","", effort.data$Subject)
 effort.data$Subject <- gsub("\\s10A","", effort.data$Subject)
 effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), effort.data$StudentSurname)
 effort.data <- plyr::rename(effort.data, replace = c("StudentID" = "Student.code",
-                                               "CLASS_CODE" = "Class.code"))
+                                                     "CLASS_CODE" = "Class.code"))
 effort.data$Date <- as.Date(SURVEY_DATE)
-write_csv(effort.data, path = paste0(REPORT_DIR, EXPORT_FILENAME))
+# pulling back into wide format
+effort.data.wide <- effort.data %>%
+  unite(Temp, c(Source, Category), sep = ".") %>%
+  spread(key = Temp, value = Score)
 
-past.effort.data <- read_csv(PATH_TO_ALL_EFFORT_DATA)
+# merging the old with the new
 ednames <- c("Student.code","Student.name","Subject","Class.code","Date","Student.Behaviour","Student.Diligence","Student.Engagement","Teacher.Behaviour","Teacher.Diligence","Teacher.Engagement")
 past.effort.data$Date <- as.Date(past.effort.data$Date)
-
-# note that all
-all.effort.data <- plyr::rbind.fill(past.effort.data[,names(past.effort.data) %in% ednames], 
+all.effort.data.wide <- plyr::rbind.fill(past.effort.data[,names(past.effort.data) %in% ednames], 
                          effort.data[,names(effort.data) %in% ednames])
-write_csv(all.effort.data, path = paste0(REPORT_DIR, NEW_ALL_EFFORT_EXPORT_FILE))
+all.effort.data <- all.effort.data.wide %>%
+  gather(key = Type,
+         value = Score,
+         Student.Diligence:Teacher.Behaviour) %>%
+  mutate(Source = gsub("\\..*","",Type), 
+         Category = str_to_title(gsub("^.*\\.", "", Type)))
 
 
-
+# Exporting data
+write_csv(effort.data.wide, path = paste0(REPORT_DIR, EXPORT_FILENAME))
+write_csv(all.effort.data.wide, path = paste0(REPORT_DIR, NEW_ALL_EFFORT_EXPORT_FILE))
 
 
 
@@ -91,15 +83,25 @@ setdiff(unique(effort.data$Subject), subject.order.list)
 # Other parameters
 mailData <- read_csv(PATH_TO_EDUMATE_MAIL_DATA)
 student.info <- mailData # used as student.info in pastoral_summary
+student.info$Cohort <- student.info$Form
 
 student.numbers <- unique(effort.data$Student.code)
 teachers <- unique(effort.data$Teacher.name) 
+
+# making empty data frame for mail merge
+mailMerge <- data.frame(To = character(),
+                        Cc =character(),
+                        Name = character(),
+                        Attachment = character())
 
 # Creating student reports  -change to student.numbers
 for (ID in student.numbers[1:5]) {
   s.name <- unique(effort.data[effort.data$Student.code == ID,]$Student.name)
   studentFileName <- paste0(ID,"___Student_Effort_Report_", s.name , "_", REPORTING_PERIOD, ".pdf" )
-  studentFilePath <- paste0(REPORT_DIR ,"/" , studentFileName)
+  studentFilePath <- paste0(REPORT_DIR,studentFileName)
+  studentEmail <- unique(mailData[mailData$Student.code == ID,]$Student.email)
+  reportsEmail <- unique(mailData[mailData$Student.code == ID,]$Report.email)
+  mailMerge[nrow(mailMerge)+1,] <- list(studentEmail, reportsEmail, s.name, studentFileName)
   rmarkdown::render('markdown_templates/student_effort_report_markdown.Rmd',
                     output_file = studentFileName,
                     output_dir = REPORT_DIR,

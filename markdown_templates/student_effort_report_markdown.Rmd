@@ -10,7 +10,6 @@ geometry: margin=1in
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 # datdir, effort.data needs to be set from script
 
-#source('effort.functions.R') # - needs to be done in script now
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(ggplot2))
 ```
@@ -19,17 +18,16 @@ suppressPackageStartupMessages(library(ggplot2))
 ``` {r eval = TRUE}
 # This markdown file needs:
 #    The data set:          effort.data
+#    All historic data:     all.effort.data
 #    Student info:          student.info
 #    The student id number: ID
-# report based on student id number - this will be automated for mail out
 
 df <- effort.data[effort.data$Student.code == ID,]
 student.name <- unique(df[df$Student.code == ID,]$Student.name)
 cohort <- unique(df[df$Student.code == ID,]$Cohort)
-df <- df %>% spread()
 ```
 
-``` {r fig.env='marginfigure', fig.height = 1, fig.width = 1}
+``` {r fig.env='marginfigure', fig.height = 1, fig.width = 1, eval = F}
 #logo <- jpeg::readJPEG("images/oxley crest.jpg")
 #grid::grid.raster(logo)
 ```
@@ -52,7 +50,7 @@ The first graph shows the average of the student's self reported scores, and the
 
 ### Effort report for `r student.name`
 
-``` {r fig.height = 4, fig.width = 8, fig.align = "center"}
+``` {r fig.height = 4, fig.width = 8, fig.align = "center", eval = F}
 overallEffortPlot(df)
 ```
 
@@ -62,7 +60,7 @@ effortPlot(df, ctitle = "Effort by Subject")
 
 --------
 
-``` {r fig.height = 4, fig.width = 8, fig.align = "center"}
+``` {r fig.height = 4, fig.width = 8, fig.align = "center", eval = F}
 g.timeline <- suppressWarnings(
   effortIndividualTimeline(all.effort.data,ID, title = paste0("Effort timeline for ",student.name, ", with cohort comparison in grey"), student.info = effort.data)
 )
