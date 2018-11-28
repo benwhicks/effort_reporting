@@ -1,6 +1,6 @@
 # Cleaning Effort Tracking data
 library(stringr)
-
+library(tidyverse)
 
 message("Choose the csv file from the Effort Tracking export to clean")
 f <- file.choose()
@@ -32,16 +32,7 @@ ed <- df %>%
 ed$Type <- NULL
 ed$Subject <- gsub("Year\\s\\d+\\s","",ed$Course)
 
-# Quick fix to get Y12 data
-library(tidyr)
-library(dplyr)
-y12td <- ed[ed$Cohort == "2018 Year 12" & ed$Source == "Teacher",]
-oldDat <- read.csv(file.choose())
-oldDat <- plyr::rename(oldDat, replace = c("Student.code" = "StudentID"))
-oldDat <- oldDat[oldDat$StudentID %in% y12td$StudentID & oldDat$Source == "Teacher",]
-y12semester <- rbind(oldDat[,c("StudentID","Score")], y12td[,c("StudentID","Score")])
-y12sum <- y12semester %>% group_by(StudentID) %>% summarise(Effort = mean(Score)) 
-y12sum <- unique(merge(y12sum, y12td[,c("StudentID","StudentFirstname","StudentSurname")]))
+write_csv(ed, path = "~/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/2018 Term 4 Effort Data.csv")
 
 # Data should have the following fields:
 #   Student.code

@@ -166,7 +166,6 @@ subject_to_department <- function(x) {
   x <- gsub("Cornerstone|SWYM|Global Perspectives|Wide Reading", "Distinctives", x)
   # Other
   x <- gsub("PDHPE|French|French|TVET|Distance Education|EXT", "Other", x)
-  
   return(x)
 }
 

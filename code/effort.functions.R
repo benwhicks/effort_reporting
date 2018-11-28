@@ -36,32 +36,35 @@ yearFromClassCode <- function(x) {
   else {return(NA)}
 }
 
-# Data tidying functions
-tidyJsonData <- function(df) {
-  require(dplyr)
-  require(tidyr)
-  # fields must already be renamed and include Student.code, Class.code, Diligence, Engagement, Behaviour
-  # Timestamp. Categories must be in that order (for Diligence to Behaviour at least)
-  df.out <- df
+clean_tracking_data <- function(df) {
+  require(stringr)
+  require(tidyverse)
+  eff.fields <- c("StudentID", "Course","CLASS","CLASS_CODE","Teacher.name"
+                  ,"Student_DILIGENCE"
+                  ,"Student_ENGAGEMENT"
+                  ,"Student_BEHAVIOUR"
+                  ,"Teacher_DILIGENCE"
+                  ,"Teacher_ENGAGEMENT"
+                  ,"Teacher_BEHAVIOUR")
+  sinf.fields <- c("StudentID","Gender","GenderID",
+                   "StudentFirstname","StudentSurname","StudentEmail",
+                   "YEAR","TutorGroup","Cohort")
+  class.fields <- c("CLASS_CODE","TeacherTitle",
+                    "TeacherFirstname","TeacherSurname","TeacherEmail")
   
-  # going from wide to long format
-  df.out <- df.out %>% gather(Category, Score, Diligence:Behaviour)
+  eff.df <- unique(df[, names(df) %in% eff.fields]) # effort
+  sinf.df <- unique(df[, names(df) %in% sinf.fields]) # student info 
+  class.df <- unique(df[, names(df) %in% class.fields]) # class / teacher 
   
-  # Fixing up the Score to be numeric
-  df.out$Score <- gsub("Outstanding", 5, df.out$Score)
-  df.out$Score <- gsub("Very Good", 4, df.out$Score)
-  df.out$Score <- gsub("Good", 3, df.out$Score)
-  df.out$Score <- gsub("Fair", 2, df.out$Score)
-  df.out$Score <- gsub("Unsatisfactory", 1, df.out$Score)
-  df.out$Score <- gsub("NA", NA, df.out$Score)
-  df.out$Score <- as.numeric(df.out$Score)
-  
-  # getting latest data only
-  df.out$Timestamp <- as.POSIXct(df.out$Timestamp, format = "%a %b %d %Y %H:%M:%S")
-  df.latest <- aggregate(Timestamp ~ ., df.out[,!(names(df.out) %in% c("Score"))], max)
-  df.out <- merge(df.latest, df.out)
-  df.out$Timestamp <- NULL
-  return(df.out)
+  ed <- df %>% 
+    gather(key = Type, 
+           value = Score, 
+           Student_DILIGENCE:Teacher_BEHAVIOUR) %>% 
+    mutate(Source = gsub("_.*","",Type), 
+           Category = str_to_title(gsub("^.*_", "", Type)))
+  ed$Type <- NULL
+  ed$Subject <- gsub("Year\\s\\d+\\s","",ed$Course)
+  return(ed)
 }
 
 effLongToWide <- function(d) {
