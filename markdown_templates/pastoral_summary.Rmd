@@ -1,6 +1,4 @@
 ---
-title: "Pastoral Summary 2018 Term 3"
-author: "Ben Hicks"
 header-includes:
   \usepackage{fancyhdr}
   \pagestyle{fancy}
@@ -8,6 +6,8 @@ header-includes:
 
 output: pdf_document
 ---
+
+# Pastoral Summary for `r REPORTING_PERIOD`
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -44,6 +44,7 @@ df.teacher$Source <- NULL
 df.teacher <- df.teacher %>% spread(key = Category, value = Score)
 df.teacher$Effort <- rowMeans(df.teacher[,c("Diligence","Engagement","Behaviour")])
 
+student.info$Student.name <- student.info$Firstname.Lastname
 df.house.summary <- merge(df.teacher, student.info[,c("Student.code","Student.name","House","Form","Gender")])
 df.house.summary <- df.house.summary[df.house.summary$House %in% houses,]
 

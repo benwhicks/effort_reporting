@@ -1,8 +1,6 @@
 ---
 output: 
-  pdf_document:
-    latex_engine: xelatex
-sansfont: Gill Sans
+  pdf_document
 geometry: margin=1in
 ---
 
@@ -20,7 +18,7 @@ df <- effort.data[effort.data$Teacher.name == tcode,]
 
 ``` {r fig.env='marginfigure', fig.height = 1, fig.width = 1}
 # Adding the Oxley logo
-logo <- png::readPNG("images/oxleycrest.png")
+logo <- jpeg::readJPEG("images/Oxley-crest.jpg")
 grid::grid.raster(logo)
 ```
 
@@ -40,7 +38,7 @@ df$Category <- factor(df$Category, level = c("Diligence","Engagement","Behaviour
 g.gender <- ggplot(data = df) +
   geom_density(aes(x = Score, colour = Gender, linetype = Source), bw = 1, size = 0.9) +
   facet_grid(Gender ~ Category) + ggtitle("Comparison by category and gender")
-g.gender + ggthemes::theme_tufte() + scale_color_manual(values = wes_palette("GrandBudapest2")) 
+g.gender + theme_minimal() + scale_color_manual(values = wes_palette("GrandBudapest2")) 
 ```
 
 ``` {r fig.height = 20, fig.width = 8}

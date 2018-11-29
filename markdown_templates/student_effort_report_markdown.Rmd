@@ -1,8 +1,6 @@
 ---
 output: 
-  pdf_document:
-    latex_engine: xelatex
-sansfont: Arial
+  pdf_document
 geometry: margin=1in
 ---
 
@@ -15,7 +13,7 @@ suppressPackageStartupMessages(library(ggplot2))
 ```
 
 
-``` {r eval = TRUE}
+``` {r dataChunk, eval = TRUE}
 # This markdown file needs:
 #    The data set:          effort.data
 #    All historic data:     all.effort.data
@@ -27,9 +25,9 @@ student.name <- unique(df[df$Student.code == ID,]$Student.name)
 cohort <- unique(df[df$Student.code == ID,]$Cohort)
 ```
 
-``` {r fig.env='marginfigure', fig.height = 1, fig.width = 1, eval = F}
-#logo <- jpeg::readJPEG("images/oxley crest.jpg")
-#grid::grid.raster(logo)
+``` {r crest, fig.env='marginfigure', fig.height = 1, fig.width = 1}
+logo <- jpeg::readJPEG("images/Oxley-crest.jpg")
+grid::grid.raster(logo)
 ```
 
 # `r student.name`
@@ -50,17 +48,17 @@ The first graph shows the average of the student's self reported scores, and the
 
 ### Effort report for `r student.name`
 
-``` {r fig.height = 4, fig.width = 8, fig.align = "center", eval = F}
+``` {r overallPlot, fig.height = 4, fig.width = 8, fig.align = "center", eval = T}
 overallEffortPlot(df)
 ```
 
-``` {r fig.height = 15, fig.width = 13, fig.align = "center"}
+``` {r subjectPlot, fig.height = 15, fig.width = 13, fig.align = "center"}
 effortPlot(df, ctitle = "Effort by Subject")
 ```
 
 --------
 
-``` {r fig.height = 4, fig.width = 8, fig.align = "center", eval = F}
+``` {r timelinePlot, fig.height = 4, fig.width = 8, fig.align = "center", eval = T}
 g.timeline <- suppressWarnings(
   effortIndividualTimeline(all.effort.data,ID, title = paste0("Effort timeline for ",student.name, ", with cohort comparison in grey"), student.info = effort.data)
 )

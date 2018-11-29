@@ -10,24 +10,78 @@ trim_pref_name <- function(x) {
   return(x)
 }
 
-PATH_TO_ALL_EFFORT_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.effort.data.csv"
-PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.student.info.csv"
-PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/Edumate Export/"
+# Loading packages and functions
+library(knitr)
+library(rmarkdown)
+library(markdown)
+library(tidyverse)
+source("code/effort.functions.R")
 
-all.effort.data <- readr::read_csv(PATH_TO_ALL_EFFORT_DATA)
-student.info <- readr::read_csv(PATH_TO_ALL_STUDENT_INFO)
-all.effort.data$Student.name <- trim_pref_name(
-  stringr::str_to_title(all.effort.data$Student.name))
-all.effort.data$Source <- factor(all.effort.data$Source, levels = c("Student", "Teacher"))
+# Changeable fields
+SURVEY_DATE <- '2018-11-19'
+EXPORT_FILENAME <- '2018 Term 4 Effort Data.csv'
+REPORTING_PERIOD <- '2018 Term 4'
+PATH_TO_NEW_EFFORT_DATA <- "~/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/efforttracking_20181127-0107.csv"
+PATH_TO_ALL_EFFORT_DATA <- "~/Documents/Data Analysis/Oxley Effort Data/oxley.all.effort.data.wide.201809.csv"
+NEW_ALL_EFFORT_EXPORT_FILE <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/oxley.all.effort.data.wide.201811.csv"
+PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/oxley.all.student.info.csv"
+PATH_TO_EDUMATE_MAIL_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/edumate.student.data.201811.csv"
+REPORT_DIR <- "~/Documents/Data Analysis/Oxley Effort Data/Reports/"
+MAIL_MERGE_FILE <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/mail_merge_2018T4.csv"
 
-# removing unwanted fields
-all.effort.data$Teacher.code <- NULL
-all.effort.data$Teacher.name <- NULL
-student.info$Student.name <- trim_pref_name(
-  stringr::str_to_title(student.info$Student.name)
-)
+# Creates a directory called 'reports' if it does not already exist
+if (!dir.exists(REPORT_DIR)) {dir.create(REPORT_DIR)}
+
+# Reading in the data
+effort.tracking.data <- read_csv(PATH_TO_NEW_EFFORT_DATA) # in the effort tracking form
+past.effort.data <- read_csv(PATH_TO_ALL_EFFORT_DATA)
+
+effort.tracking.data$Teacher.name <- paste(effort.tracking.data$TeacherFirstname, effort.tracking.data$TeacherSurname)
+
+# changing to long format and tidying up
+effort.data <- effort.tracking.data %>% 
+  gather(key = Type, 
+         value = Score, 
+         Student_DILIGENCE:Teacher_BEHAVIOUR) %>% 
+  mutate(Source = gsub("_.*","",Type), 
+         Category = str_to_title(gsub("^.*_", "", Type)))
+effort.data$Type <- NULL
+effort.data$Subject <- gsub("Year\\s\\d+\\s","",effort.data$CLASS)
+effort.data$Subject <- gsub("\\s[OXLEY]$","", effort.data$Subject)
+effort.data$Subject <- gsub("\\s10A","", effort.data$Subject)
+effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), effort.data$StudentSurname)
+effort.data <- plyr::rename(effort.data, replace = c("StudentID" = "Student.code",
+                                                     "CLASS_CODE" = "Class.code"))
+effort.data$Date <- as.Date(SURVEY_DATE)
+# pulling back into wide format
+effort.data.wide <- effort.data %>%
+  unite(Temp, c(Source, Category), sep = ".") %>%
+  spread(key = Temp, value = Score)
+
+# merging the old with the new
+ednames <- c("Student.code","Student.name","Subject","Class.code","Date","Student.Behaviour","Student.Diligence","Student.Engagement","Teacher.Behaviour","Teacher.Diligence","Teacher.Engagement")
+past.effort.data$Date <- as.Date(past.effort.data$Date)
+all.effort.data.wide <- plyr::rbind.fill(past.effort.data[,names(past.effort.data) %in% ednames], 
+                                         effort.data.wide[,names(effort.data.wide) %in% ednames])
+all.effort.data <- all.effort.data.wide %>%
+  gather(key = Type,
+         value = Score,
+         c(Student.Diligence,Student.Engagement,Student.Behaviour,Teacher.Diligence,Teacher.Engagement,Teacher.Behaviour)) %>%
+  mutate(Source = gsub("\\..*","",Type), 
+         Category = str_to_title(gsub("^.*\\.", "", Type)))
+all.effort.data$Type <- NULL
+
+# Checking subject list
+setdiff(unique(effort.data$Subject), subject.order.list)
+
+# Other parameters
+mailData <- read_csv(PATH_TO_EDUMATE_MAIL_DATA)
+student.info <- mailData # used as student.info in pastoral_summary
+student.info$Cohort <- student.info$Form
+
 students <- unique(all.effort.data[complete.cases(all.effort.data),c("Student.name","Student.code")])
 students <- students[order(students$Student.name),]
+
 
 effort.means <- all.effort.data %>% 
   group_by(Student.code, Student.name, Source, Date) %>% 
@@ -170,7 +224,7 @@ subject_to_department <- function(x) {
 }
 
 all.engagement$Department <- subject_to_department(all.engagement$Department)
-all.engagement.means <- all.engagement %>% group_by(Department, Date, Form) %>% summarise(Engagement = mean(Score, na.rm = T))
+all.engagement.means <- all.engagement[all.engagement$Department != "Other",] %>% group_by(Department, Date, Form) %>% summarise(Engagement = mean(Score, na.rm = T))
 g.engagement <- ggplot(data = all.engagement.means[all.engagement.means$Form %in% c("2018 Year 07","2018 Year 08","2018 Year 09","2018 Year 10"),], 
                        aes(x = Date, y = Engagement, color = Department, group = Department)) +
   geom_line() + facet_grid(Form ~ Department) + theme_minimal()
