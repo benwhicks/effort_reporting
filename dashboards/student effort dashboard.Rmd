@@ -15,7 +15,7 @@ library(wesanderson)
 ```
 
 ``` {r global, include=FALSE}
-PATH_TO_ALL_EFFORT_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.effort.data.csv"
+PATH_TO_ALL_EFFORT_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.effort.data.wide.201811.csv"
 PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/oxley.all.student.info.csv"
 PATH_TO_ALL_ACADEMIC_DATA_FOLDER <- "/home/hicks/Documents/Data Analysis/Oxley Dashboard Data/Edumate Export/"
  
@@ -24,8 +24,15 @@ trim_pref_name <- function(x) {
   return(x)
 }
 
-all.effort.data <- readr::read_csv(PATH_TO_ALL_EFFORT_DATA)
+all.effort.data.wide <- readr::read_csv(PATH_TO_ALL_EFFORT_DATA)
 student.info <- readr::read_csv(PATH_TO_ALL_STUDENT_INFO)
+all.effort.data <- all.effort.data.wide %>%
+  gather(key = Type,
+         value = Score,
+         c(Student.Diligence,Student.Engagement,Student.Behaviour,Teacher.Diligence,Teacher.Engagement,Teacher.Behaviour)) %>%
+  mutate(Source = gsub("\\..*","",Type), 
+         Category = str_to_title(gsub("^.*\\.", "", Type)))
+all.effort.data$Type <- NULL
 all.effort.data$Student.name <- trim_pref_name(
   stringr::str_to_title(all.effort.data$Student.name))
 all.effort.data$Source <- factor(all.effort.data$Source, levels = c("Student", "Teacher"))

@@ -149,3 +149,24 @@ rmarkdown::render('markdown_templates/pastoral_summary.Rmd',
                   output_file = pfname,
                   output_dir = REPORT_DIR
                   )
+
+# Creating means summary
+mfname <- paste0("Effort Means ", REPORTING_PERIOD, ".csv")
+mfpath <- paste0(REPORT_DIR, mfname)
+mean.efforts <- effort.data %>%
+  group_by(Student.code, StudentSurname, Student.name, Gender, Cohort, Source) %>%
+  summarise(Effort = mean(Score, na.rm = TRUE)) %>%
+  spread(key = Source, value = Effort)
+write_csv(mean.efforts, path = mfpath)
+
+# Creating annual summary
+mafname <- paste0("Effort Means ", REPORTING_PERIOD, ".csv")
+mafpath <- paste0(REPORT_DIR, mafname)
+current.student.info <- effort.data[,c("Student.code","Student.name","Gender","StudentSurname","Cohort")]
+mean.efforts.annual <- merge(
+  all.effort.data[all.effort.data$Date > as.Date("2018-01-01"),],
+  current.student.info) %>%
+  group_by(Student.code, Student.name, Gender, Cohort, Source) %>%
+  summarise(Effort = mean(Score, na.rm = TRUE)) %>%
+  spread(key = Source, value = Effort)
+write_csv(mean.efforts.annual, path = mafpath)
