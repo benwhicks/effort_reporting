@@ -229,3 +229,7 @@ g.engagement <- ggplot(data = all.engagement.means[all.engagement.means$Form %in
                        aes(x = Date, y = Engagement, color = Department, group = Department)) +
   geom_line() + facet_grid(Form ~ Department) + theme_minimal()
 g.engagement + ggtitle("Student Reported Engagement by Form and Department")
+all.engagement.means.gender <- merge(all.engagement[all.engagement$Department != "Other",], student.info[,c("Student.code","Gender")], all.x = T) %>% group_by(Department, Date, Form, Gender) %>% summarise(Engagement = mean(Score, na.rm = T))
+gender.engagement <- ggplot(data = all.engagement.means.gender[all.engagement.means.gender$Form %in% c("2018 Year 07","2018 Year 08","2018 Year 09","2018 Year 10"),], 
+                       aes(x = Date, y = Engagement, color = Gender, group = Gender)) +
+  geom_line() + facet_grid(Form ~ Department) + theme_minimal() + scale_x_date(labels = NULL)
