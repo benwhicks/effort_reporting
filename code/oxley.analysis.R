@@ -91,6 +91,10 @@ effort.means.category <- all.effort.data %>%
   group_by(Student.code, Student.name, Source, Category, Date) %>% 
   summarise(Effort = mean(Score, na.rm = T))
 
+
+
+
+
 # School Assessment Data
 assessment.files <- list.files(PATH_TO_ALL_ACADEMIC_DATA_FOLDER, pattern = "*.csv", full.names = TRUE)
 all.assessment.data <- do.call(rbind, lapply(assessment.files, readr::read_csv)) 
@@ -233,3 +237,30 @@ all.engagement.means.gender <- merge(all.engagement[all.engagement$Department !=
 gender.engagement <- ggplot(data = all.engagement.means.gender[all.engagement.means.gender$Form %in% c("2018 Year 07","2018 Year 08","2018 Year 09","2018 Year 10"),], 
                        aes(x = Date, y = Engagement, color = Gender, group = Gender)) +
   geom_line() + facet_grid(Form ~ Department) + theme_minimal() + scale_x_date(labels = NULL)
+
+
+
+
+# Annual effort report by course
+# Adjusted for teacher generosity
+# Use for CAME awards
+
+all.effort.18 <- all.effort.data.wide[all.effort.data.wide$Date > as.Date('2018-01-01'),] %>% 
+  mutate(Teacher.Effort = (Teacher.Diligence + Teacher.Behaviour + Teacher.Engagement)/3.0,
+         Student.Effort = (Student.Diligence + Student.Behaviour + Student.Engagement)/3.0) %>%
+  mutate(TminusS = Teacher.Effort - Student.Effort)
+#gen.df <- unique(merge(all.effort.18[,c("Student.name","Class.code","TminusS","Date")], effort.data[,c("Class.code","Teacher.name")])) %>%
+#  group_by(Teacher.name) %>% summarise(Gen = mean(TminusS, na.rm = T))
+y11.effort.18 <- all.effort.18[grepl("11",all.effort.18$Class.code),]
+y12.effort.18 <- all.effort.18[grepl("12", all.effort.18$Class.code) & 
+                                 all.effort.18$Date < as.Date('2018-10-01'),]
+j.effort.18 <- all.effort.18[grepl("7|8|9|10", all.effort.18$Class.code),]
+
+y11.effort.18 <- y11.effort.18 %>% group_by(Student.name, Subject) %>% summarise(Effort = mean(Teacher.Effort, na.rm = T))
+y11.effort.18$Cohort <- "2018 Year 11"
+y12.effort.18 <- y12.effort.18 %>% group_by(Student.name, Subject) %>% summarise(Effort = mean(Teacher.Effort, na.rm = T))
+y12.effort.18$Cohort <- "2018 Year 12"
+j.effort.18 <- j.effort.18 %>% group_by(Student.name, Subject) %>% summarise(Effort = mean(Teacher.Effort, na.rm = T))
+j.effort.18 <- merge(j.effort.18, effort.data[,c("Student.name","Cohort")], all.x = T)
+effort.18 <- bind_rows(list(y12.effort.18, y11.effort.18, j.effort.18))
+write_csv(unique(effort.18), path = "~/Desktop/effort_means_18.csv")
