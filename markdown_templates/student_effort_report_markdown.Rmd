@@ -2,6 +2,7 @@
 output: 
   pdf_document
 geometry: margin=1in
+graphics: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +26,7 @@ student.name <- unique(df[df$Student.code == ID,]$Student.name)
 cohort <- unique(df[df$Student.code == ID,]$Cohort)
 ```
 
-``` {r crest, fig.env='marginfigure', fig.height = 1, fig.width = 1}
+``` {r crest, fig.height = 1, fig.width = 1, eval = T}
 logo <- jpeg::readJPEG("images/Oxley-crest.jpg")
 grid::grid.raster(logo)
 ```
@@ -48,17 +49,17 @@ The first graph shows the average of the student's self reported scores, and the
 
 ### Effort report for `r student.name`
 
-``` {r overallPlot, fig.height = 4, fig.width = 8, fig.align = "center", eval = T}
+``` {r overallPlot, fig.height = 4, fig.width = 8, eval = T}
 overallEffortPlot(df)
 ```
 
-``` {r subjectPlot, fig.height = 15, fig.width = 13, fig.align = "center"}
+``` {r subjectPlot, fig.height = 15, fig.width = 13}
 effortPlot(df, ctitle = "Effort by Subject")
 ```
 
 --------
 
-``` {r timelinePlot, fig.height = 4, fig.width = 8, fig.align = "center", eval = T}
+``` {r timelinePlot, fig.height = 4, fig.width = 8, eval = T}
 g.timeline <- suppressWarnings(
   effortIndividualTimeline(all.effort.data,ID, title = paste0("Effort timeline for ",student.name, ", with cohort comparison in grey"), student.info = effort.data)
 )

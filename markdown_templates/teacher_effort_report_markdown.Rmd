@@ -16,7 +16,7 @@ df <- effort.data[effort.data$Teacher.name == tcode,]
 ```
 
 
-``` {r fig.env='marginfigure', fig.height = 1, fig.width = 1}
+``` {r fig.height = 1, fig.width = 1}
 # Adding the Oxley logo
 logo <- jpeg::readJPEG("images/Oxley-crest.jpg")
 grid::grid.raster(logo)

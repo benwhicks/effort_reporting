@@ -19,16 +19,16 @@ library(tidyverse)
 source("code/effort.functions.R")
 
 # Changeable fields
-SURVEY_DATE <- '2018-11-19'
-EXPORT_FILENAME <- '2018 Term 4 Effort Data.csv'
-REPORTING_PERIOD <- '2018 Term 4'
-PATH_TO_NEW_EFFORT_DATA <- "~/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/efforttracking_20181127-0107.csv"
-PATH_TO_ALL_EFFORT_DATA <- "~/Documents/Data Analysis/Oxley Effort Data/oxley.all.effort.data.wide.201809.csv"
-NEW_ALL_EFFORT_EXPORT_FILE <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/oxley.all.effort.data.wide.201811.csv"
-PATH_TO_ALL_STUDENT_INFO <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/oxley.all.student.info.csv"
-PATH_TO_EDUMATE_MAIL_DATA <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/2018 Term 4/edumate.student.data.201811.csv"
-REPORT_DIR <- "~/Documents/Data Analysis/Oxley Effort Data/Reports/"
-MAIL_MERGE_FILE <- "/home/hicks/Documents/Data Analysis/Oxley Effort Data/mail_merge_2018T4.csv"
+SURVEY_DATE <- '2019-03-11'
+EXPORT_FILENAME <- '2019 Term 1 Effort Data.csv'
+REPORTING_PERIOD <- '2019 Term 1'
+PATH_TO_NEW_EFFORT_DATA <- "D:\\Users\\bhicks\\Documents\\Data\\Oxley\\2019 Term 1 Effort Reporting\\Term 1 2019 Effort Grade Data Complete.csv"
+PATH_TO_ALL_EFFORT_DATA <- "D:\\Users\\bhicks\\Documents\\Data\\Oxley\\2019 Term 1 Effort Reporting\\oxley.all.effort.wide_end2018.csv"
+#PATH_TO_ALL_STUDENT_INFO <- Depreciated, to be included in all effort csv
+PATH_TO_EDUMATE_MAIL_DATA <- "D:\\Users\\bhicks\\Documents\\Data\\Oxley\\2019 Term 1 Effort Reporting\\edumate_student_details_2019T1.csv"
+REPORT_DIR <- "D:\\Users\\bhicks\\Documents\\Data\\Oxley\\2019 Term 1 Effort Reporting\\"
+NEW_ALL_EFFORT_EXPORT_FILE <- "oxley.all.effort.wide_2019T1.csv"
+MAIL_MERGE_FILE <- "mail_merge_2019T1.csv"
 
 # Creates a directory called 'reports' if it does not already exist
 if (!dir.exists(REPORT_DIR)) {dir.create(REPORT_DIR)}
@@ -50,6 +50,7 @@ effort.data$Type <- NULL
 effort.data$Subject <- gsub("Year\\s\\d+\\s","",effort.data$CLASS)
 effort.data$Subject <- gsub("\\s[OXLEY]$","", effort.data$Subject)
 effort.data$Subject <- gsub("\\s10A","", effort.data$Subject)
+effort.data$Subject <- gsub("\\s11A","", effort.data$Subject)
 effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), effort.data$StudentSurname)
 effort.data <- plyr::rename(effort.data, replace = c("StudentID" = "Student.code",
                                                      "CLASS_CODE" = "Class.code"))
@@ -60,7 +61,12 @@ effort.data.wide <- effort.data %>%
   spread(key = Temp, value = Score)
 
 # merging the old with the new
-ednames <- c("Student.code","Student.name","Subject","Class.code","Date","Student.Behaviour","Student.Diligence","Student.Engagement","Teacher.Behaviour","Teacher.Diligence","Teacher.Engagement")
+ednames <- c("Student.code","StudentFirstname","StudentSurname","StudentEmail",
+             "Subject", "Class.code",
+             "Year", "Cohort", "Date",
+             "TeacherFirstname","TeacherSurname", "TeacherEmail", 
+             "Student.Behaviour","Student.Diligence","Student.Engagement",
+             "Teacher.Behaviour","Teacher.Diligence","Teacher.Engagement")
 past.effort.data$Date <- as.Date(past.effort.data$Date)
 all.effort.data.wide <- plyr::rbind.fill(past.effort.data[,names(past.effort.data) %in% ednames], 
                          effort.data.wide[,names(effort.data.wide) %in% ednames])
@@ -114,6 +120,7 @@ for (ID in student.numbers) {
   for (n in seq(1,2)) {print("...")} # just for spacing
   print(paste0("Progress at: ",which(student.numbers == ID)/length(student.numbers)))
 }
+
 
 write_csv(mailMerge, path = MAIL_MERGE_FILE)
 

@@ -44,7 +44,7 @@ df.teacher$Source <- NULL
 df.teacher <- df.teacher %>% spread(key = Category, value = Score)
 df.teacher$Effort <- rowMeans(df.teacher[,c("Diligence","Engagement","Behaviour")])
 
-student.info$Student.name <- student.info$Firstname.Lastname
+student.info <- student.info %>% mutate(Student.name = paste(StudentFirstname, StudentLastname))
 df.house.summary <- merge(df.teacher, student.info[,c("Student.code","Student.name","House","Form","Gender")])
 df.house.summary <- df.house.summary[df.house.summary$House %in% houses,]
 
