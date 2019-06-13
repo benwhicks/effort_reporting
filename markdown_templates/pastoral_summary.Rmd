@@ -44,11 +44,11 @@ df.teacher$Source <- NULL
 df.teacher <- df.teacher %>% spread(key = Category, value = Score)
 df.teacher$Effort <- rowMeans(df.teacher[,c("Diligence","Engagement","Behaviour")])
 
-student.info <- student.info %>% mutate(Student.name = paste(StudentFirstname, StudentLastname))
-df.house.summary <- merge(df.teacher, student.info[,c("Student.code","Student.name","House","Form","Gender")])
+student.info <- student.info %>% mutate(Student.name = trim_pref_name(paste(Firstname, Lastname)))
+df.house.summary <- merge(df.teacher, student.info[,c("Student.code","Student.name","House","Cohort","Gender")])
 df.house.summary <- df.house.summary[df.house.summary$House %in% houses,]
 
-df.cohort.percentiles <- df.house.summary %>% group_by(Form, Date) %>% mutate(pr = 100*percent_rank(Effort))
+df.cohort.percentiles <- df.house.summary %>% group_by(Cohort, Date) %>% mutate(pr = 100*percent_rank(Effort))
 df.cohort.percentiles$pr <- round(df.cohort.percentiles$pr, 1)
 
 df.cohort.percentiles <- df.cohort.percentiles[df.cohort.percentiles$Date >= t0, c("Student.code","Date","pr")]
@@ -63,7 +63,7 @@ df.cohort.percentiles$t0 <- NULL
 # Setting up functions for generating house specific reports
 topFive <- function(houseSummaryData, date, house = NA, n = 5, top = TRUE) {
   # houseSummaryData as prepared earlier in file - must have the fields:
-  # Student.code, Date, Diligence, Engagement, Behaviour, Effort, Student.name, House, Form and Gender
+  # Student.code, Date, Diligence, Engagement, Behaviour, Effort, Student.name, House, Cohort and Gender
   # If top = FALSE then this function returns the bottom n students
   d <- houseSummaryData[houseSummaryData$Date == date,]
   if (!(is.na(house))) {d <- d[d$House == house,]}
@@ -72,7 +72,7 @@ topFive <- function(houseSummaryData, date, house = NA, n = 5, top = TRUE) {
   d$Student.code <- NULL
   # sorting data
   d <- d[order(d$Effort, decreasing = top),]
-  d <- d[,c("Student.name","House","Form","Gender","Effort")]
+  d <- d[,c("Student.name","House","Cohort","Gender","Effort")]
   # outputting top n
   n <- min(length(d$Effort),n)
   d <- d[1:n,]
@@ -85,7 +85,7 @@ effortChange <- function(houseSummaryData) {
   if (length(dates) < 2) {stop("Less than two dates present: insufficient for change comparison.")}
   t_1 <- dates[length(dates)]
   t_0 <- dates[length(dates)-1]
-  d <- houseSummaryData[,c("Student.code","Student.name","Date","House","Form","Gender","Effort")]
+  d <- houseSummaryData[,c("Student.code","Student.name","Date","House","Cohort","Gender","Effort")]
   d.previous <- d[d$Date == t_0,]
   d.latest <- d[d$Date == t_1,]
   d.previous$Date <- NULL
@@ -109,20 +109,20 @@ bigMovers <- function(houseSummaryData, house = NA, up = TRUE, n = 5) {
   return(d[1:n,])
 }
 
-formToYear <- function(form) {
+CohortToYear <- function(Cohort) {
   require(dplyr)
-  # Works with form in the, ahum, 'form':
+  # Works with Cohort in the, ahum, 'Cohort':
   # "2018 Year 09"
   # Extracting last 2 digits as number
-  form <- as.character(form)
-  year <- as.numeric(substr(form, nchar(form)-1, nchar(form)))
+  Cohort <- as.character(Cohort)
+  year <- as.numeric(substr(Cohort, nchar(Cohort)-1, nchar(Cohort)))
   return(year)
 }
 
 houseTimelinePlot <- function(houseSummaryData, house, colour1, colour2) {
   require(ggplot2)
   a_lev <- 0.2
-  df <- houseSummaryData[houseSummaryData$House == house,] %>% mutate(Year = formToYear(Form))
+  df <- houseSummaryData[houseSummaryData$House == house,] %>% mutate(Year = CohortToYear(Cohort))
   g <- ggplot(df, aes(x = Date, y = Effort, fill = Year, colour = Year, group = Student.code)) 
   g <- g + geom_line(alpha = a_lev) + geom_point(alpha = a_lev)
   g <- g + scale_fill_gradient(low = colour1, high = colour2)

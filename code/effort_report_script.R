@@ -94,6 +94,8 @@ for (ID in student.numbers[72:length(student.numbers)]) {
 write_csv(mailMerge, path = MAIL_MERGE_FILE)
 
 # Creating teacher reports
+# joining data with student info for gender
+effort.data <- left_join(effort.data, student.info %>% select(Student.code, Gender))
 for (tcode in teachers) {
   fn <- paste0("Teacher_Effort_Report_", tcode, "_", REPORTING_PERIOD, ".pdf" )
   fpath <- paste0(REPORT_DIR, fn)
@@ -101,6 +103,7 @@ for (tcode in teachers) {
                     output_file = fn,
                     output_dir = REPORT_DIR,
                     quiet = TRUE)
+  print(paste0("Progress at: ",which(teachers == tcode)/length(teachers)))
 }
 
 # Creating semester review for reporting
@@ -120,7 +123,7 @@ for (teacher in teachers) {
 
 # Creating school reports
 pfname <- paste0("Pastoral Summary ", REPORTING_PERIOD, '.pdf')
-pfpath <- paste0(REPORT_DIR, pfname)
+pfpath <- file.path(REPORT_DIR, pfname)
 rmarkdown::render('markdown_templates/pastoral_summary.Rmd',
                   output_file = pfname,
                   output_dir = REPORT_DIR
@@ -128,7 +131,7 @@ rmarkdown::render('markdown_templates/pastoral_summary.Rmd',
 
 # Creating means summary
 mfname <- paste0("Effort Means ", REPORTING_PERIOD, ".csv")
-mfpath <- paste0(REPORT_DIR, mfname)
+mfpath <- file.path(REPORT_DIR, mfname)
 mean.efforts <- effort.data %>%
   group_by(Student.code, StudentSurname, Student.name, Gender, Cohort, Source) %>%
   summarise(Effort = mean(Score, na.rm = TRUE)) %>%
