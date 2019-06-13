@@ -1,6 +1,7 @@
 ---
 output: 
   pdf_document
+sansfont: Calibri Light
 geometry: margin=1in
 graphics: yes
 ---

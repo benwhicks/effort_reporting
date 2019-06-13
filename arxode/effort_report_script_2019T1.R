@@ -8,6 +8,8 @@
 #    2. effort_report_script.R -- this file
 #    3. student_effort_report_markdown.Rmd
 #    4. teacher_effort_report_markdown.Rmd 
+#    5. school_effort_report_markdown.Rmd
+#    6. effort_report_data.csv
 
 # Loading packages and functions
 library(knitr)
@@ -18,21 +20,57 @@ library(rdata.oxley) # Effort data stored here now in new system.
 source("code/effort.functions.R")
 
 # Changeable fields
-SURVEY_DATE <- '2019-06-03'
-EXPORT_FILENAME <- '2019 Term 2 Effort Data.csv'
-REPORTING_PERIOD <- '2019 Term 2'
-REPORT_DIR <- file.path('~', 'Effort Reporting')
-NEW_ALL_EFFORT_EXPORT_FILE <- "oxley.all.effort.wide_2019T2.csv"
-MAIL_MERGE_FILE <- "mail_merge_2019T2.csv"
+SURVEY_DATE <- '2019-03-11'
+EXPORT_FILENAME <- '2019 Term 1 Effort Data.csv'
+REPORTING_PERIOD <- '2019 Term 1'
+PATH_TO_NEW_EFFORT_DATA <- "D:\\Users\\bhicks\\Documents\\Data\\Oxley\\2019 Term 1 Effort Reporting\\Term 1 2019 Effort Grade Data Complete.csv"
+PATH_TO_ALL_EFFORT_DATA <- "D:\\Users\\bhicks\\Documents\\Data\\Oxley\\2019 Term 1 Effort Reporting\\oxley.all.effort.wide_end2018.csv"
+#PATH_TO_ALL_STUDENT_INFO <- Depreciated, to be included in all effort csv
+PATH_TO_EDUMATE_MAIL_DATA <- "D:\\Users\\bhicks\\Documents\\Data\\Oxley\\2019 Term 1 Effort Reporting\\edumate_student_details_2019T1.csv"
+REPORT_DIR <- "D:\\Users\\bhicks\\Documents\\Data\\Oxley\\2019 Term 1 Effort Reporting\\"
+NEW_ALL_EFFORT_EXPORT_FILE <- "oxley.all.effort.wide_2019T1.csv"
+MAIL_MERGE_FILE <- "mail_merge_2019T1.csv"
 
 # Creates a directory called 'reports' if it does not already exist
 if (!dir.exists(REPORT_DIR)) {dir.create(REPORT_DIR)}
 
 # Reading in the data
-data("effort_tracking")
-effort.tracking.data <- effort_tracking %>% filter(Date >= max(Date)) # in the effort tracking form
-past.effort.data <- effort_tracking %>% filter(Date < max(Date))
-all.effort.data.wide <- effort_tracking
+effort.tracking.data <- read_csv(PATH_TO_NEW_EFFORT_DATA) # in the effort tracking form
+past.effort.data <- read_csv(PATH_TO_ALL_EFFORT_DATA)
+
+effort.tracking.data$Teacher.name <- paste(effort.tracking.data$TeacherFirstname, effort.tracking.data$TeacherSurname)
+
+# changing to long format and tidying up
+effort.data <- effort.tracking.data %>% 
+  gather(key = Type, 
+         value = Score, 
+         Student_DILIGENCE:Teacher_BEHAVIOUR) %>% 
+  mutate(Source = gsub("_.*","",Type), 
+         Category = str_to_title(gsub("^.*_", "", Type)))
+effort.data$Type <- NULL
+effort.data$Subject <- gsub("Year\\s\\d+\\s","",effort.data$CLASS)
+effort.data$Subject <- gsub("\\s[OXLEY]$","", effort.data$Subject)
+effort.data$Subject <- gsub("\\s10A","", effort.data$Subject)
+effort.data$Subject <- gsub("\\s11A","", effort.data$Subject)
+effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), effort.data$StudentSurname)
+effort.data <- plyr::rename(effort.data, replace = c("StudentID" = "Student.code",
+                                                     "CLASS_CODE" = "Class.code"))
+effort.data$Date <- as.Date(SURVEY_DATE)
+# pulling back into wide format
+effort.data.wide <- effort.data %>%
+  unite(Temp, c(Source, Category), sep = ".") %>%
+  spread(key = Temp, value = Score)
+
+# merging the old with the new
+ednames <- c("Student.code","StudentFirstname","StudentSurname","StudentEmail",
+             "Subject", "Class.code",
+             "Year", "Cohort", "Date",
+             "TeacherFirstname","TeacherSurname", "TeacherEmail", 
+             "Student.Behaviour","Student.Diligence","Student.Engagement",
+             "Teacher.Behaviour","Teacher.Diligence","Teacher.Engagement")
+past.effort.data$Date <- as.Date(past.effort.data$Date)
+all.effort.data.wide <- plyr::rbind.fill(past.effort.data[,names(past.effort.data) %in% ednames], 
+                         effort.data.wide[,names(effort.data.wide) %in% ednames])
 all.effort.data <- all.effort.data.wide %>%
   gather(key = Type,
          value = Score,
@@ -41,27 +79,20 @@ all.effort.data <- all.effort.data.wide %>%
          Category = str_to_title(gsub("^.*\\.", "", Type)))
 all.effort.data$Type <- NULL
 
-effort.tracking.data$Teacher.name <- paste(effort.tracking.data$TeacherFirstname, effort.tracking.data$TeacherSurname)
 
-# changing to long format
-effort.data <- effort.tracking.data %>% 
-  gather(key = Type, 
-         value = Score, 
-         Student.Diligence:Teacher.Behaviour) %>% 
-  mutate(Source = gsub("\\..*","",Type), 
-         Category = str_to_title(gsub("^.*\\.", "", Type)))
-effort.data$Type <- NULL
+# Exporting data
+write_csv(effort.data.wide, path = paste0(REPORT_DIR, EXPORT_FILENAME))
+write_csv(all.effort.data.wide, path = paste0(REPORT_DIR, NEW_ALL_EFFORT_EXPORT_FILE))
 
-effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), effort.data$StudentSurname)
 
 
 # Checking subject list
 setdiff(unique(effort.data$Subject), subject.order.list)
 
 # Other parameters
-data("student_info")
-mailData <- student_info
+mailData <- read_csv(PATH_TO_EDUMATE_MAIL_DATA)
 student.info <- mailData # used as student.info in pastoral_summary
+student.info$Cohort <- student.info$Form
 
 student.numbers <- unique(effort.data$Student.code)
 teachers <- unique(effort.data$Teacher.name) 
@@ -74,7 +105,7 @@ mailMerge <- data.frame(To = character(),
                         Attachment = character())
 
 # Creating student reports  -change to student.numbers
-for (ID in student.numbers[72:length(student.numbers)]) {
+for (ID in student.numbers) {
   s.name <- unique(effort.data[effort.data$Student.code == ID,]$Student.name)
   studentFileName <- paste0(ID,"___Student_Effort_Report_", s.name , "_", REPORTING_PERIOD, ".pdf" )
   studentFilePath <- paste0(REPORT_DIR,studentFileName)
@@ -87,6 +118,7 @@ for (ID in student.numbers[72:length(student.numbers)]) {
                     output_file = studentFileName,
                     output_dir = REPORT_DIR,
                     quiet = TRUE)
+  for (n in seq(1,2)) {print("...")} # just for spacing
   print(paste0("Progress at: ",which(student.numbers == ID)/length(student.numbers)))
 }
 

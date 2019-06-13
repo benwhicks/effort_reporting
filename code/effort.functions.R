@@ -226,7 +226,7 @@ effortIndividualTimeline <- function(d, ID, title = "Effort Timeline", student.i
   
   d.cohort <- d[d$ID %in% cohort.ids[[1]] & d$Source == "Teacher",]
   d.cohort$ID <- as.factor(d.cohort$ID)
-  alphaLevel <- 4.0/length(cohort.ids[[1]])
+  alphaLevel <- min(1, 4.0/length(cohort.ids[[1]]))
   
   g <- ggplot() +
     geom_line(data = d.student, 
