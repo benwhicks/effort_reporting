@@ -98,7 +98,7 @@ write_csv(mailMerge, path = MAIL_MERGE_FILE)
 effort.data <- left_join(effort.data, student.info %>% select(Student.code, Gender))
 for (tcode in teachers) {
   fn <- paste0("Teacher_Effort_Report_", tcode, "_", REPORTING_PERIOD, ".pdf" )
-  fpath <- paste0(REPORT_DIR, fn)
+  fpath <- file.path(REPORT_DIR, fn)
   rmarkdown::render('markdown_templates/teacher_effort_report_markdown.Rmd',
                     output_file = fn,
                     output_dir = REPORT_DIR,
@@ -111,7 +111,7 @@ dates <- sort(unique(all.effort.data$Date))
 dates <- dates[(length(dates)-1):length(dates)]
 for (teacher in teachers) {
   fn <- paste0(teacher, " Effort Summary.csv")
-  fpath <- paste0(REPORT_DIR, fn)
+  fpath <- file.path(REPORT_DIR, fn)
   class_codes <- unique(effort.data[effort.data$Teacher.name == teacher,]$Class.code)
   df <- all.effort.data[all.effort.data$Date %in% dates,]
   df$Class.code <- gsub("[.]", " ", df$Class.code)
