@@ -33,25 +33,29 @@ house_colours_alt <- c("#338833","#550088","#999900","#0055BB","#880000","#BB550
 all.effort.data$Student.code <- as.factor(all.effort.data$Student.code)
 all.effort.data$Category <- factor(all.effort.data$Category, levels = c("Diligence", "Engagement","Behaviour"))
 dates <- sort(unique(all.effort.data$Date))
-last4dates <- dates[min(1,length(dates)-1):length(dates)]
+last4dates <- dates[max(1,length(dates)-3):length(dates)]
 t1 <- dates[length(dates)]
 t0 <- dates[length(dates)-1]
 
-df.means <- all.effort.data %>% group_by(Student.code, Date, Category, Source) %>% summarise(Score = mean(Score))
+df.means <- all.effort.data %>%
+  mutate(Student.name = trim_pref_name(paste(StudentFirstname, StudentSurname))) %>% 
+  group_by(Student.code, Student.name, 
+           Date, Category, Source, Gender, House, Cohort) %>% 
+  summarise(Score = mean(Score))
 
 df.teacher <- df.means[df.means$Source == "Teacher",]
-df.teacher$Source <- NULL
 df.teacher <- df.teacher %>% spread(key = Category, value = Score)
 df.teacher$Effort <- rowMeans(df.teacher[,c("Diligence","Engagement","Behaviour")])
 
-student.info <- student.info %>% mutate(Student.name = trim_pref_name(paste(Firstname, Lastname)))
-df.house.summary <- merge(df.teacher, student.info[,c("Student.code","Student.name","House","Cohort","Gender")])
-df.house.summary <- df.house.summary[df.house.summary$House %in% houses,]
+df.house.summary <- df.teacher[df.teacher$House %in% houses,]
 
-df.cohort.percentiles <- df.house.summary %>% group_by(Cohort, Date) %>% mutate(pr = 100*percent_rank(Effort))
+df.cohort.percentiles <- df.house.summary %>% 
+  group_by(Cohort, Date) %>% 
+  mutate(pr = 100*percent_rank(Effort))
 df.cohort.percentiles$pr <- round(df.cohort.percentiles$pr, 1)
 
-df.cohort.percentiles <- df.cohort.percentiles[df.cohort.percentiles$Date >= t0, c("Student.code","Date","pr")]
+df.cohort.percentiles <- df.cohort.percentiles[df.cohort.percentiles$Date >= t0, c("Student.code","Date","pr")] %>% 
+  unique()
 df.cohort.percentiles <- df.cohort.percentiles %>% spread(key = Date, value = pr)
 names(df.cohort.percentiles) <- c("Student.code", "t0", "t1")
 df.cohort.percentiles <- df.cohort.percentiles %>% mutate(P.Change = paste0(t0, " to ", t1) )

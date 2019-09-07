@@ -18,12 +18,12 @@ library(rdata.oxley) # Effort data stored here now in new system.
 source("code/effort.functions.R")
 
 # Changeable fields
-SURVEY_DATE <- '2019-06-03'
-EXPORT_FILENAME <- '2019 Term 2 Effort Data.csv'
-REPORTING_PERIOD <- '2019 Term 2'
+SURVEY_DATE <- '2019-08-26'
+EXPORT_FILENAME <- '2019 Term 3 Effort Data.csv'
+REPORTING_PERIOD <- '2019 Term 3'
 REPORT_DIR <- file.path('~', 'Effort Reporting')
-NEW_ALL_EFFORT_EXPORT_FILE <- "oxley.all.effort.wide_2019T2.csv"
-MAIL_MERGE_FILE <- "mail_merge_2019T2.csv"
+NEW_ALL_EFFORT_EXPORT_FILE <- "oxley.all.effort.wide_2019T3.csv"
+MAIL_MERGE_FILE <- "mail_merge_2019T3.csv"
 
 # Creates a directory called 'reports' if it does not already exist
 if (!dir.exists(REPORT_DIR)) {dir.create(REPORT_DIR)}
@@ -59,8 +59,10 @@ effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), 
 setdiff(unique(effort.data$Subject), subject.order.list)
 
 # Other parameters
-data("student_info")
-mailData <- student_info
+# data("student_info") -  No longer supplied by Oxley
+mailData <- effort.data %>% 
+  select(Student.code, Firstname = StudentFirstname, Lastname = StudentSurname,
+         Student.email = StudentEmail, House, Gender, Cohort)
 student.info <- mailData # used as student.info in pastoral_summary
 
 student.numbers <- unique(effort.data$Student.code)
@@ -74,14 +76,16 @@ mailMerge <- data.frame(To = character(),
                         Attachment = character())
 
 # Creating student reports  -change to student.numbers
-for (ID in student.numbers[72:length(student.numbers)]) {
+for (ID in student.numbers) {
   s.name <- unique(effort.data[effort.data$Student.code == ID,]$Student.name)
   studentFileName <- paste0(ID,"___Student_Effort_Report_", s.name , "_", REPORTING_PERIOD, ".pdf" )
   studentFilePath <- paste0(REPORT_DIR,studentFileName)
   studentEmail <- unique(mailData[mailData$Student.code == ID,]$Student.email)
-  reportsEmail <- unique(mailData[mailData$Student.code == ID,]$Report.email)
+  #reportsEmail <- unique(mailData[mailData$Student.code == ID,]$Report.email)
   mailMerge <- rbind(mailMerge,
-                     data.frame(To = studentEmail, Cc = as.character(reportsEmail), Name = s.name, Attachment = studentFileName)
+                     data.frame(To = studentEmail, 
+                                #Cc = as.character(reportsEmail), 
+                                Name = s.name, Attachment = studentFileName)
   )
   rmarkdown::render('markdown_templates/student_effort_report_markdown.Rmd',
                     output_file = studentFileName,
@@ -94,8 +98,6 @@ for (ID in student.numbers[72:length(student.numbers)]) {
 write_csv(mailMerge, path = MAIL_MERGE_FILE)
 
 # Creating teacher reports
-# joining data with student info for gender
-effort.data <- left_join(effort.data, student.info %>% select(Student.code, Gender))
 for (tcode in teachers) {
   fn <- paste0("Teacher_Effort_Report_", tcode, "_", REPORTING_PERIOD, ".pdf" )
   fpath <- file.path(REPORT_DIR, fn)
