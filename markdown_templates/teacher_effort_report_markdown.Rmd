@@ -22,7 +22,7 @@ logo <- jpeg::readJPEG("images/Oxley-crest.jpg")
 grid::grid.raster(logo)
 ```
 
-# `r tcode` Effort Report - Term 2 2018
+# `r tcode` Effort Report - `r REPORTING_PERIOD`
 
 ``` {r fig.height = 3, fig.width = 8}
 suppressWarnings(overallEffortPlot(df))

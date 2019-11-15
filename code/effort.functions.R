@@ -87,12 +87,12 @@ effLongToWide <- function(d) {
 # list for the subjects. This is the order that the subjects will appear on 
 # any of the charts. 
 subject.order.list <- c("English","English Standard", "English Advanced", "English Extension 1", "English Extension 2",
-           "Mathematics", "Mathematics Advanced","Mathematics General", "Mathematics Extension 1", "Mathematics Extension 2", "Mathematics General 2", "Mathematics Standard",
+           "Mathematics", "Mathematics Advanced","Mathematics General", "Mathematics Extension 1", "Mathematics Extension 2", "Mathematics General 2", "Mathematics Standard", "Mathematics Standard 2",
            "Science", "Science Compaction", "Biology", "Chemistry", "Physics", "Science Extension",
            "History", "History Ancient", "Ancient History","History Modern", "Modern History","History Extension", "Studies of Religion", "Studies of Religion 1", "Studies of Religion 2",
            "Geography", "Economics", "Commerce", "Legal Studies", "Business Studies", "Global Studies", "Global Perspectives",
            "Cornerstone", "SWYM", "Wide Reading", "Big History",
-           "Music", "Music 1 & 2", "Music 1", "Music 2",
+           "Music", "Music 1 & 2", "Music 1", "Music 2", "Music Extension",
            "French", "French Continuers",
            "Design and Technology", "Design & Technology", "Engineering Studies", 
            "Media Technology","Food Technology","Graphics Technology", "Technology", "Textiles Technology",

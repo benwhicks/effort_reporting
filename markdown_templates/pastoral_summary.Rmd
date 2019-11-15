@@ -30,7 +30,7 @@ house_colours <- c("#33CC33","#6600CC","#DDDD00","#0099FF","#CC0000","#FF9900")
 house_colours_alt <- c("#338833","#550088","#999900","#0055BB","#880000","#BB5500")
 
 # Tidying data types
-all.effort.data$Student.code <- as.factor(all.effort.data$Student.code)
+all.effort.data$Student.code <- as.character(all.effort.data$Student.code)
 all.effort.data$Category <- factor(all.effort.data$Category, levels = c("Diligence", "Engagement","Behaviour"))
 dates <- sort(unique(all.effort.data$Date))
 last4dates <- dates[max(1,length(dates)-3):length(dates)]
