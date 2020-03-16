@@ -91,15 +91,15 @@ subject.order.list <- c("English","English Standard", "English Advanced", "Engli
            "Science", "Science Compaction", "Biology", "Chemistry", "Physics", "Science Extension",
            "History", "History Ancient", "Ancient History","History Modern", "Modern History","History Extension", "Studies of Religion", "Studies of Religion 1", "Studies of Religion 2",
            "Geography", "Economics", "Commerce", "Legal Studies", "Business Studies", "Global Studies", "Global Perspectives",
-           "Cornerstone", "SWYM", "Wide Reading", "Big History",
+           "Cornerstone", "Philosophy", "SWYM", "Wide Reading", "Big History", 
            "Music", "Music 1 & 2", "Music 1", "Music 2", "Music Extension",
-           "French", "French Continuers",
+           "French", "French Continuers", "Japanese", "Latin",
            "Design and Technology", "Design & Technology", "Engineering Studies", 
            "Media Technology","Food Technology","Graphics Technology", "Technology", "Textiles Technology",
            "Visual Arts",
            "Drama",
            "PDHPE",
-           "Distance Education", "TVET")
+           "Distance Education", "TVET", "Personal Interest Project")
 
 effortPlot <- function(d, ctitle = "Chart title", slist = subject.order.list) {
   # Recieves a long data frame and returns a ggplot historgram

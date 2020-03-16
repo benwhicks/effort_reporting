@@ -18,12 +18,12 @@ library(rdata.oxley) # Effort data stored here now in new system.
 source("code/effort.functions.R")
 
 # Changeable fields
-SURVEY_DATE <- '2019-11-11'
-EXPORT_FILENAME <- '2019 Term 4 Effort Data.csv'
-REPORTING_PERIOD <- '2019 Term 4'
+SURVEY_DATE <- '2020-03-03'
+EXPORT_FILENAME <- '2020 Term 1 Effort Data.csv'
+REPORTING_PERIOD <- '2020 Term 1'
 REPORT_DIR <- file.path('~', 'Effort Reporting')
-NEW_ALL_EFFORT_EXPORT_FILE <- "oxley.all.effort.wide_2019T4.csv"
-MAIL_MERGE_FILE <- "mail_merge_2019T4.csv"
+NEW_ALL_EFFORT_EXPORT_FILE <- "oxley.all.effort.wide_2020T1.csv"
+MAIL_MERGE_FILE <- "mail_merge_2020T1.csv"
 
 # Creates a directory called 'reports' if it does not already exist
 if (!dir.exists(REPORT_DIR)) {dir.create(REPORT_DIR)}
@@ -54,7 +54,6 @@ effort.data$Type <- NULL
 
 effort.data$Student.name <- paste(trim_pref_name(effort.data$StudentFirstname), effort.data$StudentSurname)
 
-
 # Checking subject list
 setdiff(unique(effort.data$Subject), subject.order.list)
 
@@ -62,7 +61,7 @@ setdiff(unique(effort.data$Subject), subject.order.list)
 # data("student_info") -  No longer supplied by Oxley
 mailData <- effort.data %>% 
   select(Student.code, Firstname = StudentFirstname, Lastname = StudentSurname,
-         Student.email = StudentEmail, House, Gender, Cohort)
+         Student.email, House, Gender, Cohort)
 student.info <- mailData # used as student.info in pastoral_summary
 
 student.numbers <- unique(effort.data$Student.code)
@@ -74,6 +73,8 @@ mailMerge <- data.frame(To = character(),
                         Cc =character(),
                         Name = character(),
                         Attachment = character())
+
+
 
 # Creating student reports  -change to student.numbers
 for (ID in student.numbers) {
